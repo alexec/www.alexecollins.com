@@ -11,12 +11,13 @@ title: "Thread Jiggling"
 
 <p>Consider this canonical simple, but thread unsafe class:</p>
 
-	    private int count = 0 ;
-	
-	    public void count() {
-	        count++;
-	    }
-	}
+~~~java
+    private int count = 0 ;
+
+    public void count() {
+        count++;
+    }
+~~~
 
 <p>The count method's byte code is:</p>
 
@@ -28,42 +29,45 @@ title: "Thread Jiggling"
 
 <p>This provides several places where there could be a context switch, which means that count my be increased, but not stored as expected. Let consider a quick unit test:</p>
 
-	    Counter counter = new BadCounter();
-	    int n = 1000;
-	
-	    @Test
-	    public void singleThreadedTest() throws Exception {
-	
-	        for (int i = 0; i &lt; n; i++) {
-	            counter.count();
-	        }
-	
-	        assertEquals(n, counter.getCount());
-	    }
-	    ...
+~~~java
+    Counter counter = new BadCounter();
+    int n = 1000;
 
+    @Test
+    public void singleThreadedTest() throws Exception {
+
+        for (int i = 0; i < n; i++) {
+            counter.count();
+        }
+
+        assertEquals(n, counter.getCount());
+    }
+    ...
+~~~
 <p>This test runs in a single thread, and passes. Lets try and run this on two threads and see if it fails.</p>
 
-	    public void threadedTest() throws Exception {
+~~~java
+    public void threadedTest() throws Exception {
 	
-	        final CompletionService&lt;Void&gt; service = new ExecutorCompletionService&lt;Void&gt;(Executors.newFixedThreadPool(2));
-	
-	        for (int i = 0; i &lt; n; i++) {
-	            service.submit(new Callable&lt;Void&gt;() {
-	                @Override
-	                public Void call() {
-	                    counter.count();
-	                    return null;
-	                }
-	            });
-	        }
-	
-	        for (int i = 0; i &lt; n; ++i) {
-	            service.take().get();
-	        }
-	
-	        assertEquals(n, counter.getCount());
-	     }
+        final CompletionService<Void> service = new ExecutorCompletionService<Void>(Executors.newFixedThreadPool(2));
+
+        for (int i = 0; i < n; i++) {
+            service.submit(new Callable<Void>() {
+                @Override
+                public Void call() {
+                    counter.count();
+                    return null;
+                }
+            });
+        }
+
+        for (int i = 0; i < n; ++i) {
+            service.take().get();
+        }
+
+        assertEquals(n, counter.getCount());
+     }
+~~~
 
 <p>This also passes. On my computer I can increase <em>n</em> to 100,000 before it starts to fail consistently.</p>
 
@@ -85,10 +89,12 @@ title: "Thread Jiggling"
 
 <p>Using ASM, we can create a rewriter to insert these invocations. The JigglingClassLoader re-writes classes on the fly, adding these calls. From this we can create a JUnit runner to run use the new class loader for the test.</p>
 
-	@Jiggle("threadjiggler.test.*")
-	public class BadCounterTest {
-	    ...
-	}
+~~~java
+@Jiggle("threadjiggler.test.*")
+public class BadCounterTest {
+    ...
+}
+~~~
 
 <p>Now running the test:</p>
 

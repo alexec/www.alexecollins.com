@@ -12,7 +12,7 @@ title: "Dagger DI for Spring Refuges: 10 Tips"
   <ul class="c6 lst-kix_e8imrt6jtb8v-0 start">
     <li class="c5 c0"><span>Compile time checking.</span></li>
 
-    <li class="c5 c0"><span>Very small (&lt;100kb), vs Guice
+    <li class="c5 c0"><span>Very small (<100kb), vs Guice
     (~500kb) and Spring (~800kb).</span></li>
 
     <li class="c5 c0"><span>Fast.</span></li>
@@ -48,7 +48,7 @@ title: "Dagger DI for Spring Refuges: 10 Tips"
     and doesn't have the compile time benefits.</span></li>
 
     <li class="c5 c0"><span>Like Spring et al, it can't detect
-    parameterized classes, e.g. Set&lt;Service&gt;. You'll need to
+    parameterized classes, e.g. Set<Service>. You'll need to
     use @Named on these.</span></li>
 
     <li class="c0 c5"><span>There's no in-built support for JNDI,
@@ -70,7 +70,7 @@ title: "Dagger DI for Spring Refuges: 10 Tips"
 
     <li class="c5 c0"><span>Dagger only has two scopes: singleton
     and non-singleton. Request and session are not supported. Using
-    Provider&lt;MyClass&gt; gives the same effect as
+    Provider<MyClass> gives the same effect as
     prototype.</span></li>
 
     <li class="c5 c0"><span>If need to add any "dangling"

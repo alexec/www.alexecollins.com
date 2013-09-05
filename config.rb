@@ -5,6 +5,8 @@
 
 # Time.zone = "UTC"
 
+set :markdown_engine, :kramdown
+
 activate :blog do |blog|
   # blog.prefix = "blog"
   blog.permalink = "/content/:title"
@@ -27,6 +29,8 @@ activate :blog do |blog|
 end
 
 page "/feed.xml", :layout => false
+
+activate :syntax
 
 ### 
 # Compass
