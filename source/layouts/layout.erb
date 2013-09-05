@@ -77,5 +77,13 @@
       })();
 
     </script>
+<script type="text/javascript">
+// crafty redirect to correct page
+var h=document.location.href;
+var j=h.indexOf("?q=");
+if (j>=0){
+document.location.href=h.substring(j+3);
+}
+</script>
   </body>
 </html>

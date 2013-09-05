@@ -19,11 +19,3 @@ Ops! Can't find what you're looking for, but it's probably one of these popular 
 * [Applet Model-View-Controller](/content/applet-model-view-controller)
 * [Thread Jiggling](/content/thread-jiggling)
 
-<script type="text/javascript">
-// crafty redirect to correct page
-var h=document.location.href;
-var j=h.indexOf("?q=");
-if (j>=0){
-document.location.href=h.substring(j+3);
-}
-</script>
