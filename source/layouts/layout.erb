@@ -5,10 +5,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alex Collins - <%= current_page.data.title  %></title>
-	<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css" rel="stylesheet">
+      <%= stylesheet_link_tag 'bootstrap.min' %>
   </head>
-  <body>
-
   <body class="<%= page_classes %>">
 <div class="container">
     <ul class="nav nav-pills">
@@ -43,7 +41,6 @@
         <% end %>
       </ol>
 	<p><a href="/sitemap">Sitemap</a></p>
-</div>
 <!--
 
       <h2>Tags</h2>
@@ -59,8 +56,9 @@
           <li><%= link_to year, blog_year_path(year) %> (<%= articles.size %>)</a></li>
         <% end %>
       </ol>
-    </aside>
       -->
+    </aside>
+</div>
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
