@@ -15,12 +15,14 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 
 <p>To do this, add the following lines inside the GlobalNamingResources element of $CATALINA_HOME/conf/server.xml:</p>
 
+~~~xml
 	<Resource auth="Container" 
 	    driverClassName="org.apache.derby.jdbc.EmbeddedDriver" 
 	    maxActive="8" maxIdle="4" 
 	    name="jdbc/tutorialDS" type="javax.sql.DataSource" 
 	    url="jdbc:derby:tutorialDB;create=true" 
 	    username="" password="" />
+~~~
 
 <p>A jar containing org.apache.derby.jdbc.EmbeddedDriver needs to be available to Tomcat. An quick way to get the jar is from your Maven local repository, e.g. ~/.m2/repository/org/apache/derby/derby/10.4.1.3/derby-10.4.1.3.jar. Copy that file into $CATALINA_HOME/lib and restart Tomcat to make sure there was no errors.</p>
 
@@ -36,37 +38,44 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 
 <p>We need to change the project to produce a web archive, so in the pom.xml add the following:</p>
 
-	<packaging>war</packaging>
+~~~xml
+<packaging>war</packaging>
+~~~
 
 <p>You'll want to add (as a convenience) a line inside the build section that creates a .war without the project version:</p>
 
-	<finalName>${project.artifactId}</finalName>
+~~~xml
+<finalName>${project.artifactId}</finalName>
+~~~
 
 <p>We also need the servlet API libraries:</p>
 
-	        <dependency>
-	            <groupId>javax.servlet</groupId>
-	            <artifactId>servlet-api</artifactId>
-	            <version>2.5</version>
-	            <scope>provided</scope>
-	        </dependency>
-
+~~~xml
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>servlet-api</artifactId>
+	<version>2.5</version>
+	<scope>provided</scope>
+</dependency>
+~~~
 <p>Note: the scope for this is "provided", as Tomcat already has a built in servlet library.</p>
 
 <p>So that the data-source is available to the app, create src/main/webapp/META-INF/context.xml with the following lines:</p>
 
-	<Context>
-	    <ResourceLink global="jdbc/tutorialDS" name="jdbc/tutorialDS" type="javax.sql.DataSource"/>
-	</Context>
+~~~xml
+<Context>
+	<ResourceLink global="jdbc/tutorialDS" name="jdbc/tutorialDS" type="javax.sql.DataSource"/>
+</Context>
 
 <p>This makes the data-source managed by Tomcat available to our app. We also need a stub for src/main/webapp/WEB-INF/web.xml:</p>
 
-	<web-app
-	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	    xmlns="http://java.sun.com/xml/ns/javaee"
-	    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	    version="2.5">
-	</web-app>
+<web-app
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+</web-app>
+~~~
 
 <p>Compile and deploy the app to Tomcat. You won't be able to see anything at this point, as there are no servlets or pages.</p>
 
@@ -78,53 +87,53 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 
 <p>Add the following dependency to your pom.xml:</p>
 
-		<dependency>
-	            <groupId>org.springframework</groupId>
-	            <artifactId>spring-webmvc</artifactId>
-	            <version>3.0.6.RELEASE</version>
-	        </dependency>
-
+~~~xml
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-webmvc</artifactId>
+	<version>3.0.6.RELEASE</version>
+</dependency>
+~~~
 <p>We want to tell Tomcat to use Spring to dispatch requests, so we need to add the following lines to our web.xml:</p>
 
-	    <context-param>
-	        <param-name>contextConfigLocation</param-name>
-	        <param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
-	    </context-param>
+~~~xml
+<context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
+</context-param>
 	
-	    <listener>
-	        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	    </listener>
+<listener>
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
 	
-	    <servlet>
-	        <servlet-name>mvc-dispatcher</servlet-name>
-	        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	        <load-on-startup>1</load-on-startup>
-	    </servlet>
+<servlet>
+	<servlet-name>mvc-dispatcher</servlet-name>
+	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>	<load-on-startup>1</load-on-startup>
+</servlet>
 	
-	    <servlet-mapping>
-	        <servlet-name>mvc-dispatcher</servlet-name>
-	        <url-pattern>*.html</url-pattern>
-	    </servlet-mapping>
+<servlet-mapping>
+	<servlet-name>mvc-dispatcher</servlet-name>
+	<url-pattern>*.html</url-pattern>
+</servlet-mapping>
+~~~
+<p>This will forward all requests for pages ending in ".html" to Spring and Spring will choose the appropriate controller to service each request. We also need to create an application context for Spring servlets, and this must live in src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml:</p>
 
-<p>This will forward all requests for pages ending in ".html" to Spring and Spring will choose the appropriate controller to service each request. We also need to create an application context for Spring servlets, and this must live in src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml:<p>
-
-	<?xml version="1.0" encoding="UTF-8"?>
-	<beans xmlns="http://www.springframework.org/schema/beans"
-	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	    xmlns:context="http://www.springframework.org/schema/context"
-	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-	    ">
-	
-	    <context:component-scan base-package="tutorial"/>
-	    <context:annotation-config/>
-	
-	    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	        <property name="prefix"><value>/WEB-INF/pages/</value></property>
-	        <property name="suffix"><value>.jsp</value></property>
-	    </bean>
-	
-	</beans>
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>	
+<beans xmlns="http://www.springframework.org/schema/beans"
+   	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   	xmlns:context="http://www.springframework.org/schema/context"
+  	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+   	
+   	<context:component-scan base-package="tutorial"/>
+   	<context:annotation-config/>
+   	
+   	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	   	<property name="prefix"><value>/WEB-INF/pages/</value></property>
+		<property name="suffix"><value>.jsp</value></property>
+	</bean>
+</beans>
+~~~
 
 <p>This XML does two things:</p>
 
@@ -137,28 +146,32 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 
 <p>To test this we'll need to display a page. The first page will be to display a list of all the users. We'll need two files; the first is the controller that services requests:</p>
 
-	package tutorial;
+~~~java
+package tutorial;
 	
-	import org.springframework.stereotype.Controller;
-	import org.springframework.ui.Model;
-	import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 	
-	@Controller
-	public class UsersController {
+@Controller
+public class UsersController {
 	
-	    @RequestMapping("/users")
-	    public String users(Model model) {
-	        return "users";
-	    }
+	@RequestMapping("/users")
+	public String users(Model model) {
+		return "users";
 	}
+}
+~~~
 
 <p>The second item is the page to display. This is based on the string returned by UsersController.users(), and using the rules for the resource resolver, we know this file must be WEB-INF/pages/users.jsp. Create stub of the page, something like:</p>
 
-	<html>
+~~~html
+<html>
 	<body>
-	<h1>Users</h1>
+		<h1>Users</h1>
 	</body>
-	</html>
+</html>
+~~~
 
 <p>Finally, you can test this by redeploying to Tomcat and using a browser to view <a href="http://localhost:8080/tutorial-hibernate-jpa/users.html">http://localhost:8080/tutorial-hibernate-jpa/users.html</a>.</p>
 
@@ -166,17 +179,21 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 
 <p>Spring contains support for injecting entity managers into beans, and this requires only a few lines of code to be added to your pom.xml and mvc-dispatcher-context.xml:</p>
 
-	        <dependency>
-	            <groupId>org.springframework</groupId>
-	            <artifactId>spring-orm</artifactId>
-	            <version>3.0.6.RELEASE</version>
-	        </dependency>
+~~~xml
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-orm</artifactId>
+	<version>3.0.6.RELEASE</version>
+</dependency>
+~~~
 
-	    <jee:jndi-lookup id="tutorialDS" jndi-name="java:/comp/env/jdbc/tutorialDS" expected-type="javax.sql.DataSource"/>
+~~~xml
+<jee:jndi-lookup id="tutorialDS" jndi-name="java:/comp/env/jdbc/tutorialDS" expected-type="javax.sql.DataSource"/>
 	
-	   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-	        <property name="dataSource" ref="tutorialDS"/>
-	    </bean>
+<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<property name="dataSource" ref="tutorialDS"/>
+</bean>
+~~~
 
 <p>The "jndi-lookup" element creates a bean from a JNDI resource, and this is used by the entity manager factory to create entity managers. Other JNDI objects can also be looked up in this fashion.</p>
 
@@ -184,35 +201,41 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 
 <p>Finally, we can add code to get the entity manager injected into our controller and get users from the database.</p>
 
-	public class UsersController {
+~~~java
+public class UsersController {
 	
-	    @PersistenceContext
-	    private EntityManager entityManager;
+	@PersistenceContext
+	private EntityManager entityManager;
 	
-	    @RequestMapping("/users")
-	    public String users(Model model) {
+	@RequestMapping("/users")
+	public String users(Model model) {
 	
-	        model.addAttribute("users", entityManager.createQuery("select u from User u").getResultList());
+		model.addAttribute("users", entityManager.createQuery("select u from User u").getResultList());
 	
 	        return "users";
-	    }
 	}
+}
+~~~
 
 <p>This code uses the entity manager to get all the users and binds it to an attribute called "users" that will be visible to our JSPs.</p>
 
-<p>We will want to show the users on the page. For this, I'll use JSTL; you can use another technology if you prefer, but I'll quickly give you the bits you'd need if not. Again, there's plenty of good tutorials on JSTL out there if you're not familiar. Firstly,  add another dependency to you pom.xml:</p>
+<p>We will want to show the users on the page. For this, I'll use JSTL; you can use another technology if you prefer, but I'll quickly give you the bits you'd need if not. Again, there's plenty of good tutorials on JSTL out there if you're not familiar. Firstly,  
+add another dependency to you pom.xml:</p>
 
-	        <dependency>
-	            <groupId>javax.servlet</groupId>
-	            <artifactId>jstl</artifactId>
-	            <version>1.2</version>
-	        </dependency>
+~~~xml
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>jstl</artifactId>
+	<version>1.2</version>
+</dependency>
+~~~
 
 <p>And update users.html displays the users:</p>
 
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<html>
-	<body>
+~~xml
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+body>
 	<h1>Users</h1>
 	<table>
 	    <thead><tr><td>ID</td><td>Name</td></tr></thead>
@@ -222,8 +245,9 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 	        </c:forEach>
 	    </tbody>
 	</table>
-	</body>
-	</html>
+</body>
+</html>
+~~~
 
 <p>Finally, you can smoke test this in your browser.</p>
 
@@ -231,50 +255,59 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 
 <p>The final piece of the puzzle is creating a user. To do this, we'll need a basic form, for example I've made pages/create-user.jsp:</p>
 
-	<html>
-	<body>
+~~~html
+<html>
+<body>
 	<h1>Create User</h1>
 	<form method="post">
 	Name: <input name="name"/>
 	<input type="submit"/>
 	</form>
-	</body>
-	</html>
+</body>
+</html>
+~~~
 
 <p>We need a controller to access this, so add this to UsersController:</p>
 
-	    @RequestMapping(value = "/create-user", method = RequestMethod.GET)
-	    public String createUser(Model model) {
-	        return "create-user";
-	    }
+~~~java
+@RequestMapping(value = "/create-user", method = RequestMethod.GET)
+public String createUser(Model model) {
+	return "create-user";
+}
+~~~
 
 <p>Note: that this method only accepts GET requests. When we POST the form, we'll need another method. You can smoke test this by redeploying to Tomcat and browsing to <a href="http://localhost:8080/tutorial-hibernate-jpa/create-user.html">http://localhost:8080/tutorial-hibernate-jpa/create-user.html</a>. You'll note that submitting the page results in a HTTP 405 error. We can service POST requests with the following (overloaded) method:</p>
 
-	    @RequestMapping(value = "/create-user", method = RequestMethod.POST)
-	    @Transactional
-	    public String createUser(Model model, String name) {
+~~~java
+@RequestMapping(value = "/create-user", method = RequestMethod.POST)
+@Transactional
+public String createUser(Model model, String name) {
 	        
-	        User user = new User();
-	        user.setName(name);
+	User user = new User();
+	user.setName(name);
 	        
-	        entityManager.persist(user);
+	entityManager.persist(user);
 	        
-	        return "redirect:/users.html";
-	    }
+	return "redirect:/users.html";
+}
+~~~
 
 <p>We've used the @Transactional annotation here. When we do this, Spring will create a proxy object for our bean and manage the transaction for us, beginning, committing and rolling back when errors occur. This is much less code (one line vs about a dozen) and safer (less chance for a typographical error) than opening and closing the transaction ourself. You can see an example of the code for the verbose version in <a href="/content/tutorial-hibernate-jpa-part-1">this post</a>. We need to tell Spring to support this by adding the following lines to our Spring context: telling it to use annotation based transactions, and what bean should manage the transactions:</p>
 
-	    <tx:annotation-driven/>
+~~~xml
+<tx:annotation-driven/>
 	
-	    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-	        <property name="entityManagerFactory" ref="entityManagerFactory" />
-	    </bean>
+<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<property name="entityManagerFactory" ref="entityManagerFactory" />
+</bean>
+~~~
 
 <p>Note: you'll need to add the correct schema the the document too:</p>
 
-	    xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	...
-	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+~~~
 
 <p>You can test this by going to the page and submitting a new user. You'll be redirected to the users page afterwards where you should be able to see your new user.</p>
 

@@ -19,6 +19,7 @@ Firstly we'll need a couple of basic dependencies. Essentially there are three l
 
 Additionally we'll want JUnit for creating tests and Tomcat so we can using it's JNDI naming for tests. JNDI is a preferable system to including the server details in a properties file for reasons we'll come to.
 
+~~~xml
 	<dependencies>
 	        <dependency>
 	            <groupId>org.apache.derby</groupId>
@@ -48,6 +49,7 @@ Additionally we'll want JUnit for creating tests and Tomcat so we can using it's
 	            <scope>test</scope>
 	        </dependency>
 	    </dependencies>
+~~~
 
 <h2>Configuration</h2>
 
@@ -55,6 +57,7 @@ The key config file for JPA is persistence.xml. This lives in the META-INF direc
 
 I've added some comments on the additional properties so you know what they are for. You can configure the data source directly, but using JNDI means we can easily deploy the code in a container, as a standalone or to run unit tests, with minimal code changes.
 
+~~~xml
 	<?xml version="1.0" encoding="UTF-8"?>
 	<persistence xmlns="http://java.sun.com/xml/ns/persistence"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -80,6 +83,7 @@ I've added some comments on the additional properties so you know what they are 
 			</properties>
 		</persistence-unit>
 	</persistence>
+~~~
 
 <h2>Entities</h2>
 
@@ -89,6 +93,7 @@ Annotations can be used to add extra information to the class. They mark the cla
 
 In our case we're going to start with the simplest entity possible.
 
+~~~java
 	package tutorial;
 	
 	import javax.persistence.*;
@@ -120,6 +125,7 @@ In our case we're going to start with the simplest entity possible.
 	        return name;
 	    }
 	}
+~~~
 
 JPA can use the meta information to create the DDL when it starts up. This is helpful for development as it allows you to quickly get up and running without delving into the SQL needed to create tables. Want to add a column? Just add the column, compile and run. Unfortunately, what you gain in convenience is also an increase in risk (e.g. what does the database server do when a table has millions of records and you add a new column?) and loss of control.
 
@@ -129,6 +135,7 @@ There's a compromise, once the entities have been created by Hibernate, you can 
 
 There are only two pieces, first we'll create an abstract test case as a root for all our tests. This will register a data source with JNDI, and we will extend it with other tests so that they access to the database.
 
+~~~java
 	package tutorial;
 	
 	import org.apache.derby.jdbc.EmbeddedDataSource;
@@ -168,9 +175,11 @@ There are only two pieces, first we'll create an abstract test case as a root fo
 			ic.unbind("java:comp/env/jdbc/tutorialDS");
 		}
 	}
+~~~
 
 The final piece is the test case. The entity manger provide access to the data. The persist operation (which will result in a single insert in this case) must be performed in a transaction. In fact Hibernate will not do any work until the commit. You can see this by adding a Thread.sleep immediately prior to the commit. 
 
+~~~java
 	@Test
 	    public void testNewUser() {
 	
@@ -198,6 +207,7 @@ The final piece is the test case. The entity manger provide access to the data. 
 	
 	        entityManager.close();
 	    }
+~~~
 
 <h2>Exception Handling</h2>
 
@@ -205,6 +215,7 @@ The need for a begin and commit is verbose. Additionally, the last example is in
 
 Exception handling is boiler plate code. Like it's JDBC equivalent, it's not pretty. Here's a example:
 
+~~~java
 	 @Test(expected = Exception.class)
 	    public void testNewUserWithTxn() throws Exception {
 	
@@ -230,6 +241,7 @@ Exception handling is boiler plate code. Like it's JDBC equivalent, it's not pre
 	
 	        entityManager.close();
 	    }
+~~~
 
 I'll leave the exception management out for the moment as there are better ways to do it. Later we'll look at how JSR-330's @Inject and Spring Data's @Transactional can reduce the boiler plate.
 
@@ -239,6 +251,7 @@ Since we're using relational databases, we'll almost certainly want to create a 
 
 Add the following field and method to the user table:
 
+~~~java
 	    @ManyToMany
 	    private Set<Role> roles = new HashSet<Role>();
 	
@@ -249,9 +262,11 @@ Add the following field and method to the user table:
 	    public Set<Role> getRoles() {
 	        return roles;
 	    }
+~~~
 
 The @ManyToMany annotation tells JPA that it's a many-to-many relation. We can test this with a new test case. This test creates a user and role in one transaction and then updates the user in the second using merge. Merges are used to update an entity in the database.
 
+~~~java
 	  @Test
 	    public void testNewUserAndAddRole() {
 	
@@ -290,11 +305,13 @@ The @ManyToMany annotation tells JPA that it's a many-to-many relation. We can t
 	
 	        entityManager.close();
 	    }
+~~~
 
 <h2>Queries</h2>
 
 JPA allows you to use a query language with a strong similarity to SQL called JPQL. Queries can be written directly, but named queries are easier to control, to maintain and exhibit better performance as Hibernate can prepare the statement. They are specified using the @NamedQuery annotation. Add this line to the User class after the @Table annotation:
 
+~~~java
 	@NamedQuery(name="User.findByName", query = "select u from User u where u.name = :name")
 
 You can test this as follows:
@@ -340,11 +357,13 @@ You can test this as follows:
 	
 			entityManager.close();
 		}
+~~~
 
 In this example I've closed and reopened the entity manager. This forces Hibernate to request the user from the database. Notice anything interesting about the output? The SQL for getting the roles appears after the toString of the found user. Hibernate creates a proxy object for the roles (in this case a org.hibernate.collection.PersistentSet), and only populates it when you first access the object. This can result in counter-intuitive behaviour and has its own set of pitfalls.
 
 Try this variation of the above test where we close the entity manager before we first query the roles:
 
+~~~java
 		@Test(expected = LazyInitializationException.class)
 		public void testFindUser1() throws Exception {
 	
@@ -380,6 +399,7 @@ Try this variation of the above test where we close the entity manager before we
 	
 			assertEquals(1, foundUser.getRoles().size());
 		}
+~~~
 
 The LazyInitializationException will be thrown on the getRoles() call. This is not a bug. Once the entity manager is closed, any entity can become unusable.
 

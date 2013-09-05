@@ -32,8 +32,7 @@ We can now update our test to use this. Firstly we'll need to create src/test/re
 	<?xml version="1.0" encoding="UTF-8"?>
 	<beans xmlns="http://www.springframework.org/schema/beans"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans
-	           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	
 		<bean id="siteBase" class="java.net.URI">
 			<constructor-arg value="http://localhost:10001/selenuim-tutorial/" />
