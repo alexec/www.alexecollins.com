@@ -23,7 +23,7 @@ File.open('content.1.csv').each(sep='™') do |l|
 
 puts tt
 path1=tt.downcase.gsub(/ (a|an,and|as|at|before|but|by|for|from|is|in|into|like|of|off|on|onto|per|since|than|the|this|that|to|up|via|with) /, ' ').gsub(/[^a-z0-9]+/, '-').gsub(/-$/, '').gsub(/^-/,'')
-    path="#{tm.strftime('%Y-%m-%m')}-#{path1}"
+    path="#{tm.strftime('%Y-%m-%d')}-#{path1}"
     fn="source/#{path}.html.md"
 
     puts path1
