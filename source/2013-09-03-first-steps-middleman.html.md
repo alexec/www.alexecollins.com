@@ -2,7 +2,7 @@
 title: First Steps with Middleman
 ---
 
-Middleman is a simple static site generator in Ruby. You create your site in markdown, run the builder and deploy, like you might an application. As a developer, this suites me, and after watching a friends succ
+Middleman is a simple static site generator in Ruby. You create your site in markdown, run the builder and deploy, like you might an application. As a developer, this suites me, and after watching a friends succcess I thought I'd see how hard it was to migrate my own blog.
 
 I ended up doing the following steps:
 
@@ -13,7 +13,7 @@ I ended up doing the following steps:
 * Running [my link checker](/content/web-site-link-checker) to check I'd not broken too many links.
 * Updating the template to have Google Analytics tracking, and Disqus comments.
 * Manually inspecting the most popular pages for errors.
-* Checking on modile.
+* Checking on mobile and tablet.
 * Enabling a Rakefile to publish it to Github Pages for preview.
 
-I'd already trimmed my site down when I moved it to EC2. This time I lost the recent post, recent comments and tags. I may try to reinste the tags.
+I'd already trimmed my site down when I moved it to EC2. This time I lost the recent post, recent comments and tags. I may try to reinstate the tags.
