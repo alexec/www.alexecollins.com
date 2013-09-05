@@ -5,4 +5,4 @@ I'm pretty excited about a new project I've been putting a few hours into, a Mav
 
 Early code here:
 
-https://github.com/alexec/maven-vbox-plugin
+[https://github.com/alexec/maven-vbox-plugin](https://github.com/alexec/maven-vbox-plugin)

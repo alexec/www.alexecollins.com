@@ -78,6 +78,6 @@ Finally, you might want to consider:-
 <li>How it the repository is backed up?</li>
 <li>How secure is it?</li>
 <li>How easy would it be to corrupt it?</li>
-<ol>
+</ol>
 
 You'll probably only want to use this when you'd have previously kept the files on a file share and used Ant to copy them over.

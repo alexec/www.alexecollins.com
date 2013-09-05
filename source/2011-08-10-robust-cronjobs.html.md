@@ -12,7 +12,7 @@ title: "Robust Cronjobs"
 <li>Make it idempotent so you can repeat each test easily, and if it fails, it can safely be re-run.</li>
 <li>Consider sourcing ~/.bashrc in your shell wrapper so that your app runs in a similar env in a shell to that when it'll be run by the daemon.</li>
 <li>If you develop on one machine (e.g. Linux), and deploy to another (e.g. UNIX), then make sure you take this into account. Try and develop scripts that will run in any environment.</li>
-<li>You can test it using "cd && env - myapp" so that it is run in the same working directory and a <I>similar</i> env as when it runs as a cron.
+<li>You can test it using "cd && env - myapp" so that it is run in the same working directory and a <I>similar</i> env as when it runs as a cron.</li>
 <li>Log output to a log file (e.g. /var/log/$USER/myapp.out), but remember some errors (e.g. stack traces from you apps main thread) are written to stout or stderr. Handily they will be delivered to the user's UNIX mailbox. You set-up ~/.forward so you can also get a copy in your in-box. Make sure the error is helpful, add the hostname and command for example. Don't forget to rotate, compress and archive your logs.</li>
 <li>Consider recording reporting metrics from the app. How long it took to run, how many records it processed. These are useful for debugging, and also useful for monitoring performance over longer periods of time, or creating alarms.</li>
 <li>Document, but not in some obscure, hard to find and un-maintanable article in your corporate intranet. Perhaps document in a README.txt AND the app's help, which could be accessible using a "-h" option.</li>

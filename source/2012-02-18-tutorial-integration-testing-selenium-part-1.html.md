@@ -6,9 +6,9 @@ title: "Tutorial: Integration Testing with Selenium - Part 1"
 I've been using this for sometime and I've come across a few things that appear to make life easier. I thought I'd share this as a tutorial, so I'll walk you through these parts:
 
 <ol>
-<li>Setting up a web project using Maven, configuring Selenium to run as an integration test on a C.I.
-<li>Look into good ways to model the pages in your site using "page objects" and other ways to create points of protected-variation.
-<li>Use JPA and Hibernate to perform CRUD operations on a database, and have Maven perform integration tests on them, without any of the costly and often undocumented set-up that this sometimes entails.
+<li>Setting up a web project using Maven, configuring Selenium to run as an integration test on a C.I.</li>
+<li>Look into good ways to model the pages in your site using "page objects" and other ways to create points of protected-variation.</li>
+<li>Use JPA and Hibernate to perform CRUD operations on a database, and have Maven perform integration tests on them, without any of the costly and often undocumented set-up that this sometimes entails.</li>
 </ol>
 
 This post assumes you're comfortable with Java, Spring, Maven 2 and, of course, HTML. You'll also want Firefox installed on you computer. This tutorial is intended to be otherwise technology agnostic.

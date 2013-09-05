@@ -12,6 +12,6 @@ It contains:
 <li>a test to ensure the aspect is correctly applied</li>
 </ul>
 
-https://github.com/alexec/aspectj-example
+[https://github.com/alexec/aspectj-example](https://github.com/alexec/aspectj-example)
 
 Enjoy.

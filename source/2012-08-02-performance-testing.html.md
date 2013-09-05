@@ -21,7 +21,7 @@ title: "Performance Testing"
 
 <p>After resolution, a period of self-reflection. People are asking what can be done to show willingness to tackling the problem; perhaps in a one-off performance tuning exercise by a specialist, which resolves current issues. But, if the analysis is done by a seconded specialist who's not part of the team, it's an exercise whose lessons are not disseminated, and is not repeatable. Those who do not learn lessons from the past are doomed to repeat it.</p>
 
-<p>This might be a fait-au-complet: if performance testing is more expensive than the cost of fixing periodic production issues, then this is the most logical, most cost effective approach.</pP
+<p>This might be a fait-au-complet: if performance testing is more expensive than the cost of fixing periodic production issues, then this is the most logical, most cost effective approach.</p>
 
 <p>Many system, perhaps due to cost or lack of time, have not been developed in a way that is amenable to automated testing. After all, when it's first written, you don't know if it's going to be a commercial success, so why spend money making software maintainable if it might never need to be maintained?</p>
 
@@ -47,7 +47,7 @@ title: "Performance Testing"
 <p>Integration test form the first part step toward full unit testing. There's many framework, depending on how users or client interface. If it is a web app, then you might use Selenium, a web service, a hand rolled SOAP client<a href="#footnote-1" style="vertical-align:super;">1</a>. Regardless, to run integration test, you'll need to be able to:</p>
 
 <ol>
-<li>Build your app</il>
+<li>Build your app</li>
 <li>Deploy to a test environment</li>
 <li>Execute the tests</li>
 <li>Report the results.</li>
@@ -62,16 +62,13 @@ title: "Performance Testing"
 <li>You know how to create a suitable environment for it</li>
 <li>You understand the deployment scripts</li>
 <li>You can deploy it automatically.</li>
-<li>
+</ol>
 
 <p>These are key to automating performance testing.</p>
 
 <h3>Performance Testing</h3>
 
-<p>Unit testing, and to some degree integration testing, have binary outcomes: they pass and everyone's happy, they fail, and there's a bug. To a similar degree, the tools<a href="#footnote-2"> are well supported and everyone knows how to use them.</p>
-
-
-
+<p>Unit testing, and to some degree integration testing, have binary outcomes: they pass and everyone's happy, they fail, and there's a bug. To a similar degree, the tools<a href="#footnote-2"/> are well supported and everyone knows how to use them.</p>
 
 <h1>Footnotes</h1> 
 

@@ -11,24 +11,24 @@ Long names take up screen real-estate, meaning that less code appears on screen,
 
 This pretty much covers all common abbreviations in the English dictionary, e.g.:
 
-abbreviation &rarr; abbr
-page &rarr; pg
+* abbreviation &rarr; abbr
+* page &rarr; pg
 
 Common programming terms, e.g.:
 
-directory &rarr; dir
-configuration &rarr; config &rarr; conf &rarr; cfg
-automatic &rarr; auto
-error &rarr; err
-exception &rarr; ex
-event &rarr; evt
-list &rarr; ls
-copy &rarr; cp
-x-axis &rarr; x
-amount &rarr; amt (other transactional ones include, transaction &rarr; tx, debit &rarr; dbt)
-synchronous &rarr; sync
-customer &rarr; cust (there's many customer related ones, e.g. uname, passwd, fname, addr)
-context &rarr; ctx
+* directory &rarr; dir
+* configuration &rarr; config &rarr; conf &rarr; cfg
+* automatic &rarr; auto
+* error &rarr; err
+* exception &rarr; ex
+* event &rarr; evt
+* list &rarr; ls
+* copy &rarr; cp
+* x-axis &rarr; x
+* amount &rarr; amt (other transactional ones include, transaction &rarr; tx, debit &rarr; dbt)
+* synchronous &rarr; sync
+* customer &rarr; cust (there's many customer related ones, e.g. uname, passwd, fname, addr)
+* context &rarr; ctx
 
 <em>2. Don't use a common prefix</em>
 
@@ -47,10 +47,10 @@ Think of this as the flip-side of the "long-lived variable should have descripti
 
 In e-gaming this might include:
 
-account &rarr; acct
-report &rarr; rpt
-event selection &rarr; seln
-table &rarr; tbl
+* account &rarr; acct
+* report &rarr; rpt
+* event selection &rarr; seln
+* table &rarr; tbl
 
 Consider having an easy to find list of common ones (e.g. in your new starter welcome pack).
 

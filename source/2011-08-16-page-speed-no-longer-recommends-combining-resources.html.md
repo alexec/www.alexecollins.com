@@ -3,11 +3,9 @@ title: "Page Speed no Longer Recommends Combining Resources"
 ---
 New Page Speed suggestions:
 
-<ul>
-<li>Use an Application Cache
-<li>Eliminate unnecessary reflows
-<li>Avoid excessive serialization
-<li>Avoid long-running scripts
-</ul>
+* Use an Application Cache
+* Eliminate unnecessary reflows
+* Avoid excessive serialization
+* Avoid long-running scripts
 
-http://pagespeed-velocity2011.appspot.com/
+[http://pagespeed-velocity2011.appspot.com/](http://pagespeed-velocity2011.appspot.com/)

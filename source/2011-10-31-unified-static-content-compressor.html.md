@@ -8,4 +8,4 @@ title: "Unified Static Content Compressor"
 <li>Run jar to compress CSS, HTML and JS.</li>
 </ol>
 
-<p>https://sourceforge.net/projects/unifiedcomp/</p>
+[https://sourceforge.net/projects/unifiedcomp/](https://sourceforge.net/projects/unifiedcomp/)

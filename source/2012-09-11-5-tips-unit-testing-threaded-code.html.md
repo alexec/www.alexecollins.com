@@ -1,8 +1,6 @@
 ---
 title: "5 Tips for Unit Testing Threaded Code"
 ---
-<h1>5 Tips for Unit Testing Threaded Code</h1>
-
 <p>Here's a few tips on how take make testing your code for logical correctness (as opposed to multi-threaded correctness).</p>
 
 <p>I find that there are essentially two stereotypical patterns with threaded code:</p>
