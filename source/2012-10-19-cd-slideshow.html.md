@@ -1,5 +1,6 @@
 ---
 title: "CD Slideshow"
+tags: links, cd
 ---
 Great slideshow on using Jenkins to create a complete CD pipeline:
 

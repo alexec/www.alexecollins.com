@@ -1,5 +1,6 @@
 ---
 title: "Opinion: Performance Testing"
+tags: testing,performance,testing
 ---
 <h2>Overview</h2>
 

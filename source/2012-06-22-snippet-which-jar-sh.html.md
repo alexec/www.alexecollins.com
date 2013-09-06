@@ -1,5 +1,6 @@
 ---
 title: "Snippet: which-jar.sh"
+tags: unix,gist
 ---
 <p>I seem to spend a lot of time trying to find files in jars, so I wrote a script a while ago to do this.</p>
 

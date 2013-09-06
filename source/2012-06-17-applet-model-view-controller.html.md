@@ -1,5 +1,6 @@
 ---
 title: "Applet Model-View-Controller"
+tags: java,applet
 ---
 <applet code="com.alexecollins.appletmvc.core.DispatcherApplet.class" archive="/sites/default/files/example-1.0.0-SNAPSHOT-jar-with-dependencies.jar" width="400" height="300">
 <param name="defaultController" value="com.alexecollins.appletmvc.example.DefaultController">

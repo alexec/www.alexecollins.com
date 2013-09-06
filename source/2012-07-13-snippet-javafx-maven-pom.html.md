@@ -1,5 +1,6 @@
 ---
 title: "Snippet: JavaFX Maven POM"
+tags: java,java-fx,gist
 ---
 <p>I could not find a good example, so here's my template.</p>
 

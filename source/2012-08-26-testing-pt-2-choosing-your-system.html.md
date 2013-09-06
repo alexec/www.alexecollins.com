@@ -1,5 +1,6 @@
 ---
 title: "Testing - Pt 2- Choosing Your System"
+tags: testing,oped
 ---
 <p class="c0"><span>Chose a system that has a low barrier to entry, something people are keen to learn, or will already know:</span></p>
 <p class="c1 c0"><span></span></p>

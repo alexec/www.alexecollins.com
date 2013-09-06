@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Hibernate, JPA - Part 1"
+tags: java,hibernate,jpa
 ---
 <h1>Overview</h1>
 

@@ -1,5 +1,6 @@
 ---
 title: "JMeter Custom Sampler Template"
+tags: java, performance, jmeter, gist
 ---
 <p>Due to a lack of examples on the Internet, I've created a basic Maven project that combines a custom sampler with the Maven plugin.</p>
 

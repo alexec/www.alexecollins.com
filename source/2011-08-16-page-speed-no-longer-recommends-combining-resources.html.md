@@ -1,5 +1,6 @@
 ---
 title: "Page Speed no Longer Recommends Combining Resources"
+tags: web
 ---
 New Page Speed suggestions:
 

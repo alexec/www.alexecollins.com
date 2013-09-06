@@ -1,5 +1,6 @@
 ---
 title: "Swing PLAF Example"
+tags: swing,java,plaf
 ---
 <p>One way to create a simple Swing PLAF it to sub-class an existing PLAF and override some if its option. The benefit of this approach is that is quick and simple. You choose what fonts and colours to override, and but fall back to the existing options if they’re not available.</p>
 

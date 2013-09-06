@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 7: Scroll-bars"
+tags: swing,java,plaf
 ---
 <p>OK - I'm operating on an 80/20 rule here. Some components are simpler and easier to code, but some you really need. As scrollbar is one. It's more complex than other components, consisting of arrows, a thumb which you drag along, and a track that the thumb sits in.</p>
 

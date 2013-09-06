@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 3: Custom Painter"
+tags: swing,java,plaf
 ---
 <p>A custom painter is key to creating attractive backgrounds. A custom painter can be specified in the XML using a simple tag:</p>
 

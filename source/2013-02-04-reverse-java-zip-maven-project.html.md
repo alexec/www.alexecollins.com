@@ -1,5 +1,6 @@
 ---
 title: "Reverse a Java ZIP into Maven Project"
+tags: maven,java
 ---
 1. Unzip the jars 
 	unzip app.zip -d dist

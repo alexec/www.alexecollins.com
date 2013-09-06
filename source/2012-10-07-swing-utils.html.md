@@ -1,5 +1,6 @@
 ---
 title: "Swing Utils"
+tags: java,swing
 ---
 <p>
     I've been doing a lot of Swing lately (don't laugh, it's still a <a href="http://zeroturnaround.com/labs/developer-productivity-report-2012-java-tools-tech-devs-and-data/">big deal</a>). There one or two basic things that are missing, so I've knocked together some lightweight implementations with no licensing.

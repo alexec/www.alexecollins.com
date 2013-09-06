@@ -1,5 +1,6 @@
 ---
 title: "VirtualBox Java API v2 Released, v3 Roadmap "
+tags: maven,software
 ---
 I've release v2 today. Details can be found of the issues <a href="https://github.com/alexec/maven-vbox-plugin/issues?milestone=2&state=closed">on Github</a>. The top issues are:
 

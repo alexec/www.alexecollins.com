@@ -1,5 +1,6 @@
 ---
 title: "Snippet: AppDynamics Lite /etc/init.d/appdynamics"
+tags: gist
 ---
 <p>More for personal reference than anything else. I'm using it with ColdFusion. It could do with some tweaks (e.g. making sure it started, and stopped).</p>
 

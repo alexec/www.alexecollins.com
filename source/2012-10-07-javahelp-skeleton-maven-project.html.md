@@ -1,5 +1,6 @@
 ---
 title: "JavaHelp Skeleton Maven Project"
+tags: java,gist
 ---
 <p>
 I couldn't seem to find one, and the only Maven JavaHelp plugins I could find seemed to be dead.

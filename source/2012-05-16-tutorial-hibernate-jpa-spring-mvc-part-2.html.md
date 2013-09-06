@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
+tags: hibernate,jpa,java,spring
 ---
 <h2>Overview</h2>
 
@@ -108,7 +109,8 @@ title: "Tutorial: Hibernate, JPA & Spring MVC - Part 2"
 	
 <servlet>
 	<servlet-name>mvc-dispatcher</servlet-name>
-	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>	<load-on-startup>1</load-on-startup>
+	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	<load-on-startup>1</load-on-startup>
 </servlet>
 	
 <servlet-mapping>

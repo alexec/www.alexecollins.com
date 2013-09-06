@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 10: Progress Bars"
+tags: swing,java,plaf
 ---
 <p>These are tougher - they come in determinate and indeterminate flavours. We're only going to support the indeterminate version for now, reusing components.</p>
 

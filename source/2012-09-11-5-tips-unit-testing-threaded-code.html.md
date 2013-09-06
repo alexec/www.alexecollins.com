@@ -1,5 +1,6 @@
 ---
 title: "5 Tips for Unit Testing Threaded Code"
+tags: testing,oped
 ---
 <p>Here's a few tips on how take make testing your code for logical correctness (as opposed to multi-threaded correctness).</p>
 

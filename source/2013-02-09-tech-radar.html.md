@@ -1,5 +1,6 @@
 ---
 title: "Tech Radar"
+tags: links
 ---
 Just been reading Thoughworks tech radar from last October. Some interesting things in there:
 

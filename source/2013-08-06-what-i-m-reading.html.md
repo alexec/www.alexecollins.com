@@ -1,5 +1,6 @@
 ---
 title: "What I'm reading..."
+tags: links
 ---
 <ul>
 <li><a href="http://www.darrenmothersele.com/blog/2013/08/02/cms-is-dead-long-live-cms/">CMS is Dead, Long Live CMS</a>, alternatives to CMS.</li>

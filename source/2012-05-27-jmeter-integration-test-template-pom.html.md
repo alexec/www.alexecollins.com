@@ -1,5 +1,6 @@
 ---
 title: "JMeter Integration Test Template POM"
+tags: jmeter,testing,performance
 ---
 <p>Here's the basic layout for a JMeter performance test using Cargo and Tomcat.</p>
 	<?xml version="1.0" encoding="UTF-8"?>

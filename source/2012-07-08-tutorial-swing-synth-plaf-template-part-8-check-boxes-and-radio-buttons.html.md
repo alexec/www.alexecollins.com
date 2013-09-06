@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 8: Check-boxes and Radio-buttons"
+tags: swing,java,plaf
 ---
 <p>These are quite similar, they both have a selectable icon on their left, and text describing it on the right. A custom painter can create the icon, but based on what? As components can grow, if we used the component size, we'd have a variety of different sizes on any form.</p>
 

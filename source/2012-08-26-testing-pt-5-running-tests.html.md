@@ -1,5 +1,6 @@
 ---
 title: "Testing - Pt 5 - Running Tests"
+tags: testing,oped
 ---
 <p class="c4"><span>Be &quot;realistic&quot;:</span></p>
 <p class="c2"><span></span></p>

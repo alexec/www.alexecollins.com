@@ -1,5 +1,6 @@
 ---
 title: "Secure Edit"
+tags: swing,java,plaf
 ---
 <p>Secure-Edit is a simple plain-text editor that save each file using AES encryption with a password unique to that file.</p>
 

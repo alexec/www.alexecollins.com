@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 4: Tiling Images"
+tags: swing,java,plaf
 ---
 <p>I wanted to display a tiling image as the background of panels, but I found that synth would stretch images, even when requested not to. I created a short piece of code to tile the image:</p>
 
