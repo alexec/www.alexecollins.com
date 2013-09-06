@@ -11,7 +11,7 @@ activate :blog do |blog|
   # blog.prefix = "blog"
   blog.permalink = "/content/:title"
   # blog.sources = ":year-:month-:day-:title.html"
-  # blog.taglink = "tags/:tag.html"
+  blog.taglink = "tags/:tag.html"
   # blog.layout = "layouts/layout"
   # blog.summary_separator = /(READMORE)/
   # blog.summary_length = 250
@@ -105,7 +105,8 @@ configure :build do
   # activate :cache_buster
   
   # Use relative URLs
-  activate :relative_assets
+	# screws 404 page
+  # activate :relative_assets
   
   # Compress PNGs after build
   # First: gem install middleman-smusher
