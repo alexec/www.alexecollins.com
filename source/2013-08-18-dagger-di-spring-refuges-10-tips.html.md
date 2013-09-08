@@ -1,5 +1,6 @@
 ---
 title: "Dagger DI for Spring Refuges: 10 Tips"
+tags: ioc,tips
 ---
   <p class="c0"><span>I've been experimenting with</span>
   <span class="c2"><a class="c3" href=

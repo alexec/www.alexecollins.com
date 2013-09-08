@@ -1,5 +1,6 @@
 ---
 title: "Micro Services"
+tags: links
 ---
 I've just watch <a href="http://www.infoq.com/presentations/Micro-Services">a really good InfoQ video from James Lewis at Thoughtworks</a>. As you might expect from Thoughtworks, it has some stuff about CD, but also some great ideas an building large systems from small, somewhat independent components.
 

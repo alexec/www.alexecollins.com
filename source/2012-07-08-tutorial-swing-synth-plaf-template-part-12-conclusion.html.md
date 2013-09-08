@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 12: Conclusion "
+tags: swing,java,plaf
 ---
 <h2>Conclusion</h2>
 

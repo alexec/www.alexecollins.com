@@ -1,5 +1,6 @@
 ---
 title: "Code Review Best Practises"
+tags: links
 ---
 Good and detailed post:
 

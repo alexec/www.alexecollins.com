@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 2: Style Defaults"
+tags: swing,java,plaf
 ---
 <p>Firstly, we'll want to and some common values in one place accessible to all.</p>
 

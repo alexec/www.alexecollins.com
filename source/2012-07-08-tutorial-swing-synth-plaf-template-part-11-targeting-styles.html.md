@@ -1,4 +1,5 @@
 ---
+tags: swing,java,plaf
 title: "Tutorial: Swing Synth PLAF Template - Part 11: Targeting Styles"
 ---
 <p>Is CSS, you can target elements and style them specially, e.g. as a title, or important button. You can do the same in Swing by setting their name:</p>

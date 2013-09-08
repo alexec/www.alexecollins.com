@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 6: Text Fields"
+tags: swing,java,plaf
 ---
 <p>For text fields, and the like I wanted a similar area to that in the JavaFX tutorial too. I also wanted the edge to change colour when focussed, using the colour from the XML.  You can see in this sample that we're reusing colours again, and anti-aliasing.</p>
 

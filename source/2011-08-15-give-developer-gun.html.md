@@ -1,5 +1,6 @@
 ---
 title: "Give the Developer a Gun"
+tags: oped
 ---
 I believe that if you're given a set of tools to do a job, you'll often try them all before using the correct one for the job. There's not such thing as a good developer, just one that does what they're asked to do and ones that don't, So, if there's no feedback between the way that they do their job (promotion and renumeration) and the type of job you want them to do (presumably few bugs and cheap to maintain), then you can't expect them to do the job you want them to do.
 

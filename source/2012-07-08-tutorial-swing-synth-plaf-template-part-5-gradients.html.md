@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 5: Gradients"
+tags: swing,java,plaf
 ---
 <p>I wanted a vertical gradient <a href="http://docs.oracle.com/javafx/2/get_started/css.htm">similar to that in the JavaFX tutorial</a>. This uses the foreground of the component to choose the colours, something you cannot do with images. I wanted a smooth, anti-aliased, border.</p>
 

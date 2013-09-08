@@ -1,5 +1,6 @@
 ---
 title: "Snippet: AspectJ and Ant"
+tags: apsectj, ant
 ---
 <p>I've just started working with AspectJ and despite its non-intuitive syntax, I'm pretty sold on its effectiveness at reducing development time and complexity by factoring out crosscutting concerns such as logging and security. However, the Internet is a little lacking in guides and how to build it, so here's my how to. </p>
 

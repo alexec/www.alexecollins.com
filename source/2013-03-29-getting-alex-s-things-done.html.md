@@ -1,5 +1,6 @@
 ---
 title: "Getting Alex's Things Done"
+tags: oped
 ---
 I've been finessing the way that I deal with tasks over the last few years, having tried GTD and found that it needed some tweaks. I think this is normal, any methodology might need changing to adapt to different people and roles. Specifically:
 

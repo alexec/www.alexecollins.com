@@ -49,11 +49,11 @@
 <div class="col-md-6">
 
       <h2>Tags</h2>
-      <ol>
-        <% blog.tags.each do |tag, articles| %>
-          <li><%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a></li>
+
+              <% blog.tags.each do |tag, articles| %>
+          <%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a>&nbsp;&nbsp;
         <% end %>
-      </ol>
+
 </div>
 </div>
 
@@ -86,7 +86,7 @@
 var h=document.location.href;
 var j=h.indexOf("?q=");
 if (j>=0){
-//document.location.href=h.substring(j+3);
+document.location.href=h.substring(j+3);
 }
 </script>
   </body>

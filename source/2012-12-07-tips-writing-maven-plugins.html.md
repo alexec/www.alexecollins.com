@@ -1,5 +1,6 @@
 ---
 title: "Tips for Writing Maven Plugins"
+tags: maven,tips
 ---
 I've spent a lot of time recently writing or working on plugins for Maven recently. They're simple, rewarding and fun to write. I thought I'd share a couple of tips for making life easier when writing them.
 

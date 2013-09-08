@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 9: Lists"
+tags: swing,java,plaf
 ---
 <p>More 80/20 rule here. We just specify a colour to highlight the selected option.</p>
 

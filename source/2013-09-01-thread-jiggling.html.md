@@ -1,5 +1,6 @@
 ---
 title: "Thread Jiggling"
+tags: java,concurrency,asm
 ---
 <h2>Overview</h2>
 

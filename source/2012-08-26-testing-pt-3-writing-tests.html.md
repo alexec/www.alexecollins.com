@@ -1,5 +1,6 @@
 ---
 title: "Testing - Pt 3 - Writing Tests"
+tags: testing,oped
 ---
 <p class="c3"><span>Tests should be fast to run and fast to write:</span></p>
 <p class="c2"><span></span></p>

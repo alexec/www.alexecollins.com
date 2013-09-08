@@ -1,5 +1,6 @@
 ---
 title: "An unambiguous software version scheme"
+tags: oped
 ---
 When people talk about software versioning schemes they often refer to the commonly used  X.Y.Z numerical scheme for versioning. This is often referred to major.minor.build, but these abstract terms are not useful as they don't explicitly impart any meaning to each numerical component. This can lead to the simplest usage, we just increment the last number for each release, so I've seen versions such as 1.0.35. Alternatively, versions become a time consuming point of debate. This is a shame as we could impart some clear and useful information with versions.
 

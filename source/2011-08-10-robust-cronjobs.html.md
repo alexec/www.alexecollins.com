@@ -1,5 +1,6 @@
 ---
 title: "Robust Cronjobs"
+tags: unix
 ---
 <p>Cron jobs were the bane of my life. They were fragile, unreliable, time consuming to test, hard to fix. If some failed then they were impossible to re-run. No performance metrics were collected and no monitoring was undertaken. Ultimately they were costly to write, and as no one knew what they did, costly to maintain.</p>
 

@@ -1,5 +1,6 @@
 ---
 title: "Creating a File Share Artifact Repository "
+tags: maven
 ---
 When you need to have file kept on file share used in your build, but they're not suitable to deploy into your repo, you can get some of the benefits of having artifacts in a repo (e.g. sharing and versions) by creating a disk based repo on an office file share. This is handy for some edge cases, for example when you might have very large artifacts (e.g. CD images) that are too large for your artifactory, but could be stored on a file share disk.
 

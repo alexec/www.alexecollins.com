@@ -1,5 +1,6 @@
 ---
 title: "Git tips: git xpush"
+tags: git,tips
 ---
 I'd recently been suffering from builds failing because people (including myself) had been pushing changes that they hadn't run tests on, or where un-pulled changes had broken their code.
 

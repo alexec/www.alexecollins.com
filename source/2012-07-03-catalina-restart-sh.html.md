@@ -1,5 +1,6 @@
 ---
 title: "catalina-restart.sh"
+tags: unix,tomcat,gist
 ---
 <p>A short script to stop Tomcat, and then restart it.</p>
 

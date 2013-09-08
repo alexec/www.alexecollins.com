@@ -1,6 +1,8 @@
 ---
 title: "Tips For Robust Bash Scripts"
+tags: unix
 ---
+
 <p>Here are a couple of quick tips for writing more robust shell scripts from my last 10 years of working with bash.</p>
 
 <h2>Tip 1: Use "set -e"</h2>

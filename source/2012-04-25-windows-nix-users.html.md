@@ -1,5 +1,6 @@
 ---
 title: "Windows for *NIX Users"
+tags: unix, windows
 ---
 I've moved to a Windows environment recently at work, and I've spent a lot of time adjusting and trying to get productivity up to previous levels. I've found these invaluable:
 

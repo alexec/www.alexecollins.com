@@ -1,5 +1,6 @@
 ---
 title: "Executing Groovy in ColdFusion"
+tags: groovy, coldfusion
 ---
 <p>There's plenty of articles on loading Java in CF, but none for Groovy. Here's my guide.</p>
 <p>This first piece of code creates a persistent class loader (in  Application.cfc/onApplicationStart):</p>

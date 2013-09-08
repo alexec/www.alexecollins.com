@@ -1,5 +1,6 @@
 ---
 title: "yUML - UML Diagramming Tool"
+tags: links
 ---
 <a href="http://yuml.me/">yUML</a> looks interesting. It has a nice terse syntax that make creating diagrams really easy and quick to create. It's free and looks OK.
 

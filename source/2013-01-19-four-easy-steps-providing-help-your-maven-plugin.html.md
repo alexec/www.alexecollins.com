@@ -1,5 +1,6 @@
 ---
 title: "Four Easy Steps to Providing Help for your Maven Plugin"
+tags: maven
 ---
 <p>This is easy, it is supported out of the box.</p>
 

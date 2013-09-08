@@ -1,5 +1,6 @@
 ---
 title: "Snippet: Can't Remember That -XX Option?"
+tags: java,gist
 ---
 <p>A handy recent find:</p>
 

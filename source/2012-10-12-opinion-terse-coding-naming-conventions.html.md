@@ -1,5 +1,6 @@
 ---
 title: "Opinion: Terse Coding Naming Conventions"
+tags: oped
 ---
 When writing code, you might experience the feeling that you should make all your names very descriptive, and long. But is this necessary? 
 

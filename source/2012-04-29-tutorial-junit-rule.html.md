@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: JUnit @Rule"
+tags: testing,junit,java
 ---
 <h2>Overview</h2>
 

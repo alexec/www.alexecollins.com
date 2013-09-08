@@ -1,5 +1,6 @@
 ---
 title: "Snippet: grep-jar.sh"
+tags: unix,gist
 ---
 <p>First draft of a script to grep for string inside jar (i.e. zgrep). I'm pretty sure there's a more elegant way of doing this, but this is functional.</p>
 

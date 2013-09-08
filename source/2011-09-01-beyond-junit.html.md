@@ -1,5 +1,6 @@
 ---
 title: "Beyond JUnit"
+tags: testing, junit
 ---
 JUnit is the defacto Java unit testing framework, but there's a couple of new (and not so new) frameworks out there for web development that might be of interest. Questions you might want to ask yourself prior to adoption:
 
