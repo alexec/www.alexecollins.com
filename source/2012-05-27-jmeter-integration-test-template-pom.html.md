@@ -87,7 +87,7 @@ tags: jmeter,testing,performance
 	                        <properties>
 	                            <cargo.logging>medium</cargo.logging>
 	                        </properties>
-	                    </configuration
+	                    </configuration>
 	                    <deployer>
 	                        <deployables>
 	                            <deployable>
