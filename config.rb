@@ -93,6 +93,13 @@ set :images_dir, 'images'
 #  rewrite %r{^/(.[^.]+)$}, '/$1.html'
 #end
 
+activate :deploy do |deploy|
+  deploy.method = :rsync
+  deploy.host   = "ec2"
+  deploy.path   = "/var/www/html"
+  deploy.clean = true 
+end
+
 # Build-specific configuration
 configure :build do
   # For example, change the Compass output style for deployment
@@ -100,6 +107,8 @@ configure :build do
   
   # Minify Javascript on build
   activate :minify_javascript
+
+  activate :minify_html
   
   # Enable cache buster
   # activate :cache_buster
@@ -117,5 +126,7 @@ configure :build do
   # set :http_path, "/Content/images/"
 
 	activate :directory_indexes
-	activate :livereload
+#	activate :livereload
 end
+
+
