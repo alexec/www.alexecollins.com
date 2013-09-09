@@ -1,5 +1,6 @@
 source :rubygems
 
+gem 'therubyracer'
 gem "middleman", "~> 3.1.4"
 gem "middleman-blog", "~> 3.2.0"
 #gem "middleman-gh-pages"
