@@ -234,7 +234,7 @@ add another dependency to you pom.xml:</p>
 
 <p>And update users.html displays the users:</p>
 
-~~xml
+~~~xml
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 body>
