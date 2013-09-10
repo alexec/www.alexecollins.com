@@ -82,17 +82,7 @@ public class SpringContextRule implements TestRule {
             public void evaluate() throws Throwable {
                 ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
                         locations);
-                AutowireCapableBeanFactory beanFactory = context
-                        .getAutowireCapableBeanFactory();
-
-                /* As this is an example of @Rule, this is a rough hand-rolled injector, 
-                 * not suitable for production.
-                 * More capable ones, that support @Inject, @Qualifier etc. probably exist. */
-                for (Field f : target.getClass().getFields()) {
-                    if (f.isAnnotationPresent(Autowired.class)) {
-                        f.set(target, context.getBean(f.getName(), f.getType()));
-                    }
-                }
+                context.getAutowireCapableBeanFactory().autowireBean(target);
                 context.start();
                 try {
                     base.evaluate();
@@ -107,17 +97,21 @@ public class SpringContextRule implements TestRule {
 
 <p>We can test this works using a small context and test, that verifies that auto-wired fields are set as expected.</p>
 
-	<?xml version="1.0" encoding="UTF-8"?>
-	<!-- testContext.xml -->
-	<beans xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-	
-		<bean id="bar" class="java.lang.String">
-			<constructor-arg value="bar"/>
-		</bean>
-	
-	</beans>
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config/>
+
+	<bean id="bar" class="java.lang.String">
+		<constructor-arg value="bar"/>
+	</bean>
+
+</beans>
+~~~
 
 ~~~java
 public class FooTest {
@@ -283,4 +277,4 @@ public class BazTest {
 
 <p>You may have noted that @Before and @After have not featured in these tests. Rules are executed around @Before/@After and therefore it's not possible to set-up invariants in @Before. Instead we use a rule chain to create what is  effectively a @Before using an anonymous inner class. @Rule provides a more powerful and flexible way of reducing boilerplate code in your test.</p>
 
-<p>This code is on Github, split between <a href="https://github.com/alexec/tutorial-junit-rules">the tests</a> and <a href="https://github.com/alexec/test-support">the rules</a>.</p>
+<p>This a href="https://github.com/alexec/test-support">code is on Github</a>.</p>
