@@ -18,7 +18,15 @@
       <li class="<%= current_page.data.title == 'Software' ? 'active' : ''%>"><a href="/software">Software</a></li>
     </ul>
     <h1><%= current_page.data.title  %></h1>
+
     <%= yield %>
+    <!--
+    <p>
+<b>Tags:</b>
+    <% (current_page.data.tags || '').split(',').each do |tag| %>
+<%= link_to tag, tag_path(tag) %>     <% end %>
+    </p>
+    -->
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -36,37 +44,38 @@
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 -->
 
-<aside>
 <div class="row">
-<div class="col-md-6">
-      <h2>Recent Articles</h2>
+    <div class="col-md-6">
+        <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
+        <% if (related.length >0) %>
+      <h2>Related</h2>
       <ol>
+        <% related.each do |article| %>
+          <li><%= link_to article.title, article %></li>
+        <% end %>
+      </l>
+    <% else %>
+      <h2>Recent</h2>
+      <ul>
         <% blog.articles[0...5].each do |article| %>
           <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
         <% end %>
-      </ol>
-</div>
-<div class="col-md-6">
+        </ul>
+        <%end%>
+    </div>
+    <div class="col-md-6">
 
       <h2>Tags</h2>
 
-              <% blog.tags.each do |tag, articles| %>
+              <% blog.tags.sort.each do |tag, articles| %>
           <%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a>&nbsp;&nbsp;
         <% end %>
 
+    </div>
 </div>
-</div>
-
+<div class="row"><div class="col-md-12">
 	<p><a href="/sitemap">Sitemap</a> | <a href="https://plus.google.com/101694420547181110548?rel=author">Google+</a></p>
-<!--
-      <h2>By Year</h2>
-      <ol>
-        <% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
-          <li><%= link_to year, blog_year_path(year) %> (<%= articles.size %>)</a></li>
-        <% end %>
-      </ol>
-      -->
-    </aside>
+      </div>
 </div>
 <script type="text/javascript">
 

@@ -1,5 +1,6 @@
 ---
 title: "Team Dashboard with Dashing"
+tags: ruby,dashing
 ---
 <p>I've been setting up a dashboard for my team to display metrics. After looking around at the various options (and having an abortive stab at writing a framework myself) I found and OSS version called
 <a href="http://shopify.github.io/dashing/">Dashing written by Shopify</a> that suited the needs.</p>

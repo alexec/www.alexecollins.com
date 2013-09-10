@@ -1,5 +1,6 @@
 ---
 title: "New Covestor Website"
+tags:
 ---
 Until quite recently I was working at a financial start-up called Covestor. Predominantly I was working on their website, but the project was not complete when Ieft. It was good to see <a href="http://covestor.com/">covestor.com</a> up today.
 

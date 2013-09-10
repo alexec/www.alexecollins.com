@@ -1,6 +1,6 @@
 ---
 title: "Tips For Robust Bash Scripts"
-tags: unix
+tags: unix,tips
 ---
 
 <p>Here are a couple of quick tips for writing more robust shell scripts from my last 10 years of working with bash.</p>

@@ -1,6 +1,6 @@
 ---
 title: First Steps with Middleman
-tags: blog
+tags: blog,middleman,ruby
 ---
 
 Middleman is a simple static site generator in Ruby. You create your site in markdown, run the builder and deploy, like you might an application. As a developer, this suites me, and after watching a friends succcess I thought I'd see how hard it was to migrate my own blog.

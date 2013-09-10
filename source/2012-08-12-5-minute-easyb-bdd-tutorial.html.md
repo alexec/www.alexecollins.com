@@ -1,6 +1,6 @@
 ---
 title: "5 Minute EasyB BDD Tutorial"
-tags: groovy,bdd
+tags: groovy,bdd,testing
 ---
 <p>This is a 5 minute tutorial on how to write a test story using <a href="http://www.easyb.org">EasyB</a>, a Groovy based behaviour driven development system for Java.</p> 
 

@@ -1,6 +1,6 @@
 ---
 title: "Tutorial: Integration Testing with Selenium - Part 1"
-tags: testing, selenium, java
+tags: testing, selenium, java, spring
 ---
 <h2>Overview</h2>
 

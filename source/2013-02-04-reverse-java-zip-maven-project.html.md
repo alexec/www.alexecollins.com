@@ -3,24 +3,43 @@ title: "Reverse a Java ZIP into Maven Project"
 tags: maven,java
 ---
 1. Unzip the jars 
-	unzip app.zip -d dist
-	mkdir classes
-	find dist -name '*.jar' -exec unzip -B {} -d classes ';'
+
+~~~sh
+unzip app.zip -d dist
+mkdir classes
+find dist -name '*.jar' -exec unzip -B {} -d classes ';'
+~~~
+
 2. Download JAD and add to you PATH.
 3. Decompile classes
-	mkdir -p src/main/java
-	cd classes
-	find . -name '*.class' | while read F ; do D=../src/main/java/$(dirname $F); mkdir -p $D ; jad -o -s java -d $D $F ; done
-	cd ..
+
+~~~sh
+mkdir -p src/main/java
+cd classes
+find . -name '*.class' | while read F ; do D=../src/main/java/$(dirname $F); mkdir -p $D ; jad -o -s java -d $D $F ; done
+cd ..
+~~~
+
 4. Get resources:
-	mkdir -p src/main/resources
-	cd classes
-	find . -type f ! -name '*.class' | while read F ; do D=../src/main/resources/$(dirname $F); mkdir -p $D ; cp -v $F $D ; done
-	cd ..
+
+~~~sh
+mkdir -p src/main/resources
+cd classes
+find . -type f ! -name '*.class' | while read F ; do D=../src/main/resources/$(dirname $F); mkdir -p $D ; cp -v $F $D ; done
+cd ..
+~~~
+
 5. Create a nominal POM:
-	echo '<project><modelVersion>4.0.0</modelVersion><groupId>com</groupId><artifactId>app</artifactId> <version>1</version></project>' > pom.xml
+
+~~~sh
+echo '<project><modelVersion>4.0.0</modelVersion><groupId>com</groupId><artifactId>app</artifactId> <version>1</version></project>' > pom.xml
+~~~
+
 6. Compile!
-	mvn compile
+
+~~~sh
+mvn compile
+~~~
 
 Notes:
 

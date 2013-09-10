@@ -1,6 +1,6 @@
 ---
 title: "LMAX Disruptor Pattern Screencast"
-tags: concurrency,links
+tags: concurrency,links,java
 ---
 An interesting, hour long presentation on this pattern:
 

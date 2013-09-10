@@ -1,6 +1,6 @@
 ---
 title: "Tutorial: Swing Synth PLAF Template - Part 1"
-tags: 
+tags: swing,java,plaf
 ---
 <p>I've been working on a GUI app written is Swing recently, and there's been a request to make it look more modern and attractive. When people are asked to do this, they often start sub-classing components, or calling setters directly. This is the Swing equivalent of HTML inline styles, with a similar set of problems. In HTML you’d use CSS to solve this problem. There are two good methods of styling in Swing. The first is to sub-class an existing pluggable-look-and-feel (PLAF), or to use Synth PLAF and write matching code.</p>
 

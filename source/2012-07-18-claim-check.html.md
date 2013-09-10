@@ -1,5 +1,6 @@
 ---
 title: "Claim Check"
+tags:
 ---
 Don't ask...
 
