@@ -6,6 +6,7 @@ tags: maven
 
 <p>Step 1 - make sure each mojo has the JavaDoc, this will be used to generate your help files. E.g.:</p>
 
+~~~java
 	/**
 	 * Create and provision each of the boxes defined in src/main/vbox.
 	 *
@@ -20,9 +21,11 @@ tags: maven
 		 * @parameter expression="${vbox.provision.targets}", default="*"
 		 */
 		protected String targets = "*";
+~~~
 
 <p>Step 2 - add the "helpmojo" goal to your plugin.</p>
 
+~~~xml
 	            <plugin>
 	                <groupId>org.apache.maven.plugins</groupId>
 	                <artifactId>maven-plugin-plugin</artifactId>
@@ -36,11 +39,11 @@ tags: maven
 	                    </execution>
 	                </executions>
 	            </plugin>
-
+~~~
 <p>Step 3 - execute "mvn install".</p>
 <p>Step 4 - test by executing "mvn vbox:help" (substitute your own plugin's name), you'll see something like this.</p>
 
-<pre>
+~~~
 ...
 
 A Maven plugin for creating, starting, and stopping VirtualBoxes.
@@ -59,6 +62,6 @@ vbox:help
 vbox:provision
   Create and provision each of the boxes defined.
 ...
-</pre>
+~~~
 
 <p>An example of the usage can be <a href="https://github.com/alexec/maven-vbox-plugin/tree/master/vbox-maven-plugin">found on GitHub</a>. And I've written <a href="/content/tips-writing-maven-plugins">tips on writing Maven plugins before</a>.</p>
