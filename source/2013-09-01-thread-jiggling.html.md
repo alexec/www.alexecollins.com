@@ -106,7 +106,7 @@ public class BadCounterTest {
 
 <h2>Exercise for the Reader</h2>
 
-<p>SimpleDateFormat is a well know, non-thread safe class in Java. Write a test that jiggles the class. Why is it not thread-safe? How would you rewrite it so that it was thread safe? How can you do so without using a ThreadLocal, locks or synchronisation?</p>
+<p>SimpleDateFormat is a well know, non-thread safe class in Java. Write a test that jiggles the class. Why is it not thread-safe? How would you rewrite it so that it was thread safe? How can you do so without using a ThreadLocal, locks or synchronization?</p>
 
 <h2>Source Code</h2>
 
@@ -114,7 +114,7 @@ public class BadCounterTest {
 
 <h2>Further Reading</h2>
 
-<p>I've written <a href="/content/5-tips-unit-testing-threaded-code">a post on testing threaded code for correctnes</a>. You may also wish to read more generally:</p>
+<p>I've written <a href="/content/5-tips-unit-testing-threaded-code">a post on testing threaded code for correctness</a>. You may also wish to read more generally:</p>
 
 <ul>
 <li><a href="ftp://ftp.cs.umanitoba.ca/pub/IPDPS03/DATA/W20_PADTD_02.PDF">Concurrent Bug Patterns and How to Test Them - Eitan Farchi, Yarden Nir, Shmuel Ur IBM Haifa Research Labs</a></li>
