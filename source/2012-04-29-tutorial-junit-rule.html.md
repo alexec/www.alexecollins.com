@@ -277,4 +277,4 @@ public class BazTest {
 
 <p>You may have noted that @Before and @After have not featured in these tests. Rules are executed around @Before/@After and therefore it's not possible to set-up invariants in @Before. Instead we use a rule chain to create what is  effectively a @Before using an anonymous inner class. @Rule provides a more powerful and flexible way of reducing boilerplate code in your test.</p>
 
-<p>This a href="https://github.com/alexec/test-support">code is on Github</a>.</p>
+<p>This <a href="https://github.com/alexec/test-support">code is on Github</a>.</p>
