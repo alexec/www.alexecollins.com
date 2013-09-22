@@ -126,6 +126,7 @@ configure :build do
   # set :http_path, "/Content/images/"
 
 	activate :directory_indexes
+#	activate :gzip
 #	activate :livereload
 end
 
