@@ -73,7 +73,7 @@ That's a nice start, but we're going to end up with a verbose XML document, thre
 ~~~xml
 	<test:dummy id="example" class="com.alexecollins.testing.Example"/>
 ~~~
-We can create a Spring [namespace handler](http://docs.spring.io/spring/docs/3.0.0.M3/reference/html/apbs03.html). We need three things, firstly a [class that creates the dummies:](https://github.com/alexec/test-double-deps-with-spring/blob/master/src/main/java/com/alexecollins/testing/TestNamespaceHandler.java)
+We can create a Spring [namespace handler](http://docs.spring.io/spring/docs/2.5.6/reference/extensible-xml.html). We need three things, firstly a [class that creates the dummies:](https://github.com/alexec/test-double-deps-with-spring/blob/master/src/main/java/com/alexecollins/testing/TestNamespaceHandler.java)
 
 ~~~java
 public class TestNamespaceHandler extends NamespaceHandlerSupport {
@@ -216,10 +216,10 @@ public @interface Before {
 }
 ~~~
 
-A class that stores those methods:
+A class that stores those methods, and then class them as part of the test lifecyle:
 
 ~~~java
-public class DoubleManager {
+public class DoubleManagerTestExecutionListener extends AbstractTestExecutionListener {
     private static class Target {
         final Object o;
         final Method m;
@@ -230,20 +230,20 @@ public class DoubleManager {
         }
     }
 
-    private final List<Target> targets = new ArrayList<Target>();
+    private List<Target> targets;
 
-    @Autowired
-    public DoubleManager(Object[] objects) {
-        for (Object o : objects) {
-            for (Method m : o.getClass().getMethods()) {
-                if (AnnotationUtils.findAnnotation(m, Before.class) != null) {
-                    targets.add(new Target(o, m));
+    @Override
+    public void beforeTestMethod(TestContext testContext) throws Exception {
+        if (targets == null) {
+            targets = new ArrayList<Target>();
+            for (Object o : testContext.getApplicationContext().getBeansOfType(Object.class).values()) {
+                for (Method m : o.getClass().getMethods()) {
+                    if (AnnotationUtils.findAnnotation(m, Before.class) != null) {
+                        targets.add(new Target(o, m));
+                    }
                 }
             }
         }
-    }
-
-    public void setUp() throws Exception {
         for (Target target : targets) {
             target.m.invoke(target.o);
         }
@@ -272,18 +272,26 @@ public class ManagedExample implements Example {
 This is best demonstrated by an example test:
 
 ~~~java
+@TestExecutionListeners({
+        // if we override, we must specify all the ones we want, shame we can't say "please use the defaults"
+        DependencyInjectionTestExecutionListener.class,
+        DoubleManagerTestExecutionListener.class
+})
 public class DoubleManagerTest {
-    @Autowired
-    DoubleManager doubleManager;
     @Autowired
     Example example;
 
-    @org.junit.Before
-    public void setUp() throws Exception {
-        doubleManager.setUp();
+    @Test
+    public void testSetUp() throws Exception {
+        assertEquals(1, example.intValue());
     }
+}
 ~~~
 
 OK. So I hope you enjoyed this post, and you get some good ideas from it. The code can be [found on Github](https://github.com/alexec/test-double-deps-with-spring) as usual.
 
-Want more like this post? Try [this post on test support for Tomcat and Spring](tutorial-junit-rule).
+References/Further Reading
+
+* [Test support for Tomcat and Spring](tutorial-junit-rule).
+* [Mocks Aren't Stubs](http://martinfowler.com/articles/mocksArentStubs.html) 
+* [Spring Extensible XML](http://docs.spring.io/spring/docs/2.5.6/reference/extensible-xml.html)
