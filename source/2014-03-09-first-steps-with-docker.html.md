@@ -48,12 +48,12 @@ Create `Dockerfile` in the project directory:
 	
 	RUN yum -y install java-1.7.0-openjdk-devel.x86_64 
 	
-	ADD target/dropwizard-helloworld-1.0-SNAPSHOT.jar dropwizard-helloworld-1.0-SNAPSHOT.jar
-	ADD hello-world.yml hello-world.yml
+	ADD target/dropwizard-helloworld-1.0-SNAPSHOT.jar /
+	ADD hello-world.yml /
 	
 	CMD ["java", "-jar", "dropwizard-helloworld-1.0-SNAPSHOT.jar", "server", "hello-world.yml"]
 	
-	EXPOSE 8081
+	EXPOSE 8080
 	
 The `Dockerfile` is an all in one recipe, and that complete all the steps:
 
@@ -61,23 +61,31 @@ The `Dockerfile` is an all in one recipe, and that complete all the steps:
 
 When it's complete, it'll print a hash for the **image** it's built:
 
-	Successfully built 6aecab0dc0d4
+	Successfully built a3e6a912822c
 	
-It's important to understand there's a big difference between an **image** and a **container** hashes. They look the same, and as commands you might expert to take a container ID sometimes take an image ID!
+It's important to understand there's a big difference between an **image** and a **container** hash. They look the same, and as commands you might expect to take a container ID sometimes take an image ID.
 
 Start it up:
 
-	docker run -i -p 8080 6aecab0dc0d4
+	docker run -i -P a3e6a912822c
 	
-As I'm running Docker within a VM (as I'm on OS-X), I need to set-up a port forward:
+Note the `-P` option, that creates the port forwards from the host OS to the container. Which port is it? It's not the exposed port (8080) as you might expect. Docker chooses a port for you, and you can see which port it is:
 
-	VBoxManage controlvm boot2docker-vm natpf1 "8080,tcp,127.0.0.1,8080,,8080"
+```
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                     NAMES
+67079fc70d31        a3e6a912822c        java -jar dropwizard   9 days ago          Up About a minute   0.0.0.0:49155->8080/tcp   compassionate_tesla  
+```
+
+As I'm running Docker within a VM (as I'm on OS-X), I need to set-up a port forward from my computer to the VirtualBox that boot2docker uses:
+
+	VBoxManage controlvm boot2docker-vm natpf1 "49155,tcp,127.0.0.1,49155,,49155"
 	
-You can test in your browser: [http://localhost:8080/hello-world](http://localhost:8080/hello-world)
+You can test in your browser: [http://localhost:8080/hello-world](http://localhost:49155/hello-world)
 	
 Tip: Really useful debugging command (like `vagrant ssh`):
 
-	docker run -i 6aecab0dc0d4 bash
+	docker run -i -t a3e6a912822c bash
 	
 	
 
