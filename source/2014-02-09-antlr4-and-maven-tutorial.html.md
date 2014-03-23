@@ -1,9 +1,9 @@
 ---
-title: ANTLR4 and Maven Tutorial
+title: ANTLR 4 and Maven Tutorial
 date: 2014-02-09 17:18 UTC
 tags: java, antlr, maven, dsl
 ---
-I've been working on a side project to write an external DSL. It's partly to get some more exposure to DSLs, and Java 8. ANTLR grammar is well documented, and has great tooling, but many tutorials stop at writing code exercises the new language, so I've added a my own example here.
+I've been working on a side project to write an external DSL. It's partly to get some more exposure to DSLs, and Java 8. ANTLR grammar is well documented, and has great tooling, but many tutorials stop at writing code that actually uses your new grammar, so I've added a my own example here.
 
 This tutorial is in four simple parts, but you may wish to read up a little on DSLs and Java 8 first.
 
@@ -71,9 +71,9 @@ Add this example to `src/main/resources/example.field`, so we can use it for a t
 
 ANTLR grammars consist of a couple sections:
 
-* A header, listing the grammar's name.
-* Rules, which start with a lower-case letter, indicating how ANTLR should match text.
-* Tokens, the basic tokens that make up the language (think of this as the actual words you use).
+* A **header**, listing the grammar's name.
+* **Rules**, which start with a lower-case letter, indicating how ANTLR should match text.
+* **Tokens**, the basic tokens that make up the language (think of this as the actual words you use).
 
 Create `src/main/antlr4/Field.g4`:
 
@@ -97,7 +97,7 @@ WS: (' ' | '\t')+;
 NL:  '\r'? '\n';
 ~~~
 
-Run `mvn generate-sources` to create the new sources, and have a look in `target/generate-sources/antlr4` to see what is created.
+Run `mvn generate-sources` to create the new sources, and have a look in `target/generated-sources/antlr4` to see what is created.
 
 Now create a simple test:
 
@@ -116,16 +116,16 @@ public void testExampleField() throws Exception {
 }
 ~~~
 
-You'll notice that there's a lot of boilerplate here, but note three things:
+You'll notice that there's a lot of boilerplate here, but note these steps:
 
-* Reading the file and "lexing" the text into tokens using `FieldLexer`.
-* Creating a parser for the tokens `FieldParser`.
-* Adding an error listener, that reports parsing errors.
-* Parse using `.field()`;
+1. Reading the file and "lexing" the text into tokens using `FieldLexer`.
+2. Creating a parser for the tokens using `FieldParser`.
+3. Adding an error listener, that reports parsing errors.
+4. Parse using `.field()`;
 
 Model
 ---
-Any DSL needs a model, this is what we'll build from the files written in our new language. The model should be complete agnostic on the grammar. We'll create a factory to create instances of our model later on. The code is pretty basic, for example, it doesn't print out the field to show you where you've already dug, or know then the game is over. 
+Any DSL needs a model, this is what we'll build from the files written in our new language. The model should be agnostic on the grammar. We'll create a factory to create instances of our model later on. The code is pretty basic, for example, it doesn't print out the field to show you where you've already dug, or know then the game is over. 
 
 ~~~java
 public class Game {
@@ -235,5 +235,3 @@ public class App {
 ~~~
 
 I hope this was useful to you. Have a play of the game, and try changing `example.field`. You might want to add some validation to the game to make sure you cannot add invalid treasures to the map.
-
-Next time, I'll create a post about a simple editor for your new language.

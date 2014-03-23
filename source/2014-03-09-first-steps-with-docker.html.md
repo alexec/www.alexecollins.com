@@ -71,17 +71,15 @@ Start it up:
 	
 Note the `-P` option, that creates the port forwards from the host OS to the container. Which port is it? It's not the exposed port (8080) as you might expect. Docker chooses a port for you, and you can see which port it is:
 
-```
-$ docker ps
-CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                     NAMES
-67079fc70d31        a3e6a912822c        java -jar dropwizard   9 days ago          Up About a minute   0.0.0.0:49155->8080/tcp   compassionate_tesla  
-```
+	$ docker ps
+	CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                     NAMES
+	67079fc70d31        a3e6a912822c        java -jar dropwizard   9 days ago          Up About a minute   0.0.0.0:49155->8080/tcp   compassionate_tesla  
 
 As I'm running Docker within a VM (as I'm on OS-X), I need to set-up a port forward from my computer to the VirtualBox that boot2docker uses:
 
 	VBoxManage controlvm boot2docker-vm natpf1 "49155,tcp,127.0.0.1,49155,,49155"
 	
-You can test in your browser: [http://localhost:8080/hello-world](http://localhost:49155/hello-world)
+You can test in your browser: [http://localhost:49155/hello-world](http://localhost:49155/hello-world)
 	
 Tip: Really useful debugging command (like `vagrant ssh`):
 
