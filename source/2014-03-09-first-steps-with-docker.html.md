@@ -69,7 +69,7 @@ Start it up:
 
 	docker run -i -P a3e6a912822c
 	
-Note the `-P` option, that creates the port forwards from the host OS to the container. Which port is it? It's not the exposed port (8080) as you might expect. Docker chooses a port for you, and you can see which port it is:
+Note the `-P` option, that creates the port forwards from the host OS to the container. Which port is it? It's not the exposed port (8080) as you might expect. Docker chooses a random port for you, and you can see which port it is:
 
 	$ docker ps
 	CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                     NAMES
@@ -79,7 +79,21 @@ As I'm running Docker within a VM (as I'm on OS-X), I need to set-up a port forw
 
 	VBoxManage controlvm boot2docker-vm natpf1 "49155,tcp,127.0.0.1,49155,,49155"
 	
-You can test in your browser: [http://localhost:49155/hello-world](http://localhost:49155/hello-world)
+But that's a bit complex! And we need to try and figure out the port each time! Lets do it differently.
+
+	docker run -i -p 8080:8080 a3e6a912822c
+
+The `-p` option maps the container port to a host port. 
+
+	$ docker ps
+	CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                    NAMES
+	c975a2628b03        a3e6a912822c        java -jar dropwizard   2 weeks ago         Up 5 seconds        0.0.0.0:8080->8080/tcp   condescending_bardeen  
+
+Now it's running on port 8080. We can easily set-up the forward if we are on OS-X:
+
+	VBoxManage controlvm boot2docker-vm natpf1 "8080,tcp,127.0.0.1,8080,,8080"
+
+You can test in your browser: [http://localhost:8080/hello-world](http://localhost:8080/hello-world)
 	
 Tip: Really useful debugging command (like `vagrant ssh`):
 
