@@ -7,9 +7,9 @@ I've been writing a couple more Maven plugins recently, including [one to start/
 
 Tip 7: Don't Do Any Work In Your Mojo Class
 ---
-I've used this really effectively. Create a POJO class to do the heavy lifting for you. It's much easier to test this class without the Maven infrastructure. In my plugin I've create [DockerOrchestator](https://github.com/alexec/docker-maven-plugin/blob/master/src/main/java/com/alexecollins/docker/orchestration/DockerOrchestrator.java). This has methods such as `clean`, `start` and `stop`. 
+I've used this really effectively. Create a POJO class to do the heavy lifting for you. It's much easier to test this class without the Maven infrastructure. In my plugin I've create [DockerOrchestator](https://github.com/alexec/docker-java-orchestration/blob/master/src/main/java/com/alexecollins/docker/orchestration/DockerOrchestrator.java). This has methods such as `clean`, `start` and `stop`. 
 
-We can create common parent class that creates the delegate:
+We can create a [common parent](https://github.com/alexec/docker-maven-plugin/blob/master/src/main/java/com/alexecollins/docker/mojo/AbstractDockerMojo.java) class that creates the delegate:
 
 ~~~java
 abstract class AbstractDockerMojo extends AbstractMojo {
@@ -32,7 +32,7 @@ abstract class AbstractDockerMojo extends AbstractMojo {
     ...
 ~~~
 
-Then each sub-class can just call the appropriate method. There's almost nothing to test.
+Then each [sub-class ](https://github.com/alexec/docker-maven-plugin/blob/master/src/main/java/com/alexecollins/docker/mojo/StartMojo.java) can just call the appropriate method. There's almost nothing to test.
 
 ~~~java
 @Mojo(name = "start", defaultPhase = LifecyclePhase.PRE_INTEGRATION_TEST)
