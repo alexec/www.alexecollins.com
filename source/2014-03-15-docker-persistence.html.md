@@ -62,7 +62,7 @@ Successfully built 5f2bca5b686e
 $ docker run -name data 5f2bca5b686e
 ~~~
 
-You'll notice that I've name the container for easy reference. You'll also notice that it exited without doing anything. That's because we don't need it to even be running for this to work.
+You'll notice that I've named the container for easy reference. You'll also notice that it exited without doing anything. That's because we don't need it to even be running for this to work.
 
 Now, lets try again (note the `-volumes-from` argument):
 
@@ -74,6 +74,8 @@ mysql> connect test;
 mysql> create table a(a int);
 Query OK, 0 rows affected (0.01 sec)
 ~~~
+
+Now exit, and do this:
 
 ~~~
 $ docker run -i -t -volumes-from data b962491b87db bash
