@@ -22,8 +22,8 @@
 
     <div class="col-md-9">
     <h1><%= current_page.data.title  %></h1>
-    </div>
     <%= yield %>
+    </div>
     <div class="col-md-3">
         <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
         <% if (related.length >0) %>
@@ -32,15 +32,14 @@
         <% related.each do |article| %>
           <li><%= link_to article.title, article %></li>
         <% end %>
-      </l>
-    <% else %>
+      </ol>
+    <% end %>
       <h2>Recent</h2>
       <ul>
         <% blog.articles[0...5].each do |article| %>
           <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
         <% end %>
         </ul>
-        <%end%>
       <h2>Tags</h2>
               <% blog.tags.sort.each do |tag, articles| %>
           <%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a>&nbsp;&nbsp;
@@ -49,6 +48,7 @@
 </div>
 
 <div class="row">
+<div class="col-md-12">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -65,6 +65,7 @@
 <!--
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 -->
+</div>
 </div>
 <div class="row">
 <div class="col-md-12">
