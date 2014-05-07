@@ -41,7 +41,7 @@
         <% end %>
         </ul>
       <h2>Tags</h2>
-              <% blog.tags.sort.each do |tag, articles| %>
+              <% blog.tags.sort.find_all{|tag,article| article.size>2}.each do |tag, articles| %>
           <%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a>&nbsp;&nbsp;
         <% end %>
     </div>
