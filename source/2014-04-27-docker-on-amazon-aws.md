@@ -1,6 +1,6 @@
 ---
 title: Docker on Amazon AWS
-date: 2014-04-26 19:47 UTC
+date: 2014-04-27 19:47 UTC
 publish: false
 tags: docker, amazon, aws, centos
 ---
