@@ -12,39 +12,26 @@
 <link href="https://plus.google.com/101694420547181110548" rel="publisher" />
   </head>
   <body class="<%= page_classes %>">
-
 <div class="container">
 <div class="row">
-    <div class="col-md-9">
-   		<h1><%= current_page.data.title  %></h1>
-    	<%= yield %>
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<!--
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
--->
-	</div>
-    <div class="col-md-3">
-		<center>
-			<h2>Alex Collins</h2>
-			<p>
-				<a href="/"><img src="/images/me150.png"/></a>
-			</p>
-		</center>
-		<p>
-			Java technical lead and solutions architect in London for the e-gaming industry for ten years. <a href="/about-me">more...</a>
-		</p>
+    <div class="col-md-9">
+    <h1><%= current_page.data.title  %></h1>
+    <%= yield %>
+    </div>
+    <div class="col-md-3" style="background-color:#000;color:#fff;">
+<center>
+	<h2>Alex Collins</h2>
+	<p>
+	<a href="/">
+	<img src="/images/me.png"/>
+	</a>
+</p>
+</center>
+<p>
+		Java technical lead and solutions architect in London for the e-gaming industry for ten years.
+		<a href="/about-me">more...</a>
+</p>
         <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
         <% if (related.length >0) %>
       <h4>Related</h4>
@@ -64,9 +51,30 @@
               <% blog.tags.sort.find_all{|tag,article| article.size>2}.each do |tag, articles| %>
           <%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a>&nbsp;&nbsp;
         <% end %>
-	<hr/>
+<hr/>
 	<p><a href="/sitemap">Sitemap</a> | <a href="https://plus.google.com/101694420547181110548?rel=author">Google+</a></p>
     </div>
+</div>
+
+<div class="row">
+<div class="col-md-12">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<!--
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+</div>
 </div>
 <script type="text/javascript">
 
