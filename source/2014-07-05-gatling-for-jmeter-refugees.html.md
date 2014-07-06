@@ -35,56 +35,39 @@ Load testing is:
 Designing a Simulation
 ---
 
-I'm a programmer - so let me program!
-
-No GUI - command line.
-
-Gatling DSL much more pleasant than JMeter GUI, even for a (caveat) beginner Scala programmer. No poking around in obscure input boxes.
-
-Easy to re-ractor, extract or re-use.
-
-Need something complex? Easy to break out into code.
-
-Understanding of reactive frameworks and basic functional programming make DSL easier to understand.
-
-Oriented towards HTTP. JMS? Write your own (or search Github).
-
-Easy to reuse, or combine scenarios.
-
-Looks easier to write custom plugins. No GUI requirement.
-
-Arguably easier to manage and version control. 
+* I'm a programmer - so let me program!
+* No GUI - command line.
+* Gatling DSL much more pleasant than JMeter GUI, even for a (caveat) beginner Scala programmer. No poking around in obscure input boxes.
+* Easy to re-ractor, extract or re-use.
+* Need something complex? Easy to break out into code.
+* Understanding of reactive frameworks and basic functional programming make DSL easier to understand.
+* Oriented towards HTTP. JMS? Write your own (or search Github).
+* Easy to reuse, or combine scenarios.
+* Looks easier to write custom plugins. No GUI requirement.
+* Arguably easier to manage and version control. 
 
 Metrics
 ---
 
-Pretty basic compared to JMeter. Sensible defaults.
-
-More advanced reporting a potential weak point.
-
-Graphite integration.
-
-Metrics are not just mean latency.
-
-I want to see both request times, and white box metrics (e.g. query times and the like). App-Dynamics, log files, statsd, etc.     
+* Pretty basic compared to JMeter. Sensible defaults.
+* More advanced reporting a potential weak point.
+* Graphite integration.
+* Metrics are not just mean latency.
+* I want to see both request times, and white box metrics (e.g. query times and the like). App-Dynamics, log files, statsd, etc.     
 
 Execute
 ---
 
-More users per node - saturate you network card. But .. evidence has been queried. Remain skeptical.
-
-Scaling to multiple nodes not out of the box. Almost all similar tools support clustering using controller/worker model.
-
-Debug using Charles as a proxy.
+* More users per node - saturate you network card. But .. evidence has been queried. Remain skeptical.
+* Scaling to multiple nodes not out of the box. Almost all similar tools support clustering using controller/worker model.
+* Debug using Charles as a proxy.
 
 Reports
 ---
 
-HTML reports, good for CI server, sharing. JMeter CI plugins exist.
-
-Graphite reporting. Might be better for continuous load testing.
-
-Primitive compared to JMeter.
+* HTML reports, good for CI server, sharing. JMeter CI plugins exist.
+* Graphite reporting. Might be better for continuous load testing.
+* Primitive compared to JMeter.
 
 Conclusion
 ---
