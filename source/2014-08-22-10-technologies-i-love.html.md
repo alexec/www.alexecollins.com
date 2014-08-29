@@ -1,5 +1,5 @@
 ---
-title: 10 Technologies git config --global credential.helper cacheI Love
+title: 10 Technologies I Love
 date: 2014-08-22 19:26 UTC
 tags: java, scala, maven, spring, jenkins, brew, git, github
 ---
