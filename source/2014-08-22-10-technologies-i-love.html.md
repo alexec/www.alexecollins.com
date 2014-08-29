@@ -5,16 +5,13 @@ tags: java, scala, maven, spring, jenkins, brew, git, github
 ---
 I love the [Thoughtworks Tech Radar](http://www.thoughtworks.com/radar).  It tells what I might be using in a few years. There's things I use now that make me love what I do, that make we go to meet-ups to talk about them, and makes me want to write a blog post on a Friday night.
 
-10. Vagrant
----
+(10) Vagrant
 Docker is [the new hotness](https://www.youtube.com/watch?v=ha-uagjJQ9k), but Vagrant is far from busted. It gets you up and running in moments.
 
-9. Brew
----
+(9) Brew
 It really is [The missing package manage for OS-X](http://brew.sh/) I develop for Windows, UNIX. and OS-X. I love [APT](http://en.wikipedia.org/wiki/Advanced_Packaging_Tool), and I love [YUM](http://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified), I'm really glad that we have one for OS-X.
 
-8. Jenkins
----
+(8) Jenkins
 There's a number of great CI systems out there, but Jenkins dominates, with around 4x the take up of the next most popular CI. It has some short comings, most notably a high maintenance cost due to the lack of build isolation, but it's has an gargantuan eco system, so it has to be the system of choice.
 
 7. IntelliJ
