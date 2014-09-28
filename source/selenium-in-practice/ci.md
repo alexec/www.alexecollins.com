@@ -61,7 +61,7 @@ artifacts, and a web interface. Here are two good ones:
 -   **Nexus** has both a supported commercial version and a free open source
     version.
 
--   **Artifactory*** *also has commercial and open source versions.
+-   **Artifactory** also has commercial and open source versions.
 
 CI Server
 ---------
@@ -157,7 +157,7 @@ mvn verify
 
 Now add the Cargo plugin section to the build section of your `pom.xml`.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~xml
 <plugins>
     <plugin>
         <groupId>org.codehaus.cargo</groupId>
@@ -178,7 +178,7 @@ This will start your server and you check your application by opening
 
 Let's right a basic test using what we've already learnt. Add this to the `depenencies` section of the `pom.xml`:
 
-~~~
+~~~xml
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
@@ -189,7 +189,7 @@ Let's right a basic test using what we've already learnt. Add this to the `depen
 
 Finally, let's use a later version of JUnit:
 
-~~~
+~~~xml
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -200,7 +200,7 @@ Finally, let's use a later version of JUnit:
 
 Let's create a test to make sure that "Hello Word!" is displayed on the home page. Create the `src/test/java/ci/HomepageIT.java`
 
-~~~
+~~~java
 package ci;
 
 import org.junit.After;
@@ -239,7 +239,7 @@ What we want to do is start and stop the server before and after running our int
 often don't want to run the tests as part of the default build, as they can be
 time consuming. Instead we'll add a profile to our build to run our tests:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~xml
 <profile>
     <id>run-its</id>
 </profile>
@@ -254,7 +254,7 @@ mvn verify -Prun-its
 We can do this by adding the following lines within this new profile your
 `pom.xml`:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~xml
 <build>
     <plugins>
         <plugin>
@@ -284,7 +284,7 @@ We can do this by adding the following lines within this new profile your
 Maven finally needs to be told to run the tests, and we can do this using the
 failsafe plugin which you can add to the `plugins` section of your `pom.xml`.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~xml
 <plugin>
     <artifactId>maven-failsafe-plugin</artifactId>
     <executions>
@@ -307,7 +307,7 @@ Cargo plugin for this as well. To run this example you'll need to do a bit extra
 
 Un-zip the download and open up the directory that is unpacked. By default, users are not enabled, so we need to set on up. From within the Tomcat directory, open `conf/tomcat-users.xml`, and add these lines inside the `users` element:
 
-~~~
+~~~xml
     <role rollname="manager-script"/>
     <role rolename="manager-html"/>
     <user username="admin" password="secret" roles="manager-script,manager-gui"/>
@@ -321,8 +321,7 @@ org.apache.catalina.startup.Catalina.start Server startup in 1314 ms
 
 You can verify that it's worked by logging in to [http://localhost:8080/manager/html](http://localhost:8080/manager/html) using the username and password above. Finally, we can update our `pom.xml` with the details needed to deploy the application. Change the Cargo's to look like this:
 
-~~~
-
+~~~xml
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
