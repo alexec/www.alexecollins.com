@@ -3,11 +3,19 @@ Continuous Integration
 
 Overview
 --------
+This chapter covers:
+
+* Why we would would to use continuous integration.
+* The main tools you'll use.
+* Some important strategies when testing.
+
+As we want to focus this this book on Selenium, we'll assume you're familiar with using a terminal or command prompt.
+
+Why CI?
+---
 
 One of the main ways you can improve the speed and quality of your testing is to
-run you tests on a CI server. This has a number of benefits to running them on a
-Continous Integration server. This has a number of benefits to running manually
-on your own desktop machine.
+run you tests on a CI server. This has a number of benefits to be gained by running them on a Continuous Integration server compared to  only running them manually on your own desktop machine.
 
 1.  It frees up your desktop machine for actually writing code.
 
@@ -23,7 +31,7 @@ on your own desktop machine.
 
 5.  Your CI can record information about each run and store it in database, so
     you can refer back at a later time to see just when a problem started
-    occuring.
+    occurring.
 
 6.  You can configure your CI to run the test on regular basis, so that if
     anything changes, you'll get notified.
@@ -39,8 +47,8 @@ commercial and open source systems you can use.
 Build Tools
 -----------
 
-A build tool is a piece of software that acually builds your application and
-typicall packages it into a single binary file. There's a number build tools you
+A build tool is a piece of software that actually builds your application and
+typically packages it into a single binary file. There's a number build tools you
 can choose from, here are a couple of good ones:
 
 -   **Maven** is the most popular build tool on the JVM. It uses a philosophy of
@@ -48,7 +56,7 @@ can choose from, here are a couple of good ones:
     understand, it has excellent support and integration into IDEs and CI
     servers. * Ant is Java's venerable build tool. It's still quite common. *
 
--   **Gradle** is a Groovy based build tool that is extremely flexilble and
+-   **Gradle** is a Groovy based build tool that is extremely flexible and
     allows you to things your way.
 
 Binary Repository
@@ -56,7 +64,7 @@ Binary Repository
 
 A binary repository is where you store your application once it's build. All
 have a common set of feature, such a security, the ability to search and query
-artifacts, and a web interface. Here are two good ones:
+artefacts, and a web interface. Here are two good ones:
 
 -   **Nexus** has both a supported commercial version and a free open source
     version.
@@ -72,7 +80,7 @@ builds either manually, on a schedule or whenever the source code changes;
 creating reports on your builds, storing the output from tests, and emailing on
 instant messaging you when there's a problem. Here are some popular CI servers:
 
--   **Jenkins** is an open source version of **Hudson**. It's extremly popular,
+-   **Jenkins** is an open source version of **Hudson**. It's extremely popular,
     is very well supported, and has a cornucopia of plugins. It's starting to
     show it ages these days, but still has a lot of life in it. * *
 
@@ -81,16 +89,16 @@ instant messaging you when there's a problem. Here are some popular CI servers:
 
 -   **Team City** TODO * *
 
--   **Bamboo** is a commerical tool from Atlassion, who are best know for JIRA
+-   **Bamboo** is a commercial tool from Atlassion, who are best know for JIRA
     and Confluence applications. It's very well integrated into those.* *
 
--   **TravisCI** and **DroneCI** are both commerical/open source CI servers that
+-   **TravisCI** and **DroneCI** are both commercial/open source CI servers that
     by default run builds on isolated  virtual machines.
 
 Continuous Integration Test Strategies
 --------------------------------------
 
-In a typcial strategy you'll want to do a number of basic steps:
+In a typical strategy you'll want to do a number of basic steps:
 
 1.  Create a binary build of the web application you are testing.
 
@@ -115,25 +123,25 @@ one of the fantastic build tools such as Maven. What you need to decide on is is
 where you're going to run your application and how you set-up up your test
 system.
 
-Running your applicaiton under test
+Running your application under test
 -----------------------------------
 
 You can run your application in one of two places. The first is **locally** on
 the machine that run the tests and second is on a dedicate test system. Running
 tests on the machine will simplify the set-up of the tests, they can always talk
-to localhost, it might be quite easy to initiaze the local system to a known
+to localhost, it might be quite easy to initialise the local system to a known
 state, you don't need dedicated computers set-up ready for testing, and if you
 can run it on your local machines, you can always run your regression tests
 before you share you change it.
 
-You might be using a commerical database who's license agreement, or you might
-be unable to have some neccessary service such on JNDI or JMS set-up. Running
+You might be using a commercial database who's license agreement, or you might
+be unable to have some necessary service such on JNDI or JMS set-up. Running
 the tests on a dedicated **remote** system means you'll need to set-up and
 maintain that system, for cost reason you may have to share it with other teams,
 which might mean that initialising it into a known state might not be feasible.
 
 If you want some guidance as to which option to use, I'd try and use the first
-to start with, as it's much cheaper  and quicker to determine if that's feasbile
+to start with, as it's much cheaper  and quicker to determine if that's feasible
 and then move to a dedicate system than vice-versa. There is one option, that
 sits somewhat between the two. A cloud based system and is remote, but spun up
 for each test, and destroyed afterwards.
@@ -143,7 +151,7 @@ for each test, and destroyed afterwards.
 The Cargo plugin will start and stop a test system before and after your tests
 have run. Lets work though an example.
 
-Create a Maven project using the web app archtype:
+Create a Maven project using the web app archetype:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeVersion=1.0 -DgroupId=sip -DartifactId=ci -Dversion=1.0.0-SNAPSHOT -B
@@ -174,9 +182,9 @@ mvn cargo:run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This will start your server and you check your application by opening
-<http://localhost:8080/ci, >you shoud see "Hello World!". 
+<http://localhost:8080/ci, >you should see "Hello World!". 
 
-Let's right a basic test using what we've already learnt. Add this to the `depenencies` section of the `pom.xml`:
+Let's right a basic test using what we've already learnt. Add this to the `dependencies` section of the `pom.xml`:
 
 ~~~xml
         <dependency>
@@ -308,12 +316,12 @@ Cargo plugin for this as well. To run this example you'll need to do a bit extra
 Un-zip the download and open up the directory that is unpacked. By default, users are not enabled, so we need to set on up. From within the Tomcat directory, open `conf/tomcat-users.xml`, and add these lines inside the `users` element:
 
 ~~~xml
-    <role rollname="manager-script"/>
+    <role rolename="manager-script"/>
     <role rolename="manager-html"/>
     <user username="admin" password="secret" roles="manager-script,manager-gui"/>
 ~~~
 
-To start it up, open up a terminal, change diretory into the unzipped diretory and then and execute either `./bin/catalina.sh run` or `.\bin\catalina.bat run` (if you are on Windows). You should see the following:
+To start it up, open up a terminal, change directory into the unzipped directory and then and execute either `./bin/catalina.sh run` or `.\bin\catalina.bat run` (if you are on Windows). You should see the following:
 
 ~~~
 org.apache.catalina.startup.Catalina.start Server startup in 1314 ms
@@ -362,7 +370,7 @@ How to set-up your tests
 ------------------------
 
 You'll need to set-up your system in a known state. The ideal test is stateless
-- it requires no set-up before it's run, or tear-down aften it is run, it's
+- it requires no set-up before it's run, or tear-down often it is run, it's
 always in a known state. This is incredibly important for making your tests
 reliable. Unreliable or "flaky" tests are a massive maintenance problem. I'm
 sure you want to focus and invest your time writing valuable new code rather
@@ -371,11 +379,11 @@ that to have to hope that your test system is in a suitable state.
 
 There's two ways you can achieve this.
 
--   The first way is to **initalize** your test system from scratch each time.
+-   The first way is to **initialise** your test system from scratch each time.
     For example drop the database, recreate it, and the load a set of test data
     into it. This is ideal if you don't have a complex system with lots of test
     data. - The second way is to try and **compensate** for the current state
-    and move your test system from whatever, to the necccessary state. This is a
+    and move your test system from whatever, to the necessary state. This is a
     suitable approach if recreating the system is time-consuming, or if you need
     to use an existing system. The trade off is that the type of scripts you'll
     need to write might be time-consuming in themselves.
@@ -393,7 +401,7 @@ If you're using initialisation strategy, at the start of the test run:
 
 2.  Mark them as disabled.
 
-If you're using the compenstation strategy, you would:
+If you're using the compensation strategy, you would:
 
 1.  Find out if your user already exists.
 
@@ -420,10 +428,11 @@ In the first option you'll could easily end up with a user that might not be
 able to login for some other reason. In the second you'll rapidly end up with
 far more users than you need for your tests, slowing your test system up.
 
-One important consideration is the design of your build, is that you should not
-rely on your tests to set themselves up.
+One important consideration is the design of your build, is that you should not rely on your tests to set themselves up.
 
-Conclusion
+TODO
+
+Summary
 ----------
 
 TODO
