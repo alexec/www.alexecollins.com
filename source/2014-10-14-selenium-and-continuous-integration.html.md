@@ -8,11 +8,11 @@ Overview
 --------
 This article covers:
 
--   Why we would would to use continuous integration.
+-   Why you would want to use continuous integration.
 -   The main tools you'll use.
 -   Some important strategies when testing.
 
-We'll assume you're familiar with using a terminal or command prompt. 
+We'll assume you are familiar with using a terminal or command prompt. 
 
 Source code can be found on [Github](https://github.com/alexec/selenium-ci).
 
@@ -22,7 +22,7 @@ One of the main ways you can improve the speed and quality of your testing is to
 
 1.  It frees up your desktop machine for writing code.
 2.  You don't need to be told to run the test each time your application has a code change. The CI can build the application, deploy it and then run your tests automatically.
-3.  Your CI can be set-up to run each test in different browers, making cross-browser testing much easier.
+3.  Your CI can be set-up to run each test in different browsers, making cross-browser testing much easier.
 4.  Your CI can also run each test in different languages, different time zones, and different times of day.
 5.  Your CI can record information about each run and store it in database, so you can refer back at a later time to see just when a problem started occurring.
 6.  You can configure your CI to run the tests on a regular basis, so that if anything changes, you'll get notified.
@@ -51,10 +51,8 @@ CI Server
 ---------
 Your CI server is the computer that actually calls the build tool to build your application. All CI servers tend support a common set of features such as executing builds either manually, on a schedule or whenever the source code changes; creating historical reports on your builds, storing the output from tests, and emailing or instant messaging you when there's a problem. Here are some popular CI servers:
 
--  [Jenkins](http://jenkins-ci.org) is an open source version of **Hudson**. It's extremely
-popular, is very well supported, and has a cornucopia of plugins. Some say
-it is starting to show it ages these days, but I’m betting it has a lot of
-life in it.
+-  [Jenkins](http://jenkins-ci.org) is an open source version of **Hudson**. It's extremely popular, is very well supported, and has a cornucopia of plugins. Some say
+it is starting to show it ages these days, but I’m betting it has a lot of life in it.
 -  [Go](http://www.thoughtworks.com/products/go-continuous-delivery) is a CI server created from Thoughtworks. It has both a commercial and open source version.
 -  [TeamCity](https://www.jetbrains.com/teamcity) is a server from JetBrains.
 -  [Bamboo](https://www.atlassian.com/software/bamboo) is a commercial tool from Atlassian, who are best known for their JIRA and Confluence applications. It's very well integrated into those.
@@ -78,7 +76,7 @@ You've got a few options on how you can run this. I imagine you're already using
 
 Running your application under test
 -----------------------------------
-You can run your application in one of two places. The first is **locally** on the machine that runs the tests, and second is on a dedicate test system. Running tests on the local machine will simplify the set-up of the tests, they can always talk to localhost. It might be quite easy to initialise the local system to a known state, you don't need dedicated computers set-up ready for testing, and if you can run it on your local machines, you can always run your tests before you share your change.
+You can run your application in one of two places. The first is **locally** on the machine that runs the tests, and second is on a dedicated test system. Running tests on the local machine will simplify the set-up of the tests, they can always talk to localhost. It might be quite easy to initialise the local system to a known state, you don't need dedicated computers set-up ready for testing, and if you can run it on your local machines, you can always run your tests before you share your change.
 
 However, you might be using a commercial database who's license agreement means you can't install it locally, or you might be unable to have some required service such on JNDI or JMS running. These mean you'll have to run your tests on a dedicated **remote** system means you'll need to set-up and maintain that system, for cost reasons you may have to share it with other teams, which might mean that initialising it into a known state might not be feasible.
 
