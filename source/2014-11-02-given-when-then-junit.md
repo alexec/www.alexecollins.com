@@ -1,5 +1,5 @@
 ---
-title: Given When Then JUnit
+title: Given/When/Then JUnit
 date: 2014-11-02 19:00 UTC
 tags: testing, junit
 ---
