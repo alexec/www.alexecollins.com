@@ -3,9 +3,9 @@ title: Given When Then JUnit
 date: 2014-11-02 19:00 UTC
 tags: testing, junit
 ---
-I was introduced to a way to take some of the benefits of using the given/when/then style of specification based testing.
+I was recently introduced to a way to take some of the benefits of using the given/when/then style of specification based testing, and use them directly with JUnit.
 
-If you don't want to start using a system like Cucumber JVM with your existing codebase, you can still get a lot of the benefit from applying the mindset.
+You can get some of the benefits of using BDD style testing, but without the dependency on a system such as Cucumber JVM.
 
 The code is on [Github](https://github.com/alexec/givenwhenthenjunit).
 
@@ -18,22 +18,22 @@ Feature: Returns go to stock
 	As a store owner
 	I want to add items back to stock when they're returned
 
-	Scenario: Refunded items should be returned to stock
-		Given a customer previously bought a black sweater from me
-		And I currently have three black sweaters left in stock
-		When he returns the sweater for a refund
-		Then I should have four black sweaters in stock
+Scenario: Refunded items should be returned to stock
+	Given a customer previously bought a black sweater from me
+	And I currently have three black sweaters left in stock
+	When he returns the sweater for a refund
+	Then I should have four black sweaters in stock
 
-	Scenario: Replaced items should be returned to stock
-		Given that a customer buys a blue garment
-		And I have two blue garments in stock
-		And three black garments in stock.
-		When he returns the garment for a replacement in black,
-		Then I should have three blue garments in stock
-		And two black garments in stock
+Scenario: Replaced items should be returned to stock
+	Given that a customer buys a blue garment
+	And I have two blue garments in stock
+	And three black garments in stock.
+	When he returns the garment for a replacement in black,
+	Then I should have three blue garments in stock
+	And two black garments in stock
 ~~~
 
-We can code this into JUnit test ([commit](https://github.com/alexec/givenwhenthenjunit/commit/2f5527ce11869bfae86a84428183e395cf1425d5). The class represents the story, and each scenario is a method.
+We can code this into JUnit test ([commit](https://github.com/alexec/givenwhenthenjunit/commit/2f5527ce11869bfae86a84428183e395cf1425d5)). The class represents the story, and each scenario is a method.
 
 ~~~java
 /**
@@ -68,10 +68,10 @@ public class ReturnsGoToStockStoryTest {
 There's a couple of things to note here:
 
 * None of the comments will appear on  display in the CI.
-* I've added a `fail()` at the end of each test to make sure I complete it.
+* I've added a `fail()` at the end of each test to make sure I complete it. Analygous to "pending".
 * I'm sticking with Java and JUnit naming conventions.
 
-Now we can implment the tests ([commit](https://github.com/alexec/givenwhenthenjunit/commit/7c964872a44056f374faee97ae2d28ee2b1c40eb)):
+Now we can implment the first test scenario ([commit](https://github.com/alexec/givenwhenthenjunit/commit/7c964872a44056f374faee97ae2d28ee2b1c40eb)):
 
 ~~~java
     @Test
@@ -140,8 +140,8 @@ These test share both customer and inventory. We can refactor this out.
     }
 ~~~
 
-Finally, we can implement the main code ([commit](https://github.com/alexec/givenwhenthenjunit/commit/83409db87271dffb9b634819e1afb9e2937173fd)). Note that I've still got TODOs in the code, as I can clearly see some other scenarios that we'll want to write.
+Finally, we can implement the main code ([commit](https://github.com/alexec/givenwhenthenjunit/commit/83409db87271dffb9b634819e1afb9e2937173fd)). See that I've still got TODOs in the code, as I can clearly see some other scenarios that we'll want to test.
 
-I hope this shows you one interesting way to write your tests and bring some new ideas to your code with having to take on a new technology to do so.
+I hope this shows you one interesting way to write tests and bring some new ideas to your code without having to depend on another technology to do so.
 
-Read [more about unit testing](http://www.alexecollins.com/tags/testing/).
+[Read more about unit testing](http://www.alexecollins.com/tags/testing/).
