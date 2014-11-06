@@ -7,11 +7,11 @@ What is @Transactional and how can it catch me out?
 ---
 The @Transactional annotation is used by Spring to wrap a method call in a transaction, committing if successful, and rolling back if unsuccessful.
 
-It has a couple of quite nasty gotchas when using it. 
+It has a couple of quite nasty gotchas. 
 
-We'll create a very simple app with one class, a H2 database and use Spring to wire it together. It'll have one test, which will make sure `@Transactional` is working and demonstrate some gotchas.
+Today we'll create a very simple app with one class, a H2 database and use Spring to wire it together. It'll have one test, which will make sure `@Transactional` is working and demonstrate some gotchas.
 
-You can find the following code on [Github](https://github.com/alexec/spring-tx-gotchas).
+You can find all the following code on [Github](https://github.com/alexec/spring-tx-gotchas).
 
 Create the following `pom.xml`:
 
@@ -188,4 +188,4 @@ The test will fail. `@Transactional` only works on public methods, but you get n
 
 Conclusion
 ---
-Watch out for these problems! In [my next post](http://www.alexecollins.com/content/java-annotation-processor-tutorial/) I'll show how to prevent these errors at compile time. 
+Watch out for these problems! In [my next post](http://www.alexecollins.com/content/java-annotation-processor-tutorial/index.html) I'll show how to prevent these errors at compile time. 

@@ -3,11 +3,11 @@ title: Java Annotation Processor Tutorial
 date: 2014-11-06 22:20 UTC
 tags: java, annotation processor, sprint, annotation tutorial
 ---
-I've been using [Project Lombok](http://projectlombok.org), the excellent Java tool that create value-object classes with minimal code. Under the hood is using the [Java Annotation Processor](http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/Processor.html) to generate code based on reading your source code before compilation. Annotation processing a somewhat niche technique, but it has some great use cases. Lombok uses it for generate code, but another good use if for verify source code.
+I've been using [Project Lombok](http://projectlombok.org), the excellent Java tool that create value-object classes with minimal code. Under the hood it uses the [Java Annotation Processor](http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/Processor.html) to generate code based on your source code before compilation. Annotation processing a somewhat niche technique, but it has some great use cases. Lombok uses it for generate code, but another good use it to verify your source code.
 
-In a [recent tutorial](http://www.alexecollins.com/content/spring-transactional-gotchas/),  we saw how Spring `@Transactional` annotation can cause problems. We'll write an annotation processor to identify these prevent these problems at compile time.
+In a [recent tutorial](http://www.alexecollins.com/content/spring-transactional-gotchas/), I showed how Spring `@Transactional` annotation can cause problems. Today we'll write an annotation processor to identify these prevent these problems at compile time.
 
-The following code can be found on [Github](https://github.com/alexec/spring-tx-ann-proc).
+All the following code can be found on [Github](https://github.com/alexec/spring-tx-ann-proc).
 
 Create the following basic `pom.xml`:
 
@@ -36,20 +36,21 @@ Create the following basic `pom.xml`:
 </project>
 ~~~
 
-Note that we need to disable processors for this project using `-proc:none`.
+Unless we disable processors for this project using `-proc:none`, then it'll try to process itself!
 
-We need a file to tell the Java complier where to find our new processor, so create `src/main/resourcEs/META-INF/services/javax.annotation.processing.Processor`:
+We need a file to tell the Java complier where to find our new processor, so create `src/main/resources/META-INF/services/javax.annotation.processing.Processor`:
 
 ~~~
 SpringTransactionalProcessor
 ~~~
 
-Next, create this new class:
+Next, create this small class:
 
 ~~~java
 @SupportedAnnotationTypes("org.springframework.transaction.annotation.Transactional")
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
 public class SpringTransactionalProcessor extends AbstractProcessor {
+
     @Override
     public boolean process(Set<? extends TypeElement> typeElements, RoundEnvironment roundEnvironment) {
         System.out.println("not doing much right now");
@@ -58,7 +59,7 @@ public class SpringTransactionalProcessor extends AbstractProcessor {
 }
 ~~~
 
-The class's annotations tell the Java compiler what annotation we are interested in, and the minimum Java version we support, Java 6 in this case:
+The class's annotations tell the Java compiler what annotation we are interested in, and the minimum Java version we support, Java 6 in this case.
 
 Build and install our new project:
 
@@ -66,7 +67,7 @@ Build and install our new project:
 mvn install
 ~~~
 
-Now, we need some code to test this out. Fortunately, I've written a project just for this:
+Now, we need some code to test this out. Fortunately, I've written a project we can already use for this:
 
 ~~~
 git clone https://github.com/alexec/spring-tx-gotchas.git
@@ -75,17 +76,17 @@ git clone https://github.com/alexec/spring-tx-gotchas.git
 Open this project and add our new project as a dependency to the `pom.xml`:
 
 ~~~xml
-        <dependency>
-            <groupId>spring-tx-ann-proc</groupId>
-            <artifactId>spring-tx-ann-proc</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+<dependency>
+	<groupId>spring-tx-ann-proc</groupId>
+	<artifactId>spring-tx-ann-proc</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<scope>provided</scope>
+</dependency>
 ~~~
 
-Note that we use the provided scope to make sure our processor does not end up in our dependencies.
+Note that we use the provided scope to make sure our processor does not end up in our production systems.
 
-Do a `mvn compile`, you should see this:
+Do a `mvn compile` and you should see this output:
 
 ~~~
 [INFO] Compiling 1 source file to /Users/alexc/spring-tx-gotchas/target/classes
@@ -107,26 +108,25 @@ Add this dependency to you annotation processor's `pom.xml`:
 And change our processor to:
 
 ~~~java
-    public boolean process(Set<? extends TypeElement> typeElements, RoundEnvironment roundEnvironment) {
-        for (Element element : roundEnvironment.getElementsAnnotatedWith(Transactional.class)) {
-            Element classElement= element.getEnclosingElement();
-            boolean isPublic = element.getModifiers().contains(Modifier.PUBLIC);
-            if (!isPublic) {
-               processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
-                       classElement + "#" + element+ " is not public, but @Transactional only works with public methods");
-            }
-        }
-        return true;
-    }
+public boolean process(Set<? extends TypeElement> typeElements, RoundEnvironment roundEnvironment) {
+	for (Element element : roundEnvironment.getElementsAnnotatedWith(Transactional.class)) {
+		Element classElement= element.getEnclosingElement();
+		boolean isPublic = element.getModifiers().contains(Modifier.PUBLIC);
+		if (!isPublic) {
+			processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, classElement + "#" + element+ " is not public, but @Transactional only works with public methods");
+		}
+	}
+	return true;
+}
 ~~~
 
-`mvn install` the annotation project. Now modify the Spring project so that the method is not public:
+Firstly `mvn install` the annotation project. Then modify the Spring project so that the method is not public:
 
 ~~~java
 protected void insertOneRecordAndThenThrowException() {
 ~~~
 
-`mvn clean install` the Spring project, you should now see this error:
+Finally, we can test our annotation processor works but running `mvn clean install` on the Spring project, you should now see this error:
 
 ~~~
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:2.3.2:compile (default-compile) on project spring-tx-gotchas: Compilation failure
@@ -135,4 +135,4 @@ protected void insertOneRecordAndThenThrowException() {
 
 Conclusion
 ---
-Annotation processors have some interesting niche uses, such as documentation or source code generation, and source code validation.
+This is just one use of an annotation processors. They have a number of other uses, such as documentation or source code generation, and source code validation. 
