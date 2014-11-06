@@ -1,6 +1,6 @@
 ---
 title: Spring Transactional Gotchas
-date: 2014-11-07 21:00 UTC	
+date: 2014-11-06 21:30 UTC	
 tags: spring
 ---
 What is @Transactional and how can it catch me out?
