@@ -20,10 +20,9 @@ Create the following `pom.xml`:
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ann-proc-tut</groupId>
-    <artifactId>ann-proc-tut</artifactId>
+    <groupId>spring-tx-gotchas</groupId>
+    <artifactId>spring-tx-gotchas</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Annotation Processor Tutorial</name>
 
     <properties>
         <spring.version>3.2.11.RELEASE</spring.version>
@@ -96,15 +95,14 @@ public class App {
 }
 ~~~
 
-An XML file name `AppTest-context.xml` in the root of your class path:
+An Spring XML configuration file named `AppTest-context.xml` in the root of your class path:
 
 ~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <tx:annotation-driven/>
 
@@ -148,6 +146,9 @@ Run the test, you'll find it's green. It tells us that even though we had an exc
 
 Now, lets experiment. Comment out `@Transactional` and re-run the test. It'll be red. Uncomment it again before you continue.
 
+Constructors Gotcha
+---
+
 Change `App` to use constructor injection:
 
 ~~~java
@@ -159,7 +160,6 @@ public class App {
     public App(JdbcTemplate db) {
         this.db = db;
     }
-	…
 ~~~
 
 Run the test. You'll see this exception:
@@ -176,6 +176,8 @@ You may need to delete the database now if you see `Table "TEST" already exists`
 rm -R /tmp/test.*
 ~~~
 
+Non-Public Method Gotcha
+---
 Now lets look a more insidious error, change `App` so that the insert method is protected like this:
 
 ~~~
@@ -184,4 +186,6 @@ protected void insertOneRecordAndThenThrowException() {
 
 The test will fail. `@Transactional` only works on public methods, but you get no error or warning about it.
 
-In [my next post](http://www.alexecollins.com/content/java-annotation-processor-tutorial/) I'll show how to prevent these errors at compile time. 
+Conclusion
+---
+Watch out for these problems! In [my next post](http://www.alexecollins.com/content/java-annotation-processor-tutorial/) I'll show how to prevent these errors at compile time. 
