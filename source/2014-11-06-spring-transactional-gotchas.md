@@ -1,6 +1,6 @@
 ---
-title: Spring Transactonal Gotchas
-date: 2014-11-07 21:00 UTC
+title: Spring Transactional Gotchas
+date: 2014-11-07 21:00 UTC	
 tags: spring
 ---
 What is @Transactional and how can it catch me out?
@@ -176,12 +176,12 @@ You may need to delete the database now if you see `Table "TEST" already exists`
 rm -R /tmp/test.*
 ~~~
 
-Now lets look a more insideous error, change `App` so that the insert method is protected like this:
+Now lets look a more insidious error, change `App` so that the insert method is protected like this:
 
 ~~~
 protected void insertOneRecordAndThenThrowException() {
 ~~~
 
-The test will fail. This is a insidours problem. `@Transactional` only works on public methods!
+The test will fail. `@Transactional` only works on public methods, but you get no error or warning about it.
 
 In [my next post](http://www.alexecollins.com/content/java-annotation-processor-tutorial/) I'll show how to prevent these errors at compile time. 
