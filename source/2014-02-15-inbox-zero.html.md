@@ -3,7 +3,7 @@ title: Inbox Zero
 date: 2014-02-15 17:43 UTC
 tags: oped
 ---
-I've just watched a video on [Inbox Zero](http://inboxzero.com/video) and it made me think how my email process works now:
+I've just watched a video on Inbox Zero and it made me think how my email process works now:
 
 * I try to check only once every 1-2 hours.
 * I use the [two minute rule](http://www.huffingtonpost.com/james-clear/stop-procrastinating_b_3342758.html), if I can sort it in two minutes, **do it now**, otherwise either **delegate** or **defer**.

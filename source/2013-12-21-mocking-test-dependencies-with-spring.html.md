@@ -292,6 +292,6 @@ OK. So I hope you enjoyed this post, and you get some good ideas from it. The co
 
 References/Further Reading
 
-* [Test support for Tomcat and Spring](tutorial-junit-rule).
+* [Test support for Tomcat and Spring](/content/tutorial-junit-rule/).
 * [Mocks Aren't Stubs](http://martinfowler.com/articles/mocksArentStubs.html) 
 * [Spring Extensible XML](http://docs.spring.io/spring/docs/2.5.6/reference/extensible-xml.html)

@@ -13,8 +13,6 @@ tags: swing,java,plaf
 
 <p>Do not email the password, especially with the document.</p>
 
-<p><a href="/sites/default/files/secure-edit-1.0.0.jar">Download latest version</a> SHA-1 9dd0df33271dbf1183c646c4255ef38b82260f9f</p>
-
 <p>The code is <a href="https://github.com/alexec/secure-edit">Github</a>.</p>
 
 <p>Note: that it is not intended for commercial/governmental use.</p>

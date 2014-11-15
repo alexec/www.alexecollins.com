@@ -115,9 +115,3 @@ public class BadCounterTest {
 <h2>Further Reading</h2>
 
 <p>I've written <a href="/content/5-tips-unit-testing-threaded-code">a post on testing threaded code for correctness</a>. You may also wish to read more generally:</p>
-
-<ul>
-<li><a href="ftp://ftp.cs.umanitoba.ca/pub/IPDPS03/DATA/W20_PADTD_02.PDF">Concurrent Bug Patterns and How to Test Them - Eitan Farchi, Yarden Nir, Shmuel Ur IBM Haifa Research Labs</a></li>
-<li><a href="http://www.almaden.ibm.com/laborday/haifa/projects/verification/contest/papers/testingConcurrentJune2008ForMS.pdf">A presentation describing the difficulty of testing and debugging concurrent software - Shmuel Ur</a></li>
-<li><a href="http://www.ibm.com/developerworks/java/library/j-jtp09263/index.html">Java theory and practice: Characterizing thread safety</a></li>
-</ul>

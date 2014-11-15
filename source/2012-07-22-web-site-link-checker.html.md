@@ -11,6 +11,4 @@ tags: java,software
 	/content/swing-plaf-example: failed to process link /content/tutorial-swing-synth-plaf-template-part-1: java.io.FileNotFoundException: /content/tutorial-swing-synth-plaf-template-part-1
 	Done - 39027 ms
 
-<p><a href="/sites/default/files/link-checker-1.0.0-jar-with-dependencies.jar">Download latest version</a> SHA-1 3897574e6ba2fc0c2034159cad2c72d36f320f4e</p>
-
 <p>The code is <a href="https://github.com/alexec/link-checker">Github</a>.</p>

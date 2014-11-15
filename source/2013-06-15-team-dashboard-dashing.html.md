@@ -52,7 +52,7 @@ tags: ruby,dashing
 
 <ul>
 <li>Get same data from a URL, possbily having to authenticate.</li>
-<li>Parse that data (if it is HTML we can <a href="http://mechanize.rubyforge.org">use Mechianize</a>).</li>
+<li>Parse that data (if it is HTML we can use a Ruby library called Mechianize).</li>
 <li>Loop though the data to find the interesting information.</li>
 <li>Filter that information, e.g. based on status.</li>
 <li>Post that information to one of more widgets.</li>

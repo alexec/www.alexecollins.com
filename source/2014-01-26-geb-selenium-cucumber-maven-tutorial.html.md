@@ -3,7 +3,7 @@ title: Geb, Selenium, Cucumber & Maven Tutorial
 date: 2014-01-26 09:53 UTC
 tags: geb, selenium, cucumber, maven, testing, tutorial
 ---
-A while ago I wrote some [tutorials](/tags/selenuim.html) on writing Selenium tests in Java. I've been using Selenium on and off for a while and I've found somethings are always tricky:
+A while ago I wrote some [tutorials](/tags/selenium.html) on writing Selenium tests in Java. I've been using Selenium on and off for a while and I've found somethings are always tricky:
 
 * The Java code tends to be very verbose and has a lot of boiler plate. But you're not tied to the backend language, so you could use any language, or even a DSL.
 * JUnit is great for unit testing, but it's not really ideal for functional tests. These tests could be Product Owner facing, and framework choice should suite this.
