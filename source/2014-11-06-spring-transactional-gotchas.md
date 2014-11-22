@@ -172,7 +172,7 @@ You can't use `@Transactional` on a class without a no-args constructor. Revert 
 
 You may need to delete the database now if you see `Table "TEST" already exists`:
 
-~~~bash
+~~~shell
 rm -R /tmp/test.*
 ~~~
 
