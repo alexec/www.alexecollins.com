@@ -1,5 +1,5 @@
 ---
-title: A Reliable Push Release Pattern 
+title: A Reliable Push Button Release Pattern 
 date: 2014-11-22 11:16 UTC
 tags: git, maven, release, process
 ---
@@ -16,6 +16,7 @@ In this post I'll tell you about the caveats of this process, walk you though an
 
 Mandatory Processes
 ===
+
 Semantic Versioning
 ---
 There is one major caveat to this process. You need to be using a **semantic versioning system**. I.e. version numbers need to have meaning. [Semantic Versioning 2.0](http://semver.org) is the method I'd recommend. You need to be using a semantic versioning system for both your project, and any dependencies you want to upgrade.
@@ -49,6 +50,8 @@ You only need three types of branch for this pattern:
 1. A master (or trunk) branch that at versions >= 1.0.0 only contains, as best as you can manage, production ready code. This is typically named `master` in Git.
 2. Feature and bug fix branches. These are always branched from, and merged to, master.  Generally it's best if they are small and short lived.
 3. Release branches. These follow the format `MAJOR.MINOR.x`, based on which version they were branched from. If you need to release a new feature, you need to increase the minor version, and you are doing a new mainline release.
+
+![Git Branches](/images/git-branches.png)
 
 Only Merge Production Ready Code to Master 
 ---

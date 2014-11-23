@@ -1,7 +1,7 @@
 #!/bin/sh
 set -ue
 
-sh ec2 <<'ENDSSH'
+ssh ec2 <<'ENDSSH'
 set -eux
 sudo su -
 cd www.alexecollins.com
