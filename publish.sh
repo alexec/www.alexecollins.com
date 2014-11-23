@@ -1,5 +1,9 @@
 #!/bin/sh
 set -ue
 
-middleman build
-rsync -rv --delete build/ ec2:build
+sh ec2 <<'ENDSSH'
+set -eux
+sudo su -
+cd www.alexecollins.com
+./build.sh
+ENDSSH
