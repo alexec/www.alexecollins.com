@@ -272,6 +272,8 @@ You'll see in the Git log that we automatically updated this dependency's versio
 mvn release:prepare release:perform -B
 ~~~
 
+If the bug fix is to the project itself, we treat it almost exactly the same as a feature. We branch from master, and merge back to master. We then cherry pick the commits we need from master to the release branch, using Git's cherry pick command.
+
 Automate it!
 ===
 We can put this into [a simple script](https://github.com/alexec/reltut/blob/master/release.sh). To do a mainline release:
@@ -288,3 +290,6 @@ git checkout 1.1.x
 ./release.sh
 ~~~
 
+Conclusion
+===
+I hope this post shows you how that, if you are using a sematic versioning system, and haven strong guarantees on quality, then you can reduce the amount of work required to do releases.
