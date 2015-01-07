@@ -53,7 +53,7 @@ public class HelloSeleniumIT {
 
 Running this test shows:
 
-![image](/images/unclear-assertion-error.png)
+![image](images/unclear-assertion-error.png)
 
 If the above image we can see the error we get from this is not very clear. Instead we need to take a screenshot. To do this, we'll use a feature of JUnit called "rules" (see <https://github.com/junit-team/junit/wiki/Rules>). A rule is essentially an object that listens to a test. We'll listen to failures and take a screen shot when one occurs:
 
@@ -82,7 +82,7 @@ public TestRule screenshotTaker = new ScreenshotTaker((TakesScreenshot) driver);
 
 Re-running the test shows:
 
-![image](/images/assertion-error-with-screenshot-file.png)
+![image](images/assertion-error-with-screenshot-file.png)
 
 You'll notice that the screen shot has been saved in a temporary file, and you'll also note that the name isn't very descriptive. This will be deleted  when the test finishes. We'll need to copy this somewhere safe. Update ScreenshotTaker as follows:
 
@@ -101,7 +101,7 @@ protected void failed(Throwable e, Description description) {
 }
 ~~~
 
-![image](/images/assertion-error-with-screenshot-file-2.png)
+![image](images/assertion-error-with-screenshot-file-2.png)
 
 You can now see in the above screenshot that we've saved the file with a clear name.
 
