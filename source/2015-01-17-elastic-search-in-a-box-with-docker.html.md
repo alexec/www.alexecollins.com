@@ -375,7 +375,6 @@ The container will be listed by the `docker` command
 
 ~~~bash
 $ docker ps
-alex-collinss-macbook:esiab alexc$ docker ps
 CONTAINER ID        IMAGE                             COMMAND                CREATED             STATUS              PORTS                                                                    NAMES
 f673731a9489        searchinabox/searchinabox:1.0.0-SNAPSHOT   "/bin/sh -c 'java  -   6 seconds ago       Up 4 seconds        0.0.0.0:8080->8080/tcp, 0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp   search-in-a-box_app  
 ~~~
