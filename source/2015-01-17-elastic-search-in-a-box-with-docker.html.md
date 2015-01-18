@@ -278,7 +278,7 @@ Restart the application, run the test, and you'll see it's green.
 
 Putting The Application Into A Container
 ---
-We want to put the application into a Docker container. Spring Boot can create a standalone jar to put it into the container, so add this plugin to the `pom.xml`:
+We want to put the application into a Docker container. Spring Boot can create a standalone jar to put it into a container, so add this plugin to the `pom.xml`:
 
 ~~~xml
 <plugin>
@@ -315,11 +315,11 @@ Next, we'll use a plugin to build the container:
 </plugin>
 ~~~
 
-The plugin neees some files to create the app, so in `src/main/docker/searchinabox` create  a `Dockerfile` that:
+The plugin neees some files to create the app. Each directory in `src/main/docker` in treated as a container, so in `src/main/docker/searchinabox` create a `Dockerfile` that:
 
 1. Adds the JAR, 
 2. Adds a configuration file,
-3. Exposes the port - both our app on 8080, and Elastic Search on 9200 and 9300,
+3. Exposes the ports - both our app on 8080, and Elastic Search on 9200 and 9300 (so it can join a cluster),
 4. Sets the start-up command (which also set the classpath to allow us to load the config).
 
 ~~~
@@ -357,7 +357,7 @@ tag:
     searchinabox/app:${project.version}
 ~~~
 
-To package this andstart-up the container:
+To package this and start-up the container:
 
 ~~~bash
 mvn docker:start
@@ -382,7 +382,9 @@ f673731a9489        searchinabox/searchinabox:1.0.0-SNAPSHOT   "/bin/sh -c 'java
 
 We can check we can access Elastic Search by opening the <http://localhost:9200> URL, and our application by opening <http://localhost:8080>.
 
-Packing containers can go wrong. You can find you can print/tail the logs of the last started container with this useful command:
+**Tips**
+
+Packing containers can go wrong. I find it helpful to print/tail the logs of the last started container with this command:
 
 ~~~bash
 docker logs -f $(docker ps -qa|head -n1)
@@ -396,7 +398,7 @@ docker run -t -i  searchinabox/searchinabox:1.0.0-SNAPSHOT bash
 
 Continuous Integration
 ---
-To complete the picture we want to start the containers and run the acceptance tests. We'll use the Maven Failsafe Plugin to do the tests, so add this plugin as so:
+To complete the picture we want to start the containers and run our acceptance tests. We'll use the Maven Failsafe Plugin to run the tests, so add this plugin as follows:
 
 ~~~xml
 <plugin>
@@ -412,7 +414,7 @@ To complete the picture we want to start the containers and run the acceptance t
 </plugin>
 ~~~
 
-Add the appropriate execution to the `docker-maven-plugin`:
+We need to tell `docker-maven-plugin` to start and stop the container, so add these lines to it:
 
 ~~~xml
 <executions>
@@ -436,8 +438,9 @@ mvn clean verify
 
 Conclusion
 ---
-We seen how to create a search service in a box with Elastic Search, Spring Boot and Docker. We've seen how to create a build using Docker Maven Plugin. Here are some exercises for the reader:
+We seen how to create a search service in a box with Elastic Search, Spring Boot and Docker. We've seen how to create a build using Docker Maven Plugin. I hope you enjoyed this. Here are some exercises for the reader:
 
 * The UI is pretty drab, how about an attractive [Bootstrap](http://getbootstrap.com) front end?
-* We've let the model leak into the templates. We also have to speak to Elastic Search directly. Perhaps we should refactor it so that we speak to an intermediate bean that abstracts that away?
+* We've let Elastic Code leak all over the place. We also have to speak "Elastic Search". Perhaps we should refactor it behind an abstraction?
+* We might want to re-index out data. Use Spring to [schedule the re-indexing](http://spring.io/guides/gs/scheduling-tasks/).
 * We're not indexing a lot of things? Should we some new indexers for other items?
