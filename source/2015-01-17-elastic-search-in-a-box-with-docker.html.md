@@ -1,7 +1,7 @@
 ---
-title: Search In A Box With Docker, Elastic Search, and Selenium
+title: Search In A Box With Docker, Elastic Search, Spring Boot, and Selenium
 date: 2015-01-17 09:43 UTC
-tags: docker, maven, elastic search, testing, selenium
+tags: docker, maven, elastic search, spring boot, testing, selenium
 ---
 Overview
 ===
@@ -142,7 +142,7 @@ We need some HTML for the home page, so make `src/main/resources/templates/home.
 </html>
 ~~~
 
-When you run the application, you can then run the test and see that it is green. You can also look at the search form manually at <http://localhost:8080>.
+When you run the application, you can also run the test and you'll see that it is green. You can also look at the search form manually at <http://localhost:8080>.
 
 Searching For Jokes
 ---
@@ -178,7 +178,7 @@ public class Config {
 }
 ~~~
 
-Elastic Search creates directory called `data` in the root of our project. We want this to be cleaned for testing, so we can set-up the Maven Clean Plugin to do so
+Elastic Search creates directory called `data` in the root of our project. We want this to be cleaned so our test always start with a fresh instance. set-up the Maven Clean Plugin to do so:
 
 ~~~xml
 <plugin>
@@ -196,8 +196,8 @@ Elastic Search creates directory called `data` in the root of our project. We wa
 We want to make a service for indexing and searching jokes. There's will be quite a bit going on here, so let's break it down:
 
 1. On start-up create an index called "jokes" to store our jokes in,
-2. Then we store two jokes, each with unique IDs,
-3. Finally, we provide a method to search for jokes.
+2. Then store two jokes, each with unique IDs,
+3. Finally, provide a method to search for jokes.
 
 ~~~java
 @Service
@@ -274,7 +274,7 @@ Next, we need a results page so create `src/main/resources/templates/results.htm
 </html>
 ~~~
 
-Restart the application, run the test, and you'll see it's green.
+Restart the application, run the test, and you'll see it's now green.
 
 Putting The Application Into A Container
 ---
@@ -315,12 +315,12 @@ Next, we'll use a plugin to build the container:
 </plugin>
 ~~~
 
-The plugin neees some files to create the app. Each directory in `src/main/docker` in treated as a container, so in `src/main/docker/searchinabox` create a `Dockerfile` that:
+The plugin needs some files to create the app. Each directory in `src/main/docker` in treated as a container, so in `src/main/docker/searchinabox` create a `Dockerfile` that:
 
 1. Adds the JAR, 
 2. Adds a configuration file,
 3. Exposes the ports - both our app on 8080, and Elastic Search on 9200 and 9300 (so it can join a cluster),
-4. Sets the start-up command (which also set the classpath to allow us to load the config).
+4. Sets the start-up command.
 
 ~~~
 FROM dockerfile/java:oracle-java7
@@ -336,10 +336,10 @@ CMD java -jar /${project.build.finalName}.jar
 
 We need a `conf.yml` file in the same directory, this:
 
-1. Indicates which to add JAR into the packing directory,
-2. States the ports to expose on the host,
+1. Indicates that we want to add the JAR as part of the Docker image,
+2. States the ports it should expose on the host,
 4. A health check URL we can use to smoke test the container, 
-5. Finally a tag for the container so we can easily identify it:
+5. Finally, a tag for the container so we can easily identify it:
 
 ~~~yml
 packaging:
@@ -354,10 +354,10 @@ healthChecks:
     - url: http://localhost:9200/
     - url: http://localhost:8080/
 tag:
-    searchinabox/app:${project.version}
+    searchinabox/searchinabox:${project.version}
 ~~~
 
-To package this and start-up the container:
+Package this and start-up the container:
 
 ~~~bash
 mvn docker:start
@@ -397,7 +397,7 @@ docker run -t -i  searchinabox/searchinabox:1.0.0-SNAPSHOT bash
 
 Continuous Integration
 ---
-To complete the picture we want to start the containers and run our acceptance tests. We'll use the Maven Failsafe Plugin to run the tests, so add this plugin as follows:
+To complete the picture we want Maven to start the containers and run our acceptance tests. We'll use the Maven Failsafe Plugin to run the tests. Add this plugin as follows:
 
 ~~~xml
 <plugin>
@@ -427,7 +427,7 @@ We need to tell `docker-maven-plugin` to start and stop the container, so add th
 </executions>
 ~~~
 
-Finally, let test it.
+Finally, test it.
 
 ~~~bash
 mvn clean verify
@@ -437,9 +437,9 @@ mvn clean verify
 
 Conclusion
 ---
-We seen how to create a search service in a box with Elastic Search, Spring Boot and Docker. We've seen how to create a build using Docker Maven Plugin. I hope you enjoyed this. Here are some exercises for the reader:
+We seen how to create a search service in a box with Elastic Search, Spring Boot and Docker. We've seen how to create a build using Docker Maven Plugin. I hope you enjoyed this. Here are some exercises for you:
 
 * The UI is pretty drab, how about an attractive [Bootstrap](http://getbootstrap.com) front end?
-* We've let Elastic Code leak all over the place. We also have to speak "Elastic Search". Perhaps we should refactor it behind an abstraction?
+* We've let Elastic Code leak all over the place.  Perhaps we should refactor it behind an abstraction?
 * We might want to re-index out data. Use Spring to [schedule the re-indexing](http://spring.io/guides/gs/scheduling-tasks/).
 * We're not indexing a lot of things? Should we some new indexers for other items?
