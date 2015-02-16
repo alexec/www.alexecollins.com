@@ -12,7 +12,7 @@ Step 1 - Install Graphite
 
 Get a Graphite Vagrant VM as follows 
 
-	git clone https://github.com/Jimdo/vagrant-statsd-graphite-puppet
+	git clone https://github.com/tilmans/vagrant-statsd-graphite-puppet.git
 	cd vagrant-statsd-graphite-puppet
 	
 By default sets up a port forward on 8080, but we will need to use that for the app to be tested, so lets change it:
