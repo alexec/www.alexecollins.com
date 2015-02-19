@@ -16,6 +16,11 @@
 		margin-right: auto;
 		padding: 10px;
 	}
+	@media print {
+		#disqus_thread, #sidebar {
+    			display:none;
+  		}
+	}
 </style>
 <link href="https://plus.google.com/101694420547181110548" rel="publisher" />
   </head>
@@ -43,7 +48,7 @@
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 -->
 	</div>
-    <div class="col-md-3">
+    <div class="col-md-3" id="sidebar">
 		<center>
 			<h2>Alex Collins</h2>
 			<p>
