@@ -132,3 +132,5 @@ plugin {
 ~~~
 
 This is an interesting development in the Maven eco-system. It is certainly a lot of fun to play around with.
+
+Core Extension is not the only new feature in [Maven 3.3.1](http://blog.soebes.de/blog/2015/03/17/apache-maven-3-dot-3-1-features/), there is only per-project JVM and and Maven configuration that looks really useful to ensure you and your team, and your CI are using the same, correct set-up.
