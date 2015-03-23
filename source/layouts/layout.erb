@@ -30,6 +30,24 @@
 <div class="row">
     <div class="col-md-9 article">
    		<h1><%= current_page.data.title  %></h1>
+
+<!-- begin advert -->
+<% if ((current_page.data.tags || '').include?('docker')) %>
+<table class="table">
+    <tr>
+    <td>
+        <center>
+            <a href="https://zwischenzugs.wordpress.com/2015/03/14/docker-in-practice-a-guide-for-engineers/"><img src="https://zwischenzugs.files.wordpress.com/2015/03/dip.jpg?w=80" class="thumbnail"/></a>
+        </center>
+    </td>
+    <td>
+                <p class="well"><b>Docker in Practice</b> is now available to buy on the  <a href="https://zwischenzugs.wordpress.com/2015/03/14/docker-in-practice-a-guide-for-engineers/">Manning Early Access Program</a>. You can get 50% off the book with the code ‘mlmiell’ and help to shape its content in the author forum.</p>
+    </td>
+    </tr>
+    </table>
+    <% end %>
+        <!-- end advert -->
+
     	<%= yield %>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
@@ -58,6 +76,21 @@
 		<p>
 			Java technical lead and solutions architect in London for the UK IT industry for over ten years. <a href="/about-me">more...</a>
 		</p>
+                <!-- Begin MailChimp Signup Form -->
+<form action="//foo.us8.list-manage.com/subscribe/post?u=e034a5aba98b70863b98b0592&amp;id=24aa18470b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate form" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll" class="form-group">
+	<label for="mce-EMAIL" class="control-label">Subscribe to my email list
+	<input type="email" value="" name="EMAIL" class="email form-control" id="mce-EMAIL" placeholder="Email" required>
+        </label>
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;"><input type="text" name="b_e034a5aba98b70863b98b0592_24aa18470b" tabindex="-1" value=""></div>
+    <div class="form\group"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-default"></div>
+    </div>
+</form>
+
+<!--End mc_embed_signup-->
+        
+        <!-- begin related -->
         <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
         <% if (related.length >0) %>
       <h4>Related</h4>
@@ -67,6 +100,9 @@
         <% end %>
       </ol>
     <% end %>
+        <!-- end related -->
+        
+        <!-- begin recent -->
       <h4>Recent</h4>
       <ul>
         <% blog.articles[0...5].each do |article| %>
@@ -77,13 +113,20 @@
               <% blog.tags.sort.find_all{|tag,article| article.size>2}.each do |tag, articles| %>
           <%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a>&nbsp;&nbsp;
         <% end %>
+    <!-- end recent -->
+    
+    <!-- begin buttons -->
 	<p>
       <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a>
       <a class="btn btn-primary btn-xs" href="/feed.xml">RSS</a>
       <a class="btn btn-primary btn-xs" href="http://uk.linkedin.com/in/alexecollins">LinkedIn</a>
 </p>
+      <!-- end buttons -->
+    
     </div>
 </div>
+      
+      <!-- begin analytics -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -95,5 +138,6 @@
   ga('send', 'pageview');
 
 </script>
+      <!-- end analytics -->
   </body>
 </html>
