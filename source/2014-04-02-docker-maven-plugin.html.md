@@ -19,21 +19,19 @@ Anything the `docker` command will do for you. E.g. if you want to attach to a c
 
 Sounds great! How about a short tutorial?
 ---
-I'm going to assume you have Docker installed and running. If you're on OS-X, and using boot2docker, then you'll need to [set-up port forwards](/content/first-steps-with-docker).
-
-The project has an example which creates a container that run a standalone JAR ([they're so hot right now!](http://martinfowler.com/articles/microservices.html)) in [it's tests](https://github.com/alexec/docker-maven-plugin/tree/master/src/it/build-test-it). 
+The project has an example which creates a container that run a standalone JAR ([they're so hot right now!](http://martinfowler.com/articles/microservices.html)) in [here](https://github.com/alexec/drop-wizard-in-a-box). 
 
 Checkout the code and quickly build it and run the tests:
 
 ~~~
-git clone https://github.com/alexec/docker-maven-plugin
+git clone https://github.com/alexec/drop-wizard-in-a-box.git
+cd drop-wizard-in-a-box
 mvn install -Prun-its
 ~~~
 
 You'll have the example ready to examine:
 
 ~~~
-$ cd target/it/build-test-it/
 $ find . -type f
 ./hello-world.yml
 ./pom.xml
@@ -59,27 +57,28 @@ What have we got here? It's a pretty simple Drop-Wizard Hello World Micro-Servic
 
 Our app needs it's database set-up, so run this:
 
-	$ java -jar target/example-1.0-SNAPSHOT.jar db migrate hello-world.yml
+	$ java -jar target/drop-wizard-in-a-box-1.0.0-SNAPSHOT.jar db migrate hello-world.yml
 	Can not read response from server. 
 
 It's failed to run - that's not very impressive! That's because, you need a MySQL server running on port 3306, to set-up the database. Lets use the plugin to build this for us:
 
 	$ mvn docker:package
 	..
-	$ docker ps -a|grep mysql
-	2154b8780ad9        0b5620021ade          /usr/bin/mysqld_safe   8 minutes ago       Exit 137                                example_app/example_mysql,example_mysql 
+	$ docker images | head
+    REPOSITORY                                                   TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+    registry/drop-wizard-in-a-box-app                            1.0.0-SNAPSHOT      76614734bdcd        3 minutes ago       461 MB
 
 There we go, a set-up and configured container which we can start:
 
-	$ docker run -i -i -p 3306:3306 -name example_mysql example_mysql
+	$ docker run -i -p 3306:3306 registry/drop-wizard-in-a-box-mysql:1.0.0-SNAPSHOT
 
 Now we need to set-up the database:
 
-	$ java -jar target/example-1.0-SNAPSHOT.jar db migrate hello-world.yml
+	$ java -jar target/drop-wizard-in-a-box-1.0.0-SNAPSHOT.jar db migrate hello-world.yml
 	...
-	$ java -jar target/example-1.0-SNAPSHOT.jar server hello-world.yml
+	$ java -jar target/drop-wizard-in-a-box-1.0.0-SNAPSHOT.jar server hello-world.yml
 
-Now lets test it, at [http://localhost:8080/hello-world](http://localhost:8080/hello-world) you should see:
+Now lets test it, at <http://localhost:8080/hello-world> you should see:
 
 ~~~json
 {"id":1,"content":"Hello, Stranger!"}
@@ -87,11 +86,9 @@ Now lets test it, at [http://localhost:8080/hello-world](http://localhost:8080/h
 
 Great! Lets have a look and the config is `src/main/docker`. Each sub-directory is for a single container. There are at least two files in each, a `Dockerfile`, which should not container any surprises:
 
-	FROM centos
+	FROM dockerfile/java:oracle-java7
 	
-	RUN yum -y install java-1.7.0-openjdk-devel.x86_64
-	
-	ADD example-1.0-SNAPSHOT.jar /
+	ADD ${project.build.finalName}.jar /
 	ADD hello-world.yml /
 	ADD run.sh /
 	
@@ -107,7 +104,7 @@ The second file is `conf.yml`, lets take a closer look:
 ~~~yaml
 packaging:
   add:
-    - target/example-1.0-SNAPSHOT.jar
+    - target/${project.build.finalName}.jar
     - hello-world.yml
 ports:
   - 8080
@@ -128,14 +125,14 @@ The hawk-eyed amongst you will have noticed that `run.sh` is also in the directo
 	
 	sed -i "s/localhost:3306/$EXAMPLE_MYSQL_PORT_3306_TCP_ADDR:3306/" hello-world.yml
 	
-	java -jar example-1.0-SNAPSHOT.jar db migrate hello-world.yml
-	java -jar example-1.0-SNAPSHOT.jar server hello-world.yml
+	java -jar ${project.build.finalName}.jar db migrate hello-world.yml
+	java -jar ${project.build.finalName}.jar server hello-world.yml
 
 Docker reveals the exposed ports of a linked container as environment variables. As the plugin uses the container name as the alias, we can `sed` it into place. 
 	
 The plugin does more than just building containers. It'll start and stop them for tests too. You can try this out yourself:
 
-	$ mvn clean install
+	$ mvn verify
 	...
 	-------------------------------------------------------
 	 T E S T S
@@ -147,9 +144,4 @@ The plugin does more than just building containers. It'll start and stop them fo
 
 Horay! We've created a tested docker image ready to be pushed to a repository and deployed!
 
-	$ docker commit example_app alexec/example_app
-	$ docker push alexec/example_app
-
-Credits
----
-Credit where credit is due: [kyelykh's docker-java library.](https://github.com/kpelykh/docker-java)
+	$ mvn docker:push
