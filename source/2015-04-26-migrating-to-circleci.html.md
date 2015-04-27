@@ -166,12 +166,11 @@ You can create a build pipeline that starts one build when another finishes. To 
 
 You need to then create an API token and  update the environment variables for your build. Finally, you can kick it off in your `circle.yml`:
 
-	test:
-	 override:
-	  …
-	  - ./circle.sh start_build docker-maven-plugin
-
-One problem I have yet to sort out here is that the build is always started, but I only really run the downstream build if this one is passing. This will prevent too many false red builds.
+	deployment:
+	 staging:
+	   branch: master
+	   commands:
+		  - ./circle.sh start_build docker-maven-plugin
 
 ## Summary
 
