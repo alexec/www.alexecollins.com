@@ -32,20 +32,18 @@
    		<h1><%= current_page.data.title  %></h1>
 
 <!-- begin advert -->
-<% if ((current_page.data.tags || '').include?('docker')) %>
 <table class="table">
     <tr>
     <td>
         <center>
-            <a href="https://zwischenzugs.wordpress.com/2015/03/14/docker-in-practice-a-guide-for-engineers/"><img src="https://zwischenzugs.files.wordpress.com/2015/03/dip.jpg?w=80" class="thumbnail"/></a>
+            <a href="http://selenium-webdriver-in-practice.github.io"><img src="images/liang_cover100.jpg" class="thumbnail"/></a>
         </center>
     </td>
     <td>
-                <p class="well"><b>Docker in Practice</b> is now available to buy on the  <a href="https://zwischenzugs.wordpress.com/2015/03/14/docker-in-practice-a-guide-for-engineers/">Manning Early Access Program</a>. You can get 50% off the book with the code ‘mlmiell’ and help to shape its content in the author forum.</p>
+                <p class="well"><b>Big news!</b> I've been working hard getting <b>Selenium WebDriver in Practice</b> ready and it is now available to buy on the <a href="http://selenium-webdriver-in-practice.github.io">Manning Early Access Program</a>. It provides practical and useful techniques you can use with WebDriver, to get the very best out of it in your projects.</p>
     </td>
     </tr>
     </table>
-    <% end %>
         <!-- end advert -->
 
     	<%= yield %>
