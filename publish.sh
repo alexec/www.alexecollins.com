@@ -1,11 +1,6 @@
-#!/bin/sh
-set -ue
-
-git push
-
-ssh ec2 <<'ENDSSH'
+#! /bin/bash
 set -eux
-sudo su -
-cd www.alexecollins.com
-./build.sh
-ENDSSH
+
+git pull
+middleman build
+ansible-playbook -i inventory site.yml

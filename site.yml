@@ -1,0 +1,15 @@
+---
+- hosts: webservers
+  user: ubuntu
+  sudo: true
+  tasks:
+   - name: install nginx
+     apt: pkg=nginx state=installed update_cache=true
+   - name: set-up nginx default site
+     synchronize: src=default dest=/etc/nginx/sites-available/default
+     notify: restart nginx      
+   - name: sync files
+     synchronize: src=build/ dest=/usr/share/nginx/html/
+  handlers:
+   - name: restart nginx
+     service: name=nginx state=restarted
