@@ -100,7 +100,7 @@ Change Servlet Container To Undertow
 ---
 By default, Spring Boot uses Tomcat. Tomcat uses around 110mb of heap, and has 16 threads: 
 
-![tomcat]](images/tomcat-spring-boot-jvisualvm.png)
+![tomcat](/images/tomcat-spring-boot-jvisualvm.png)
 
 Undertow is lightweight servlet container from JBoss. You can [switch to Undertow](http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-use-undertow-instead-of-tomcat) to get a performance improvement. Firstly, exclude Tomcat from your dependencies:
 
@@ -124,7 +124,7 @@ Add Undertow:
 
 Undertow uses around 90MB and has 13 threads: 
 
-![undertow]](images/undertow-spring-boot-jvisualvm.png)
+![undertow](/images/undertow-spring-boot-jvisualvm.png)
 
 Conclusion
 ---
