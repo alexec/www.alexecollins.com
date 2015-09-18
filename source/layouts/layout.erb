@@ -75,8 +75,15 @@
 			Java technical lead and solutions architect in London for the UK IT industry for over ten years. <a href="/about-me">more...</a>
 		</p>
 
-<!--End mc_embed_signup-->
-        
+        <!-- begin docker -->
+        <h4>Docker Maven Plugin</h4>
+        <p>Version 2.10.4 released, <a href="https://github.com/alexec/docker-maven-plugin/blob/master/CHANGELOG.md">more...</a></p>
+        <pre style="font-size:50%">&lt;dependency&gt;
+  &lt;groupId&gt;com.alexecollins.docker&lt;/groupId&gt;
+  &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;2.10.4&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+        <!-- end docker -->
         <!-- begin related -->
         <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
         <% if (related.length >0) %>
@@ -101,7 +108,7 @@
           <%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a>&nbsp;&nbsp;
         <% end %>
     <!-- end recent -->
-    
+    </hr/>
     <!-- begin buttons -->
 	<p>
       <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a>
