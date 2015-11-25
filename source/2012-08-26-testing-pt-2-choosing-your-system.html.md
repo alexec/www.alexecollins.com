@@ -21,4 +21,4 @@ tags: testing,oped
 <p class="c0"><span>Consider if the system is usable by both developers, and to less technical people - will you want testers or QA to be able to write tests?</span></p>
 <p class="c1 c0"><span></span></p>
 <p class="c0"><span>Once upon a time I thought this was a no brainer: is the test system fully automated? Or, is it going to cost your company money each time you run them?</span></p>
-<p><a href="/content/testing-pt-1">&larr; Back to part 1</a> ~ <a href="/content/testing-pt-3-writing-tests">On to part 3 &rarr;</a></p>
+<p><a href="/testing-pt-1">&larr; Back to part 1</a> ~ <a href="/testing-pt-3-writing-tests">On to part 3 &rarr;</a></p>

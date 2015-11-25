@@ -114,4 +114,4 @@ public class BadCounterTest {
 
 <h2>Further Reading</h2>
 
-<p>I've written <a href="/content/5-tips-unit-testing-threaded-code">a post on testing threaded code for correctness</a>. You may also wish to read more generally:</p>
+<p>I've written <a href="/5-tips-unit-testing-threaded-code">a post on testing threaded code for correctness</a>. You may also wish to read more generally:</p>

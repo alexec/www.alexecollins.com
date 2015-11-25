@@ -58,4 +58,4 @@ tags: swing,java,plaf
 	</style>
 	<bind style="hover" type="region" key="Button"/>
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-4-tiling-images">&larr; Back to part 4</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-6-text-fields">On to part 6 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-4-tiling-images">&larr; Back to part 4</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-6-text-fields">On to part 6 &rarr;</a></p>

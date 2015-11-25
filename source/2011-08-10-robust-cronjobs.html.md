@@ -52,4 +52,4 @@ tags: unix
 
 <p>Note that I have to escape the percentage symbols, and that I append to the log file so re-runs won't erase the old logs.</p>
 
-<p>If you enjoyed this post, you might be interested in <a href="/content/tips-robust-bash-scripts">this one on robust scripts</a>.</p>
+<p>If you enjoyed this post, you might be interested in <a href="/tips-robust-bash-scripts">this one on robust scripts</a>.</p>

@@ -6,7 +6,7 @@ tags: hibernate,jpa,java,spring
 
 <p>This tutorial will show you how to take a basic Hibernate/JPA app, convert it into a Spring MVC web project to be able to view the database in a web browser, and finally use Spring's @Transactional annotation to reduce boiler plate code.</p>
 
-<p>This tutorial assumes you're familiar with Java and Maven, and that you've completed the <a href="/content/tutorial-hibernate-jpa-part-1">first part of this tutorial</a>. You'll also need to have downloaded and installed Tomcat.</p>
+<p>This tutorial assumes you're familiar with Java and Maven, and that you've completed the <a href="/tutorial-hibernate-jpa-part-1">first part of this tutorial</a>. You'll also need to have downloaded and installed Tomcat.</p>
 
 <p>You may wish to check out the code freshly from <a href="https://github.com/alexec/tutorial-hibernate-jpa/tree/part-1">Github</a>.</p>
 
@@ -294,7 +294,7 @@ public String createUser(Model model, String name) {
 }
 ~~~
 
-<p>We've used the @Transactional annotation here. When we do this, Spring will create a proxy object for our bean and manage the transaction for us, beginning, committing and rolling back when errors occur. This is much less code (one line vs about a dozen) and safer (less chance for a typographical error) than opening and closing the transaction ourself. You can see an example of the code for the verbose version in <a href="/content/tutorial-hibernate-jpa-part-1">this post</a>. We need to tell Spring to support this by adding the following lines to our Spring context: telling it to use annotation based transactions, and what bean should manage the transactions:</p>
+<p>We've used the @Transactional annotation here. When we do this, Spring will create a proxy object for our bean and manage the transaction for us, beginning, committing and rolling back when errors occur. This is much less code (one line vs about a dozen) and safer (less chance for a typographical error) than opening and closing the transaction ourself. You can see an example of the code for the verbose version in <a href="/tutorial-hibernate-jpa-part-1">this post</a>. We need to tell Spring to support this by adding the following lines to our Spring context: telling it to use annotation based transactions, and what bean should manage the transactions:</p>
 
 ~~~xml
 <tx:annotation-driven/>

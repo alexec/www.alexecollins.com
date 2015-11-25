@@ -53,4 +53,4 @@ tags: unix,tips
 	...
 	./win file.txt
 
-<p>If you enjoyed this post, perhaps you'd enjoy <a href="/content/robust-cronjobs">this post on robust cron-jobs</a>.</p>
+<p>If you enjoyed this post, perhaps you'd enjoy <a href="/robust-cronjobs">this post on robust cron-jobs</a>.</p>

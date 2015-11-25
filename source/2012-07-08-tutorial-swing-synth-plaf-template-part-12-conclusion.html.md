@@ -13,4 +13,4 @@ tags: swing,java,plaf
 <li>I’ve not talked about controlling the sizing components. Perhaps I'll blog about this soon.</li>
 </ul>
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-11-targeting-styles">&larr; Back to part 11</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-11-targeting-styles">&larr; Back to part 11</a></p>

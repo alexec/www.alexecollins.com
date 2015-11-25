@@ -18,4 +18,4 @@ tags: swing,java,plaf
 	    g2.drawRoundRect(x, y, w - 1, h - 1, arc, arc);
 	}
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-5-gradients">&larr; Back to part 5</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-7-scroll-bars">On to part 7 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-5-gradients">&larr; Back to part 5</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-7-scroll-bars">On to part 7 &rarr;</a></p>

@@ -36,4 +36,4 @@ tags: swing,java,plaf
 	    return new Color(color.getRed(), color.getGreen(), color.getBlue(), 0x88);
 	}
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-6-text-fields">&larr; Back to part 6</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-8-check-boxes-and-radio-buttons">On to part 8 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-6-text-fields">&larr; Back to part 6</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-8-check-boxes-and-radio-buttons">On to part 8 &rarr;</a></p>

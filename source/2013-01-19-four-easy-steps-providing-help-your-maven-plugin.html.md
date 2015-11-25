@@ -64,4 +64,4 @@ vbox:provision
 ...
 ~~~
 
-<p>An example of the usage can be <a href="https://github.com/alexec/maven-vbox-plugin/tree/master/vbox-maven-plugin">found on GitHub</a>. And I've written <a href="/content/tips-writing-maven-plugins">tips on writing Maven plugins before</a>.</p>
+<p>An example of the usage can be <a href="https://github.com/alexec/maven-vbox-plugin/tree/master/vbox-maven-plugin">found on GitHub</a>. And I've written <a href="/tips-writing-maven-plugins">tips on writing Maven plugins before</a>.</p>

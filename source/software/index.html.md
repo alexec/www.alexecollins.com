@@ -11,11 +11,11 @@ A Maven plugin that creates and provisions VirtualBox VMs. <a href="https://gith
 
 <h2>Secure Edit</h2>
 
-A simple plain text editor that encrypts the files you edit in it. <a href="/content/secure-edit">more...</a>
+A simple plain text editor that encrypts the files you edit in it. <a href="/secure-edit">more...</a>
 
 <h2>Link Checker</h2>
 
-A simple web site link checker. <a href="/content/web-site-link-checker">more...</a>
+A simple web site link checker. <a href="/web-site-link-checker">more...</a>
 
 <h2>MSN to XMPP Adapter</h2>
 
@@ -23,8 +23,8 @@ An application to allow iChat users to speak to their MSN colleagues. <a href="h
 
 <h2>Unified Static Content Compressor</h2>
 
-An application to compress web site's static content to provide performance improvements. <a href="/content/unified-static-content-compressor">more...</a>
+An application to compress web site's static content to provide performance improvements. <a href="/unified-static-content-compressor">more...</a>
 
 <h2>Stretch for 60s</h2>
 
-A small tool (web page) that counts for 60 .. 0 and make a beep noise, for timing stretches. <a href="/content/stretch-60s">more...</a>
+A small tool (web page) that counts for 60 .. 0 and make a beep noise, for timing stretches. <a href="/stretch-60s">more...</a>

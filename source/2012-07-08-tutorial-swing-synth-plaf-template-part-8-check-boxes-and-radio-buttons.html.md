@@ -70,4 +70,4 @@ tags: swing,java,plaf
 
 <p>Code for radio button is very similar.</p>
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-7-scroll-bars">&larr; Back to part 7</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-9-lists">On to part 9 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-7-scroll-bars">&larr; Back to part 7</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-9-lists">On to part 9 &rarr;</a></p>

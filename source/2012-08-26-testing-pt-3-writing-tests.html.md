@@ -34,4 +34,4 @@ tags: testing,oped
 	<li class="c1"><span>How long is the mean time between test failure, fixing the faulty code and rerun of the test?</span></li>
 </ol>
 <p class="c2"><span></span></p>
-<p><a href="/content/testing-pt-2-choosing-your-system">&larr; Back to part 2</a> ~ <a href="/content/testing-pt-4-test-support-and-test-doubles">On to part 4 &rarr;</a></p>
+<p><a href="/testing-pt-2-choosing-your-system">&larr; Back to part 2</a> ~ <a href="/testing-pt-4-test-support-and-test-doubles">On to part 4 &rarr;</a></p>

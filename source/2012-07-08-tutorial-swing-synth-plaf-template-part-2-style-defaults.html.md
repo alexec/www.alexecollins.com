@@ -44,4 +44,4 @@ tags: swing,java,plaf
 	<bind style="padding" type="region" key="List"/>
 	<bind style="padding" type="region" key="Tree"/>
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-1">&larr; Back to part 1</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-3-custom-painter">On to part 3 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-1">&larr; Back to part 1</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-3-custom-painter">On to part 3 &rarr;</a></p>

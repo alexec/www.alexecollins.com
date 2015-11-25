@@ -10,4 +10,4 @@ tags: swing,java,plaf
 	    paintVerticalGradient(context, graphics, x, y, (int)(w * ((JProgressBar) context.getComponent()).getPercentComplete()), h);
 	}
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-9-lists">&larr; Back to part 9</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-11-targeting-styles">On to part 11 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-9-lists">&larr; Back to part 9</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-11-targeting-styles">On to part 11 &rarr;</a></p>

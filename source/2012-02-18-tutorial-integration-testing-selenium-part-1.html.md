@@ -186,4 +186,4 @@ You shouldn't see any failures. What you will have is a lingering Firefox. It wo
 
 Naturally, if we create another test, we'll soon be violating DRY principles. We'll come to that in the next part, as well as looking at what happens when we require a database connection, and some other ways to make sure that your tests are simple to write and easy to maintain.
 
-<a href="/content/tutorial-integration-testing-selenium-part-2">Continue to part 2</a>
+<a href="/tutorial-integration-testing-selenium-part-2">Continue to part 2</a>

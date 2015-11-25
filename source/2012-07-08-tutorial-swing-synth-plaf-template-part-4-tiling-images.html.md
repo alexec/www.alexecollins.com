@@ -19,4 +19,4 @@ tags: swing,java,plaf
 	    }
 	}
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-3-custom-painter">&larr; Back to part 3</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-5-gradients">On to part 5 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-3-custom-painter">&larr; Back to part 3</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-5-gradients">On to part 5 &rarr;</a></p>

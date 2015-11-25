@@ -410,4 +410,4 @@ This is the basics to get up and running with Hibernate JPA. In the next part of
 
 This tutorial is <A href="https://github.com/alexec/tutorial-hibernate-jpa/tree/part-1">on Github</a>.
 
-You might want to do <a href="/content/tutorial-hibernate-jpa-spring-mvc-part-2">Part 2</a>.
+You might want to do <a href="/tutorial-hibernate-jpa-spring-mvc-part-2">Part 2</a>.

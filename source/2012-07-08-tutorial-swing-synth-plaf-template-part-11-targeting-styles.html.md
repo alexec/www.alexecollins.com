@@ -17,4 +17,4 @@ title: "Tutorial: Swing Synth PLAF Template - Part 11: Targeting Styles"
 	</style>
 	<bind style="primary" type="name" key="primary"/>
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-10-progress-bars">&larr; Back to part 10</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-12-conclusion">On to part 12 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-10-progress-bars">&larr; Back to part 10</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-12-conclusion">On to part 12 &rarr;</a></p>

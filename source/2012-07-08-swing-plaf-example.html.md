@@ -175,4 +175,4 @@ tags: swing,java,plaf
 
 <p>The code for this is <a href="https://github.com/alexec/swing-synth-plaf-template">on Github</a>.</p>
 
-<p>If you're interested in look and feel, then you may want to read <a href="/content/tutorial-swing-synth-plaf-template-part-1">my example of doing a Swing Synth based PLAF.</p>
+<p>If you're interested in look and feel, then you may want to read <a href="/tutorial-swing-synth-plaf-template-part-1">my example of doing a Swing Synth based PLAF.</p>

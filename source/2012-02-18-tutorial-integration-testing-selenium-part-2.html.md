@@ -4,9 +4,9 @@ tags: selenium, testing, java,spring
 ---
 <h2>Overview</h2>
 
-In the <a href="/content/tutorial-integration-testing-selenium-part-1">previous part of this tutorial</a> I covered the basics of setting up Maven with a small web project running integration tests. This post will cover <a href="http://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Protected_Variations">protected variation</a> using page objects and Spring context.
+In the <a href="/tutorial-integration-testing-selenium-part-1">previous part of this tutorial</a> I covered the basics of setting up Maven with a small web project running integration tests. This post will cover <a href="http://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Protected_Variations">protected variation</a> using page objects and Spring context.
 
-You'll will need to complete the <a href="/content/tutorial-integration-testing-selenium-part-1">previous post</a> before starting this one.
+You'll will need to complete the <a href="/tutorial-integration-testing-selenium-part-1">previous post</a> before starting this one.
 
 <h2>Spring Context</h2>
 
@@ -377,4 +377,4 @@ In the next part of this tutorial, we'll looking at backing the tests with some 
 
 This tutorial is <a href="https://github.com/alexec/tutorial-selenium">on Github</a>.
 
-You might be interesting in using <a href="/content/tomcat-context-junit-rule">my JUnit @Rule for Tomcat</a>.
+You might be interesting in using <a href="/tomcat-context-junit-rule">my JUnit @Rule for Tomcat</a>.

@@ -38,4 +38,4 @@ tags: swing,java,plaf
 		    return component instanceof  JList ? 0 : component.getFont().getSize() / 2;
 		}
 
-<p><a href="/content/tutorial-swing-synth-plaf-template-part-2-style-defaults">&larr; Back to part 2</a> ~ <a href="/content/tutorial-swing-synth-plaf-template-part-4-tiling-images">On to part 4 &rarr;</a></p>
+<p><a href="/tutorial-swing-synth-plaf-template-part-2-style-defaults">&larr; Back to part 2</a> ~ <a href="/tutorial-swing-synth-plaf-template-part-4-tiling-images">On to part 4 &rarr;</a></p>

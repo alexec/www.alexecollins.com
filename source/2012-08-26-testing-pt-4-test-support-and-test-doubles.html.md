@@ -8,7 +8,7 @@ tags: testing,oped
 	<li class="c0"><span>Test doubles or fixtures won&#39;t be reused if people don&#39;t know about them or how.</span></li>
 </ol>
 <p class="c1 c4"><span></span></p>
-<p class="c1"><span>With JUnit, consider using </span><span class="c5"><a class="c2" href="/content/tutorial-junit-rule">@Rules</a></span> to provide mixin-esq components for tests.</span></p>
+<p class="c1"><span>With JUnit, consider using </span><span class="c5"><a class="c2" href="/tutorial-junit-rule">@Rules</a></span> to provide mixin-esq components for tests.</span></p>
 <p class="c1 c4"><span></span></p>
 <p class="c1"><span>Prefer fakes:</span></p>
 <p class="c1 c4"><span></span></p>
@@ -24,4 +24,4 @@ tags: testing,oped
 	<li>This will work equally as well with RESTful APIs and the like.</li>
 </ol>
 <p class="c1 c4"><span></span></p>
-<p><a href="/content/testing-pt-3-writing-tests">&larr; Back to part 3</a> ~ <a href="/content/testing-pt-5-running-tests">On to part 5 &rarr;</a></p>
+<p><a href="/testing-pt-3-writing-tests">&larr; Back to part 3</a> ~ <a href="/testing-pt-5-running-tests">On to part 5 &rarr;</a></p>

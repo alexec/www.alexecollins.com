@@ -26,4 +26,4 @@ tags: testing,oped
 	<li class="c1"><span>They should run in CI, probably headless, alongside concurrent executions of the same tests. Do they use the same hardcoded directories; are they listening on the same ports?</span></li>
 </ol>
 <p class="c2"><span></span></p>
-<p><a href="/content/testing-pt-4-test-support-and-test-doubles">&larr; Back to part 4</a></p>
+<p><a href="/testing-pt-4-test-support-and-test-doubles">&larr; Back to part 4</a></p>

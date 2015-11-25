@@ -2,7 +2,7 @@
 title: "Tomcat Context JUnit @Rule"
 tags: java,tomcat,junit,testing,tomcat,gist
 ---
-<p>A first draft of a JUnit @Rule that create the test context. This can be used with the Spring context rule for <a href="/content/tutorial-junit-rule">this post</a> to create a complete Spring context for integration tests.</p>
+<p>A first draft of a JUnit @Rule that create the test context. This can be used with the Spring context rule for <a href="/tutorial-junit-rule">this post</a> to create a complete Spring context for integration tests.</p>
 
 	/**
 	 * Creates an context for tests using an Apache Tomcat server.xml.
