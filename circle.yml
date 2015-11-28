@@ -1,3 +1,6 @@
+machine:
+  post:
+  - pip install gsutil
 checkout:
   post:
   - bundler install
