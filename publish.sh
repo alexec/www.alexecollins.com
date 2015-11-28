@@ -2,5 +2,14 @@
 set -eux
 
 git pull
-middleman build
-ansible-playbook -i inventory site.yml
+git status
+
+docker build .
+IMAGE=$(docker images | head -n1)
+docker run --rm -v build:/www.alexcollins.com/build 
+docker rmi -f $IMAGE
+
+gsutil rsync -R build gs://www.alexecollins.com
+gsutil -m acl ch -d AllUsers -r gs://www.alexecollins.com/
+
+open http://www.alexecollins.com/
