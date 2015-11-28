@@ -1,0 +1,442 @@
+<!doctype html> <html> <head> <meta charset=utf-8 /> <meta http-equiv=X-UA-Compatible content='IE=edge;chrome=1'/> <meta name=viewport content="width=device-width, initial-scale=1.0"> <meta name=google-site-verification content=459WLyNfyiKwT7T3IzdCjzIpNP-IVQSOb4tR8b2vQhI /> <title>Alex Collins - Search In A Box With Docker, Elastic Search, Spring Boot, and Selenium</title> <link href="/css/bootstrap.min.css" media=screen rel=stylesheet /> <style type="text/css">
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}	.article img {
+		border: 1px solid #bbb;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 10px;
+	}
+	@media print {
+		#disqus_thread, #sidebar {
+    			display:none;
+  		}
+	}
+</style> <link href="https://plus.google.com/101694420547181110548" rel=publisher /> </head> <body class="elastic-search-in-a-box-with-docker elastic-search-in-a-box-with-docker_index"> <div class=container> <div class=row> <div class="col-md-9 article"> <h1>Search In A Box With Docker, Elastic Search, Spring Boot, and Selenium</h1> <table class=table> <tr> <td> <center> <a href="//selenium-webdriver-in-practice.github.io"><img src="/images/liang_cover100.jpg" class=thumbnail /></a> </center> </td> <td> <p class=well><b>Big news!</b> I've been working hard getting <b>Selenium WebDriver in Practice</b> ready and it is now available to buy on the <a href="//selenium-webdriver-in-practice.github.io">Manning Early Access Program</a>. It provides practical and useful techniques you can use with WebDriver, to get the very best out of it in your projects.</p> </td> </tr> </table> <h1 id=overview>Overview</h1> <p>This tutorial will show you how to build a search service in a box. It'll have a graphical front end to search for some funny jokes (well, they made me laugh). Notably, you'll be able to build, test, and package it into a container with a push of a button.</p> <p>We'll learn about:</p> <ul> <li>Searching and indexing with <a href="//www.elasticsearch.org">Elastic Search</a>,</li> <li>Creating a standalone web-app with <a href="//projects.spring.io/spring-boot/">Spring Boot</a>,</li> <li>Building Docker containers with <a href="https://github.com/alexec/docker-maven-plugin">Docker Maven Plugin</a>,</li> <li>Testing with <a href="//selenide.org">Selenide</a> and <a href="//docs.seleniumhq.org/projects/webdriver/">Selenium WebDriver</a>.</li> </ul> <p>As always, you can checkout the <a href="https://github.com/alexec/search-in-a-box">code on Github</a>.</p> <h2 id=prerequisites>Prerequisites</h2> <p>You'll need to have installed:</p> <ul> <li>Maven,</li> <li>Java (version 7 or later),</li> <li>Docker (or, if you're on a Mac: <a href="//boot2docker.io">Boot2Docker</a>).</li> </ul> <h2 id=preparation>Preparation</h2> <p>Lets create a <code>pom.xml</code> file for our project:</p> <pre class="highlight xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+    <span class="nt">&lt;groupId&gt;</span>search-in-a-box<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>search-in-a-box<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+
+<span class="nt">&lt;/project&gt;</span>
+</pre> <h2 id=create-the-basic-search-query-page>Create The Basic Search Query Page</h2> <p>We're going to build this using <a href="//en.wikipedia.org/wiki/Acceptance_test-driven_development">Acceptance Test Driven Development (ATDD)</a>. As this will be a web application, we're going to use Selenide, a simple DSL that works with Selenium WebDriver to test web apps. Add these dependencies to get started:</p> <pre class="highlight xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>4.12<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.codeborne<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>selenide<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.16<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre> <p>We'll create a test that verifies the homepage shows a search box:</p> <pre class="highlight java"><span class="kn">package</span> <span class="n">searchinabox</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.openqa.selenium.By</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">com</span><span class="o">.</span><span class="na">codeborne</span><span class="o">.</span><span class="na">selenide</span><span class="o">.</span><span class="na">Condition</span><span class="o">.</span><span class="na">exist</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">com</span><span class="o">.</span><span class="na">codeborne</span><span class="o">.</span><span class="na">selenide</span><span class="o">.</span><span class="na">Selenide</span><span class="o">.</span><span class="err">$</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">com</span><span class="o">.</span><span class="na">codeborne</span><span class="o">.</span><span class="na">selenide</span><span class="o">.</span><span class="na">Selenide</span><span class="o">.</span><span class="na">open</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppIT</span> <span class="o">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">homepageShowsSearchBox</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">open</span><span class="o">(</span><span class="s">"/"</span><span class="o">);</span>
+        <span class="err">$</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">cssSelector</span><span class="o">(</span><span class="s">"input[name='query']"</span><span class="o">)).</span><span class="na">should</span><span class="o">(</span><span class="n">exist</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre> <p>Run this test and you'll find it is red. We need to get our search page running!</p> <p>We're going to create a Spring Boot application. Add these lines to your <code>pom.xml</code>:</p> <pre class="highlight xml"><span class="nt">&lt;parent&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.2.1.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/parent&gt;</span>
+</pre> <p>This will sort out our dependency versions for us. Next, we'll be using Spring Boot with Thyme-leaf for templates. Add the Spring Boot dependency:</p> <pre class="highlight xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre> <p>Next, create an application class, this will</p> <ol> <li>Expose the home page,</li> <li>Boot up the application.</li> </ol> <pre class="highlight java"><span class="nd">@SpringBootApplication</span>
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">App</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">home</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"home"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">App</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre> <p>We need some HTML for the home page, so make <code>src/main/resources/templates/home.html</code>:</p> <pre class="highlight html"><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Search In A Box<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"query"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre> <p>When you run the application, you can also run the test and you'll see that it is green. You can also look at the search form manually at <a href="//localhost:8080">http://localhost:8080</a>.</p> <h2 id=searching-for-jokes>Searching For Jokes</h2> <p>Sticking with ATDD, create the test first:</p> <pre class="highlight java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">searchingForBearsFindsTheNorthPollJoke</span><span class="p">(</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+
+    <span class="n">open</span><span class="o">(</span><span class="s">"/"</span><span class="o">);</span>
+    <span class="err">$</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">name</span><span class="o">(</span><span class="s">"query"</span><span class="o">)).</span><span class="na">sendKeys</span><span class="o">(</span><span class="s">"bears"</span><span class="o">);</span>
+    <span class="err">$</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">cssSelector</span><span class="o">(</span><span class="s">"input[type='submit']"</span><span class="o">)).</span><span class="na">submit</span><span class="o">();</span>
+
+    <span class="err">$$</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">tagName</span><span class="o">(</span><span class="s">"td"</span><span class="o">)).</span><span class="na">find</span><span class="o">(</span><span class="n">exactText</span><span class="o">(</span><span class="s">"The North Poll!"</span><span class="o">)).</span><span class="na">should</span><span class="o">(</span><span class="n">exist</span><span class="o">);</span>
+<span class="o">}</span>
+</pre> <p>We need to speak to a client, so create the following Spring Java configuration file:</p> <pre class="highlight java"><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Config</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span><span class="o">(</span><span class="n">destroyMethod</span> <span class="o">=</span> <span class="s">"close"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">Node</span> <span class="n">node</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">NodeBuilder</span><span class="o">.</span><span class="na">nodeBuilder</span><span class="o">().</span><span class="na">node</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">Client</span> <span class="n">client</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">().</span><span class="na">client</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre> <p>Elastic Search creates directory called <code>data</code> in the root of our project. We want this to be cleaned so our test always start with a fresh instance. set-up the Maven Clean Plugin to do so:</p> <pre class="highlight xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>maven-clean-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;filesets&gt;</span>
+            <span class="nt">&lt;fileset&gt;</span>
+                <span class="nt">&lt;directory&gt;</span>data<span class="nt">&lt;/directory&gt;</span>
+            <span class="nt">&lt;/fileset&gt;</span>
+        <span class="nt">&lt;/filesets&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre> <p>We want to make a service for indexing and searching jokes. There's will be quite a bit going on here, so let's break it down:</p> <ol> <li>On start-up create an index called "jokes" to store our jokes in,</li> <li>Then store two jokes, each with unique IDs,</li> <li>Finally, provide a method to search for jokes.</li> </ol> <pre class="highlight java"><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JokeSearchService</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">Client</span> <span class="n">client</span><span class="o">;</span>
+
+    <span class="nd">@PostConstruct</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">indexJokes</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="c1">// create an index name "jokes" to store the jokes in</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">client</span><span class="o">.</span><span class="na">admin</span><span class="o">().</span><span class="na">indices</span><span class="o">().</span><span class="na">prepareCreate</span><span class="o">(</span><span class="s">"jokes"</span><span class="o">).</span><span class="na">get</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IndexAlreadyExistsException</span> <span class="n">ignored</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">}</span>
+
+        <span class="n">storeJoke</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"Why are teddy bears never hungry? "</span><span class="o">,</span> <span class="s">"They are always stuffed!"</span><span class="o">);</span>
+        <span class="n">storeJoke</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"Where do polar bears vote? "</span><span class="o">,</span> <span class="s">"The North Poll!"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="n">storeJoke</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">,</span> <span class="n">String</span> <span class="n">question</span><span class="o">,</span> <span class="n">String</span> <span class="n">answer</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="c1">// index a document ID  of type "joke" in the "jokes" index</span>
+        <span class="n">client</span><span class="o">.</span><span class="na">prepareIndex</span><span class="o">(</span><span class="s">"jokes"</span><span class="o">,</span> <span class="s">"joke"</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">id</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">setSource</span><span class="o">(</span>
+                        <span class="n">XContentFactory</span><span class="o">.</span><span class="na">jsonBuilder</span><span class="o">()</span>
+                                <span class="o">.</span><span class="na">startObject</span><span class="o">()</span>
+                                <span class="o">.</span><span class="na">field</span><span class="o">(</span><span class="s">"question"</span><span class="o">,</span> <span class="n">question</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">field</span><span class="o">(</span><span class="s">"answer"</span><span class="o">,</span> <span class="n">answer</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">endObject</span><span class="o">()</span>
+                <span class="o">)</span>
+                <span class="o">.</span><span class="na">get</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">SearchHit</span><span class="o">[]</span> <span class="n">search</span><span class="o">(</span><span class="n">String</span> <span class="n">query</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">prepareSearch</span><span class="o">(</span><span class="s">"jokes"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">setTypes</span><span class="o">(</span><span class="s">"joke"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">setQuery</span><span class="o">(</span><span class="n">QueryBuilders</span><span class="o">.</span><span class="na">multiMatchQuery</span><span class="o">(</span><span class="n">query</span><span class="o">,</span> <span class="s">"question"</span><span class="o">,</span> <span class="s">"answer"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">get</span><span class="o">().</span><span class="na">getHits</span><span class="o">().</span><span class="na">getHits</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</pre> <p>Update the <code>App</code> and add the following lines so the we have can accept POST requests and display results:</p> <pre class="highlight java"><span class="nd">@Autowired</span>
+<span class="kd">private</span> <span class="n">JokeSearchService</span> <span class="n">jokeSearchService</span><span class="o">;</span>
+
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">search</span><span class="p">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"query"</span><span class="o">)</span> <span class="n">String</span> <span class="n">query</span><span class="o">,</span> <span class="n">Model</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"results"</span><span class="o">,</span> <span class="n">jokeSearchService</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">query</span><span class="o">));</span>
+    <span class="k">return</span> <span class="s">"results"</span><span class="o">;</span>
+<span class="o">}</span>
+</pre> <p>Next, we need a results page so create <code>src/main/resources/templates/results.html</code>:</p> <pre class="highlight html"><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Search In A Box - Results<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;table&gt;</span>
+    <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"result : ${results}"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;td</span> <span class="na">th:text=</span><span class="s">"${result.source.question}"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;td</span> <span class="na">th:text=</span><span class="s">"${result.source.answer}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre> <p>Restart the application, run the test, and you'll see it's now green.</p> <h2 id=putting-the-application-into-a-container>Putting The Application Into A Container</h2> <p>We want to put the application into a Docker container. Spring Boot can create a standalone jar to put it into a container, so add this plugin to the <code>pom.xml</code>:</p> <pre class="highlight xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre> <p>You can see this at work by creating a package:</p> <pre class="highlight shell"><span class="gp">$ </span>mvn package
+...
+spring-boot-maven-plugin:1.2.1.RELEASE:repackage 
+</pre> <p>This replaces the original JAR, with a standalone version.</p> <p>Next, we'll use a plugin to build the container:</p> <pre class="highlight xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.alexecollins.docker<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>docker-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.3.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!-- only needed if you are using Boot2Docker --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.alexecollins.docker<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>docker-java-orchestration-plugin-boot2docker<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.3.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre> <p>The plugin needs some files to create the app. Each directory in <code>src/main/docker</code> in treated as a container, so in <code>src/main/docker/searchinabox</code> create a <code>Dockerfile</code> that:</p> <ol> <li>Adds the JAR, </li> <li>Adds a configuration file,</li> <li>Exposes the ports - both our app on 8080, and Elastic Search on 9200 and 9300 (so it can join a cluster),</li> <li>Sets the start-up command.</li> </ol> <pre class="highlight plaintext">FROM dockerfile/java:oracle-java7
+
+EXPOSE 8080
+EXPOSE 9200
+EXPOSE 9300
+
+ADD ${project.build.finalName}.jar .
+
+CMD java -jar /${project.build.finalName}.jar
+</pre> <p>We need a <code>conf.yml</code> file in the same directory, this:</p> <ol> <li>Indicates that we want to add the JAR as part of the Docker image,</li> <li>States the ports it should expose on the host,</li> <li>A health check URL we can use to smoke test the container, </li> <li>Finally, a tag for the container so we can easily identify it:</li> </ol> <pre class="highlight yaml"><span class="s">packaging</span><span class="pi">:</span>
+  <span class="s">add</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">target/${project.build.finalName}.jar</span>
+<span class="s">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">8080</span>
+  <span class="pi">-</span> <span class="s">9200</span>
+  <span class="pi">-</span> <span class="s">9300</span>
+<span class="s">healthChecks</span><span class="pi">:</span>
+  <span class="s">pings</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">url</span><span class="pi">:</span> <span class="s">http://localhost:9200/</span>
+    <span class="pi">-</span> <span class="s">url</span><span class="pi">:</span> <span class="s">http://localhost:8080/</span>
+<span class="s">tag</span><span class="pi">:</span>
+    <span class="s">searchinabox/searchinabox:${project.version}</span>
+</pre> <p>Package this and start-up the container:</p> <pre class="highlight shell">mvn docker:start
+</pre> <p>You should see this:</p> <pre class="highlight plaintext">[INFO] Starting searchinabox
+...
+[INFO] BUILD SUCCESS
+</pre> <p>The container will be listed by the <code>docker</code> command</p> <pre class="highlight shell"><span class="gp">$ </span>docker ps
+CONTAINER ID        IMAGE                             COMMAND                CREATED             STATUS              PORTS                                                                    NAMES
+f673731a9489        searchinabox/searchinabox:1.0.0-SNAPSHOT   <span class="s2">"/bin/sh -c 'java  -   6 seconds ago       Up 4 seconds        0.0.0.0:8080-&gt;8080/tcp, 0.0.0.0:9200-&gt;9200/tcp, 0.0.0.0:9300-&gt;9300/tcp   search-in-a-box_app  
+</span></pre> <p>We can check we can access Elastic Search by opening the <a href="//localhost:9200">http://localhost:9200</a> URL, and our application by opening <a href="//localhost:8080">http://localhost:8080</a>.</p> <p><strong>Tips</strong></p> <p>Packing containers can go wrong. I find it helpful to print/tail the logs of the last started container with this command:</p> <pre class="highlight shell">docker logs -f <span class="k">$(</span>docker ps -qa|head -n1<span class="k">)</span>
+</pre> <p>We often want to start the container up with a shell to debug it, for example I often get the start command wrong, so here's what I'd do:</p> <pre class="highlight shell">docker run -t -i  searchinabox/searchinabox:1.0.0-SNAPSHOT bash
+</pre> <h2 id=continuous-integration>Continuous Integration</h2> <p>To complete the picture we want Maven to start the containers and run our acceptance tests. We'll use the Maven Failsafe Plugin to run the tests. Add this plugin as follows:</p> <pre class="highlight xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>maven-failsafe-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>integration-test<span class="nt">&lt;/goal&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>verify<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre> <p>We need to tell <code>docker-maven-plugin</code> to start and stop the container, so add these lines to it:</p> <pre class="highlight xml"><span class="nt">&lt;executions&gt;</span>
+    <span class="nt">&lt;execution&gt;</span>
+        <span class="nt">&lt;goals&gt;</span>
+            <span class="nt">&lt;goal&gt;</span>clean<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;goal&gt;</span>start<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;goal&gt;</span>stop<span class="nt">&lt;/goal&gt;</span>
+        <span class="nt">&lt;/goals&gt;</span>
+    <span class="nt">&lt;/execution&gt;</span>
+<span class="nt">&lt;/executions&gt;</span>
+</pre> <p>Finally, test it.</p> <pre class="highlight shell">mvn clean verify
+...
+<span class="o">[</span>info] BUILD SUCCESSFUL
+</pre> <h2 id=conclusion>Conclusion</h2> <p>We seen how to create a search service in a box with Elastic Search, Spring Boot and Docker. We've seen how to create a build using Docker Maven Plugin. I hope you enjoyed this. Here are some exercises for you:</p> <ul> <li>The UI is pretty drab, how about an attractive <a href="//getbootstrap.com">Bootstrap</a> front end?</li> <li>We've let Elastic Code leak all over the place. Perhaps we should refactor it behind an abstraction?</li> <li>We might want to re-index out data. Use Spring to <a href="//spring.io/guides/gs/scheduling-tasks/">schedule the re-indexing</a>.</li> <li>We're not indexing a lot of things? Should we some new indexers for other items?</li> </ul> <div id=disqus_thread></div> <script>
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> </div> <div class=col-md-3 id=sidebar> <center> <h2>Alex Collins</h2> <p> <a href="/"><img src="/images/alex-collins-circle.png"/></a> </p> </center> <p> Java technical lead and solutions architect in London for the UK IT industry for over ten years. <a href="/about-me">more...</a> </p> <h4>Docker Maven Plugin</h4> <p>Version 2.11.4 released, <a href="https://github.com/alexec/docker-maven-plugin/blob/master/CHANGELOG.md">more...</a></p> <pre style="font-size:50%">&lt;dependency&gt;
+  &lt;groupId&gt;com.alexecollins.docker&lt;/groupId&gt;
+  &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;2.11.4&lt;/version&gt;
+&lt;/dependency&gt;</pre> <h4>Related</h4> <ol> <li><a href="/selenium-visual-testing/">Visual Testing With Selenium WebDriver</a></li> <li><a href="/geb-selenium-cucumber-maven-tutorial/">Geb, Selenium, Cucumber & Maven Tutorial</a></li> <li><a href="/migrating-to-circleci/">Migrating to CircleCI</a></li> <li><a href="/gatling-in-10-minutes/">Gatling in 10 Minutes</a></li> <li><a href="/docker-maven-plugin-presentation-at-docker-london/">Docker Maven Plugin Presentation At Docker London</a></li> </ol> <h4>Recent</h4> <ul> <li><a href="/practical-domain-specific-language-tutorial/">Practical Java Domain Specific Language Tutorial</a> <span>Sep 19</span></li> <li><a href="/sonarqube-and-java-8/">Sonarqube And Java 8</a> <span>Sep 17</span></li> <li><a href="/spring-boot-performance/">Spring Boot Performance</a> <span>Sep 5</span></li> <li><a href="/testing-anti-patterns/">Testing Anti-Patterns</a> <span>Jun 23</span></li> <li><a href="/migrating-to-circleci/">Migrating to CircleCI</a> <span>Apr 26</span></li> </ul> <h4>Tags</h4> <a href="/tags/ci/">ci</a> (3)</a>&nbsp;&nbsp; <a href="/tags/concurrency/">concurrency</a> (4)</a>&nbsp;&nbsp; <a href="/tags/docker/">docker</a> (10)</a>&nbsp;&nbsp; <a href="/tags/gist/">gist</a> (13)</a>&nbsp;&nbsp; <a href="/tags/groovy/">groovy</a> (4)</a>&nbsp;&nbsp; <a href="/tags/java/">java</a> (48)</a>&nbsp;&nbsp; <a href="/tags/jmeter/">jmeter</a> (3)</a>&nbsp;&nbsp; <a href="/tags/junit/">junit</a> (7)</a>&nbsp;&nbsp; <a href="/tags/links/">links</a> (14)</a>&nbsp;&nbsp; <a href="/tags/maven/">maven</a> (18)</a>&nbsp;&nbsp; <a href="/tags/oped/">oped</a> (8)</a>&nbsp;&nbsp; <a href="/tags/performance/">performance</a> (6)</a>&nbsp;&nbsp; <a href="/tags/plaf/">plaf</a> (14)</a>&nbsp;&nbsp; <a href="/tags/ruby/">ruby</a> (3)</a>&nbsp;&nbsp; <a href="/tags/selenium/">selenium</a> (9)</a>&nbsp;&nbsp; <a href="/tags/software/">software</a> (10)</a>&nbsp;&nbsp; <a href="/tags/spring/">spring</a> (7)</a>&nbsp;&nbsp; <a href="/tags/swing/">swing</a> (15)</a>&nbsp;&nbsp; <a href="/tags/testing/">testing</a> (23)</a>&nbsp;&nbsp; <a href="/tags/tips/">tips</a> (4)</a>&nbsp;&nbsp; <a href="/tags/tomcat/">tomcat</a> (3)</a>&nbsp;&nbsp; <a href="/tags/unix/">unix</a> (6)</a>&nbsp;&nbsp; <a href="/tags/web/">web</a> (4)</a>&nbsp;&nbsp; </hr/> <p> <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a> <a class="btn btn-primary btn-xs" href="/feed.xml">RSS</a> <a class="btn btn-primary btn-xs" href="//uk.linkedin.com/in/alexecollins">LinkedIn</a> </p> </div> </div> <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25388993-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script> </body> </html>

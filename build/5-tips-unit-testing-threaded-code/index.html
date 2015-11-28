@@ -1,0 +1,447 @@
+<!doctype html> <html> <head> <meta charset=utf-8 /> <meta http-equiv=X-UA-Compatible content='IE=edge;chrome=1'/> <meta name=viewport content="width=device-width, initial-scale=1.0"> <meta name=google-site-verification content=459WLyNfyiKwT7T3IzdCjzIpNP-IVQSOb4tR8b2vQhI /> <title>Alex Collins - 5 Tips for Unit Testing Threaded Code</title> <link href="/css/bootstrap.min.css" media=screen rel=stylesheet /> <style type="text/css">
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}	.article img {
+		border: 1px solid #bbb;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 10px;
+	}
+	@media print {
+		#disqus_thread, #sidebar {
+    			display:none;
+  		}
+	}
+</style> <link href="https://plus.google.com/101694420547181110548" rel=publisher /> </head> <body class="x5-tips-unit-testing-threaded-code x5-tips-unit-testing-threaded-code_index"> <div class=container> <div class=row> <div class="col-md-9 article"> <h1>5 Tips for Unit Testing Threaded Code</h1> <table class=table> <tr> <td> <center> <a href="//selenium-webdriver-in-practice.github.io"><img src="/images/liang_cover100.jpg" class=thumbnail /></a> </center> </td> <td> <p class=well><b>Big news!</b> I've been working hard getting <b>Selenium WebDriver in Practice</b> ready and it is now available to buy on the <a href="//selenium-webdriver-in-practice.github.io">Manning Early Access Program</a>. It provides practical and useful techniques you can use with WebDriver, to get the very best out of it in your projects.</p> </td> </tr> </table> <p>Here's a few tips on how take make testing your code for logical correctness (as opposed to multi-threaded correctness).</p> <p>I find that there are essentially two stereotypical patterns with threaded code:</p> <ol> <li>Task orientated - many, short running, homogeneous tasks, often run within the Java 5 executor framework,</li> <li>Process orientated - few, long running, heterogeneous tasks, often event based (waiting on notification), or polling (sleeping between cycles), often expressed using a thread or runnable.</li> </ol> <p>Testing either type of code can be hard; the work is done in another thread, and therefore notification of completion can be opaque, or is hidden behind a level of abstraction.</p> <p>The code is <a href="https://github.com/alexec/threaded-code-testing">On GitHub</a>.</p> <h2>Tip 1 - Life-cycle Manage Your Objects</h2> <p>Object that have a managed life-cycle are are easier to test, the life-cycle allows for set-up and tear-down, which means you can clean-up after your test and no spurious threads are lying around to pollute other tests.</p> <pre class="highlight plaintext">    private ExecutorService executorService;
+
+    public void start() {
+        executorService = Executors.newSingleThreadExecutor();
+    }
+
+    public void stop() {
+        executorService.shutdown();
+    }
+}
+</pre> <h2>Tip 2 - Set a Timeout on Your Tests</h2> <p>Bugs in code (as you'll see below) can result in a multi-threaded test never completing, as (for example) you're waiting on some flag that never gets set. JUnit lets you set a timeout on your test.</p> <pre class="highlight plaintext">@Test(timeout = 100) // in case we never get a notification
+public void testGivenNewFooWhenIncrThenGetOne() throws Exception {
+...
+</pre> <h2>Tip 3 - Run Tasks in the Same Thread as Your Test</h2> <p>Typically you'll have an object that runs tasks in a thread pool. This means that your unit test might have to wait for the task to complete, but you're not able to know when it would complete. You might guess, for example:</p> <pre class="highlight plaintext">    private final AtomicLong foo = new AtomicLong();
+...
+    public void incr() {
+        executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                foo.incrementAndGet();
+            }
+        });
+    }
+...
+    public long get() {
+        return foo.get();
+    }
+}
+</pre> <p>Consider this test:</p> <pre class="highlight plaintext">    private Foo sut; // system under test
+
+    @Before
+    public void setUp() throws Exception {
+        sut = new Foo();
+        sut.start();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        sut.stop();
+    }
+
+    @Test
+    public void testGivenFooWhenIncrementGetOne() throws Exception {
+        sut.incr();
+        Thread.sleep(1000); // yuk - a slow test - don't do this
+        assertEquals("foo", 1, sut.get());
+    }
+}
+</pre> <p>But this is problematic. Execution is non-uniform so there's no guarantee that this will work on another machine. It's fragile, changes to the code can cause the test to fail as it suddenly take a bit too long. Its slow, as you will be generous with sleep when it fails.</p> <p>A trick is to make the task run synchronously, i.e. in the same thread as the test. Here this can be achieved by injecting the executor:</p> <pre class="highlight plaintext">...
+    public Foo(ExecutorService executorService) {
+        this.executorService = executorService;
+    }
+...
+    public void stop() {
+        // nop
+    }
+</pre> <p>Then you can have use a synchronous executor service (similar in concept to a SynchronousQueue) to test:</p> <pre class="highlight plaintext">    private boolean shutdown;
+
+    @Override
+    public void shutdown() {shutdown = true;}
+
+    @Override
+    public List&amp;amp;lt;Runnable&amp;amp;gt; shutdownNow() {shutdown = true; return Collections.emptyList();}
+
+    @Override
+    public boolean isShutdown() {shutdown = true; return shutdown;}
+
+    @Override
+    public boolean isTerminated() {return shutdown;}
+
+    @Override
+    public boolean awaitTermination(final long timeout, final TimeUnit unit) {return true;}
+
+    @Override
+    public void execute(final Runnable command) {command.run();}
+}
+</pre> <p>An updated test that doesn't need to sleep:</p> <pre class="highlight plaintext">    private Foo sut; // system under test
+    private ExecutorService executorService;
+
+    @Before
+    public void setUp() throws Exception {
+        executorService = new SynchronousExecutorService();
+        sut = new Foo(executorService);
+        sut.start();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        sut.stop();
+        executorService.shutdown();
+    }
+
+    @Test
+    public void testGivenFooWhenIncrementGetOne() throws Exception {
+        sut.incr();
+        assertEquals("foo", 1, sut.get());
+    }
+}
+</pre> <p>Note that you need to life-cycle manage the executor externally to Foo.</p> <h2>Tip 4 - Extract the Work from the Threading</h2> <p>If your thread is waiting for an event, or a time before it does any work, extract the work to its own method and call it directly. Consider this:</p> <pre class="highlight plaintext">    private final Object ready = new Object();
+    private volatile boolean cancelled;
+    private final AtomicLong foo = new AtomicLong();
+
+    @Override
+    public void run() {
+        try {
+            synchronized (ready) {
+                while (!cancelled) {
+                    ready.wait();
+                    foo.incrementAndGet();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace(); // bad practise generally, but good enough for this example
+        }
+    }
+
+    public void incr() {
+        synchronized (ready) {
+            ready.notifyAll();
+        }
+    }
+
+    public long get() {
+        return foo.get();
+    }
+
+    public void cancel() throws InterruptedException {
+        cancelled = true;
+        synchronized (ready) {
+            ready.notifyAll();
+        }
+    }
+}
+</pre> <p>And this test:</p> <pre class="highlight plaintext">    private FooThread sut;
+
+    @Before
+    public void setUp() throws Exception {
+        sut = new FooThread();
+        sut.start();
+        Thread.sleep(1000); // yuk
+        assertEquals("thread state", Thread.State.WAITING, sut.getState());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        sut.cancel();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        sut.cancel();
+    }
+
+    @Test
+    public void testGivenNewFooWhenIncrThenGetOne() throws Exception {
+        sut.incr();
+        Thread.sleep(1000); // yuk
+        assertEquals("foo", 1, sut.get());
+    }
+}
+</pre> <p>Now extract the work:</p> <pre class="highlight plaintext">public void run() {
+    try {
+        synchronized (ready) {
+            while (!cancelled) {
+                ready.wait();
+                undertakeWork();
+            }
+        }
+    } catch (InterruptedException e) {
+        e.printStackTrace(); // bad practise generally, but good enough for this example
+    }
+}
+
+void undertakeWork() {
+    foo.incrementAndGet();
+}
+</pre> <p>Re-factor the test:</p> <pre class="highlight plaintext">    private FooThread sut;
+
+    @Before
+    public void setUp() throws Exception {
+        sut = new FooThread();
+    }
+
+    @Test
+    public void testGivenNewFooWhenIncrThenGetOne() throws Exception {
+        sut.incr();
+        sut.undertakeWork();
+        assertEquals("foo", 1, sut.get());
+    }
+}
+</pre> <h2>Tip 5 - Notify State Change via Events</h2> <p>An alternative to the previous two tips is to use a notification system, so your test can listen to the threaded object.</p> <p>Here's a task oriented example:</p> <pre class="highlight plaintext">    private final AtomicLong foo = new AtomicLong();
+    private ExecutorService executorService;
+
+    public void start() {
+        executorService = Executors.newSingleThreadExecutor();
+    }
+
+    public void stop() {
+        executorService.shutdown();
+    }
+
+    public void incr() {
+        executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                foo.incrementAndGet();
+                setChanged();
+                notifyObservers(); // lazy use of observable
+            }
+        });
+    }
+
+    public long get() {
+        return foo.get();
+    }
+}
+</pre> <p>And its corresponding test (note the use of timeout):</p> <pre class="highlight plaintext">    private ObservableFoo sut;
+    private CountDownLatch updateLatch; // used to react to event
+
+    @Before
+    public void setUp() throws Exception {
+        updateLatch = new CountDownLatch(1);
+        sut = new ObservableFoo();
+        sut.addObserver(this);
+        sut.start();
+    }
+
+    @Override
+    public void update(final Observable o, final Object arg) {
+        assert o == sut;
+        updateLatch.countDown();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        sut.deleteObserver(this);
+        sut.stop();
+    }
+
+    @Test(timeout = 100) // in case we never get a notification
+    public void testGivenNewFooWhenIncrThenGetOne() throws Exception {
+        sut.incr();
+        updateLatch.await();
+        assertEquals("foo", 1, sut.get());
+    }
+}
+</pre> <p>This has pros and cons:</p> <p>Pros:</p> <ol> <li>Creates useful code for listening to the object.</li> <li>Can take advantage of existing notification code, which makes it a good choice where that already exists.</li> <li>Is more flexible, can apply to both tasks and process orientated code.</li> <li>It is more cohesive than extracting the work.</li> </ol> <p>Cons:</p> <ol> <li>Listener code can be complex and introduce its own problems, creating additional production code that ought to be tested.</li> <li>De-couples submission from notification.</li> <li>Requires you to deal with the scenario that no notification is sent (e.g. due to bug).</li> <li>Test code can be quite verbose and therefore prone to having bugs.</li> </ol> <div id=disqus_thread></div> <script>
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> </div> <div class=col-md-3 id=sidebar> <center> <h2>Alex Collins</h2> <p> <a href="/"><img src="/images/alex-collins-circle.png"/></a> </p> </center> <p> Java technical lead and solutions architect in London for the UK IT industry for over ten years. <a href="/about-me">more...</a> </p> <h4>Docker Maven Plugin</h4> <p>Version 2.11.4 released, <a href="https://github.com/alexec/docker-maven-plugin/blob/master/CHANGELOG.md">more...</a></p> <pre style="font-size:50%">&lt;dependency&gt;
+  &lt;groupId&gt;com.alexecollins.docker&lt;/groupId&gt;
+  &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;2.11.4&lt;/version&gt;
+&lt;/dependency&gt;</pre> <h4>Related</h4> <ol> <li><a href="/testing-pt-5-running-tests/">Testing - Pt 5 - Running Tests</a></li> <li><a href="/testing-pt-1/">Testing - Pt 1</a></li> <li><a href="/testing-pt-2-choosing-your-system/">Testing - Pt 2- Choosing Your System</a></li> <li><a href="/testing-pt-3-writing-tests/">Testing - Pt 3 - Writing Tests</a></li> <li><a href="/testing-pt-4-test-support-and-test-doubles/">Testing - Pt 4 - Test Support and Test Doubles</a></li> </ol> <h4>Recent</h4> <ul> <li><a href="/practical-domain-specific-language-tutorial/">Practical Java Domain Specific Language Tutorial</a> <span>Sep 19</span></li> <li><a href="/sonarqube-and-java-8/">Sonarqube And Java 8</a> <span>Sep 17</span></li> <li><a href="/spring-boot-performance/">Spring Boot Performance</a> <span>Sep 5</span></li> <li><a href="/testing-anti-patterns/">Testing Anti-Patterns</a> <span>Jun 23</span></li> <li><a href="/migrating-to-circleci/">Migrating to CircleCI</a> <span>Apr 26</span></li> </ul> <h4>Tags</h4> <a href="/tags/ci/">ci</a> (3)</a>&nbsp;&nbsp; <a href="/tags/concurrency/">concurrency</a> (4)</a>&nbsp;&nbsp; <a href="/tags/docker/">docker</a> (10)</a>&nbsp;&nbsp; <a href="/tags/gist/">gist</a> (13)</a>&nbsp;&nbsp; <a href="/tags/groovy/">groovy</a> (4)</a>&nbsp;&nbsp; <a href="/tags/java/">java</a> (48)</a>&nbsp;&nbsp; <a href="/tags/jmeter/">jmeter</a> (3)</a>&nbsp;&nbsp; <a href="/tags/junit/">junit</a> (7)</a>&nbsp;&nbsp; <a href="/tags/links/">links</a> (14)</a>&nbsp;&nbsp; <a href="/tags/maven/">maven</a> (18)</a>&nbsp;&nbsp; <a href="/tags/oped/">oped</a> (8)</a>&nbsp;&nbsp; <a href="/tags/performance/">performance</a> (6)</a>&nbsp;&nbsp; <a href="/tags/plaf/">plaf</a> (14)</a>&nbsp;&nbsp; <a href="/tags/ruby/">ruby</a> (3)</a>&nbsp;&nbsp; <a href="/tags/selenium/">selenium</a> (9)</a>&nbsp;&nbsp; <a href="/tags/software/">software</a> (10)</a>&nbsp;&nbsp; <a href="/tags/spring/">spring</a> (7)</a>&nbsp;&nbsp; <a href="/tags/swing/">swing</a> (15)</a>&nbsp;&nbsp; <a href="/tags/testing/">testing</a> (23)</a>&nbsp;&nbsp; <a href="/tags/tips/">tips</a> (4)</a>&nbsp;&nbsp; <a href="/tags/tomcat/">tomcat</a> (3)</a>&nbsp;&nbsp; <a href="/tags/unix/">unix</a> (6)</a>&nbsp;&nbsp; <a href="/tags/web/">web</a> (4)</a>&nbsp;&nbsp; </hr/> <p> <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a> <a class="btn btn-primary btn-xs" href="/feed.xml">RSS</a> <a class="btn btn-primary btn-xs" href="//uk.linkedin.com/in/alexecollins">LinkedIn</a> </p> </div> </div> <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25388993-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script> </body> </html>

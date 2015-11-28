@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Alex Collins</title>
+  <subtitle>Java Blog</subtitle>
+  <id>http://www.alexecollins.com/</id>
+  <link href="http://www.alexecollins.com/"/>
+  <link href="http://www.alexecollins.com/feed.xml" rel="self"/>
+  <updated>2015-09-19T17:08:00Z</updated>
+  <author>
+    <name>Alex Collins</name>
+  </author>
+  <entry>
+    <title>Practical Java Domain Specific Language Tutorial</title>
+    <link rel="alternate" href="/practical-domain-specific-language-tutorial/"/>
+    <id>/practical-domain-specific-language-tutorial/</id>
+    <published>2015-09-19T17:08:00Z</published>
+    <updated>2015-09-19T17:08:00Z</updated>
+    <author>
+      <name>Alex Collins</name>
+    </author>
+    <content type="html">&lt;p&gt;This tutorial will teach you how to create a &lt;strong&gt;Domain Special Language (DSL)&lt;/strong&gt; for testing web pages. you'll be taking the canonical &lt;strong&gt;Selenium WebDriver&lt;/strong&gt; hello world – searching using Google, and use it to write a DSL.&lt;/p&gt;
+
+&lt;p&gt;You'll need to be familiar with Java, Maven, and WebDriver would be handy.&lt;/p&gt;
+
+&lt;p&gt;As usual, the code can be found on &lt;a href="https://github.com/alexec/wd-dsl"&gt;Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To start with, create the following &lt;code&gt;pom.xml&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre class="highlight xml"&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0" encoding="UTF-8"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;project&lt;/span&gt; &lt;span class="na"&gt;xmlns:xsi=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/2001/XMLSchema-instance"&lt;/span&gt;
+         &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;"http://maven.apache.org/POM/4.0.0"&lt;/span&gt;
+         &lt;span class="na"&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class="s"&gt;"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;modelVersion&amp;gt;&lt;/span&gt;4.0.0&lt;span class="nt"&gt;&amp;lt;/modelVersion&amp;gt;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;wd-dsl&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;wd-dsl&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.0.0-SNAPSHOT&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;selenium.version&amp;gt;&lt;/span&gt;2.47.0&lt;span class="nt"&gt;&amp;lt;/selenium.version&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.codehaus.groovy&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;groovy&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.4.3&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!-- test --&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.12&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.seleniumhq.selenium&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;selenium-firefox-driver&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${selenium.version}&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.seleniumhq.selenium&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;selenium-support&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${selenium.version}&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+
+&lt;span class="nt"&gt;&amp;lt;/project&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Let's start with a failing test:&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.junit.Test&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebDriverDslTest&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Test&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="n"&gt;canRunExample&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;WebDriverDsl&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;run&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"search-google.groovy"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;And fill out the stub implementation:&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebDriverDsl&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;script&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// TODO&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Not much to look at yet, but lets create an example file for the DSL (save it as &lt;code&gt;src/test/resources/example.groovy&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre class="highlight groovy"&gt;&lt;span class="n"&gt;wd&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;go&lt;/span&gt; &lt;span class="s2"&gt;"http://www.google.com"&lt;/span&gt;
+    &lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="s2"&gt;"#lst-ib"&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"WebDriver Tutorials"&lt;/span&gt;
+    &lt;span class="n"&gt;click&lt;/span&gt; &lt;span class="s2"&gt;"button[type='submit']"&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="nf"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Selenium Tutorials"&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;displayed&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Does the syntax look familiar? This is in fact a valid Groovy program, but this requires something boiler plate code to run, so update your class with these lines:&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;script&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WebDriverDSL&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getResourceAsStream&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;script&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InputStream&lt;/span&gt; &lt;span class="n"&gt;resource&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;WebDriverDSL&lt;/span&gt; &lt;span class="n"&gt;dsl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;WebDriverDSL&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="n"&gt;InputStreamReader&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;InputStreamReader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resource&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;GroovyShell&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Binding&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;singletonMap&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"wd"&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dsl&lt;/span&gt;&lt;span class="o"&gt;)))&lt;/span&gt;
+            &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parse&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+            &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;run&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Closure&lt;/span&gt; &lt;span class="n"&gt;cl&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;cl&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDelegate&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;cl&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setResolveStrategy&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Closure&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;DELEGATE_ONLY&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;cl&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;call&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Those lines are pure boiler-plate scaffolding. I'm not going to explain them in any detail, except to say that it tells the Groovy shell how to bind the script to the DSL class.&lt;/p&gt;
+
+&lt;p&gt;Now, try and run your test, you'll get an error:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;groovy.lang.MissingMethodException: No signature of method: Script1$_run_closure1.go() is applicable for argument types: (java.lang.String) values: [http://www.google.com]
+&lt;/pre&gt;
+
+&lt;p&gt;This is telling us that &lt;code&gt;WebDriverDsl&lt;/code&gt; is missing a method, so lets add a new field and a new method:&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;WebDriver&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FirefoxDriver&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;go&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;location&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;location&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;WebDriver should be quit before you close you program, otherwise you might get many open browser which will ultimately crash your computer. Lets update the class to implement &lt;code&gt;AutoCloseable&lt;/code&gt;, and implement the &lt;code&gt;close&lt;/code&gt; method:&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="nd"&gt;@Override&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;close&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;quit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Finally, you need to close it when done, so update the &lt;code&gt;run&lt;/code&gt; method:&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InputStream&lt;/span&gt; &lt;span class="n"&gt;resource&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WebDriverDSL&lt;/span&gt; &lt;span class="n"&gt;dsl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;WebDriverDSL&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;InputStreamReader&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;InputStreamReader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resource&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;GroovyShell&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Binding&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;singletonMap&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"wd"&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dsl&lt;/span&gt;&lt;span class="o"&gt;)))&lt;/span&gt;
+                &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parse&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;run&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Run the test again, you'll see Firefox open up and open the Google search page – we're making progress. This time you'll see a new error:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;groovy.lang.MissingMethodException: No signature of method: Script1$_run_closure1.set() is applicable for argument types: (java.lang.String, java.lang.String) values: [#lst-ib, WebDriver Tutorials]
+&lt;/pre&gt;
+
+&lt;p&gt;You can implement this, and we also need to implement the other methods, so let's do them all at once:&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;locator&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElement&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;cssSelector&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;locator&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;sendKeys&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;click&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;locator&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElement&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;cssSelector&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;locator&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;click&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Now you have a fully formed, mini-DSL. You can add words to your DSL until you're happy with it!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Sonarqube And Java 8</title>
+    <link rel="alternate" href="/sonarqube-and-java-8/"/>
+    <id>/sonarqube-and-java-8/</id>
+    <published>2015-09-17T09:23:00Z</published>
+    <updated>2015-09-17T09:23:00Z</updated>
+    <author>
+      <name>Alex Collins</name>
+    </author>
+    <content type="html">&lt;p&gt;This article is some tips and help for setting up Java 8 projects for analysis on Sonarqube. My goal is to:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Have static analysis.&lt;/li&gt;
+  &lt;li&gt;Have mutation coverage using Pi Test&lt;/li&gt;
+  &lt;li&gt;Exclude Lombok and XJB generated classes.&lt;/li&gt;
+  &lt;li&gt;Use Maven.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Firstly, it's important to understand some key things about how the Sonar plugin works.  Sonar does static analysis using built in plugins, but test and mutation coverage require Maven plugins to be set-up. This means you need to configure all the plugins in separately.&lt;/p&gt;
+
+&lt;h2 id="static-analysis"&gt;Static Analysis&lt;/h2&gt;
+&lt;p&gt;If you need to exclude some source file for static analysis (e.g. generated sources) you need to add a Sonar property. Unusually for a Maven plugin, you can only configure Sonar via properties.:&lt;/p&gt;
+
+&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;sonar.exclusions&amp;gt;&lt;/span&gt;**/generated-sources/**&lt;span class="nt"&gt;&amp;lt;/sonar.exclusions&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;If your generated files are elsewhere, you'll need to change this.&lt;/p&gt;
+
+&lt;h2 id="jacoco"&gt;Jacoco&lt;/h2&gt;
+&lt;p&gt;Jacoco allows you to gather coverage metrics. It attaches to the JVM when Surefire runs your tests to do this, so you need to tell it prepare an agent:&lt;/p&gt;
+
+&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;plugin&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.jacoco&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;jacoco-maven-plugin&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!-- newer versions do not work with Sonar --&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;0.7.4.201502262128&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+   &lt;span class="nt"&gt;&amp;lt;executions&amp;gt;&lt;/span&gt;
+       &lt;span class="nt"&gt;&amp;lt;execution&amp;gt;&lt;/span&gt;
+           &lt;span class="nt"&gt;&amp;lt;phase&amp;gt;&lt;/span&gt;initialize&lt;span class="nt"&gt;&amp;lt;/phase&amp;gt;&lt;/span&gt;
+           &lt;span class="nt"&gt;&amp;lt;goals&amp;gt;&lt;/span&gt;
+               &lt;span class="nt"&gt;&amp;lt;goal&amp;gt;&lt;/span&gt;prepare-agent&lt;span class="nt"&gt;&amp;lt;/goal&amp;gt;&lt;/span&gt;
+           &lt;span class="nt"&gt;&amp;lt;/goals&amp;gt;&lt;/span&gt;
+       &lt;span class="nt"&gt;&amp;lt;/execution&amp;gt;&lt;/span&gt;
+   &lt;span class="nt"&gt;&amp;lt;/executions&amp;gt;&lt;/span&gt;	    
+&lt;span class="nt"&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href="https://projectlombok.org"&gt;Lombok&lt;/a&gt; generates code from annotated class. You'd want to exclude this generated code from analysis and from test coverage. Therefore you need to configure both Sonar and Jacoco.&lt;/p&gt;
+
+&lt;p&gt;Lombok annotated fields and methods with &lt;code&gt;@SuppressWarnings("all")&lt;/code&gt;. Jacoco ignores this. It does not support exclusion by annotation. You must do this manually. Here is a script you can use:&lt;/p&gt;
+
+&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;sonar.exclusions&amp;gt;&lt;/span&gt;**/generated-sources/**,**/mypackage/MyVO.java/&lt;span class="nt"&gt;&amp;lt;sonar.exclusions&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;You'll need to update this every time you wanted to update this.&lt;/p&gt;
+
+&lt;h2 id="pitest"&gt;PiTest&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://pitest.org"&gt;PiTest&lt;/a&gt; is a mutation coverage tool that help you find untested or redundant code. You need to install &lt;a href="https://github.com/SonarCommunity/sonar-pitest"&gt;the plugin&lt;/a&gt; into Sonar.&lt;/p&gt;
+
+&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.pitest&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;pitest-maven&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.1.6&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;targetClasses&amp;gt;&lt;/span&gt;
+    	&lt;span class="c"&gt;&amp;lt;!-- it is best to specify which classes you want mutation coverage on --&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;targetClass&amp;gt;&lt;/span&gt;mypackage*&lt;span class="nt"&gt;&amp;lt;/targetClass&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/targetClasses&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;targetTests&amp;gt;&lt;/span&gt;
+    	 &lt;span class="c"&gt;&amp;lt;!-- if your project has *IT integration tests, and they are slow, you probably only want to include normal tests --&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;targetTest&amp;gt;&lt;/span&gt;mypackage*Test&lt;span class="nt"&gt;&amp;lt;/targetTest&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/targetTests&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;outputFormats&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!-- Sonar needs the XML output --&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;outputFormat&amp;gt;&lt;/span&gt;XML&lt;span class="nt"&gt;&amp;lt;/outputFormat&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;outputFormat&amp;gt;&lt;/span&gt;HTML&lt;span class="nt"&gt;&amp;lt;/outputFormat&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/outputFormats&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!-- Sonar expects reports to not have timestamps --&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;timestampedReports&amp;gt;&lt;/span&gt;false&lt;span class="nt"&gt;&amp;lt;/timestampedReports&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;To enable PiTest on Sonar, use this property:&lt;/p&gt;
+
+&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;sonar.pitest.mode&amp;gt;&lt;/span&gt;active&lt;span class="nt"&gt;&amp;lt;/sonar.pitest.mode&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Finally, you can create your analysis using:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;mvn clean test sonar:sonar
+&lt;/pre&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Spring Boot Performance</title>
+    <link rel="alternate" href="/spring-boot-performance/"/>
+    <id>/spring-boot-performance/</id>
+    <published>2015-09-05T09:03:00Z</published>
+    <updated>2015-09-05T09:03:00Z</updated>
+    <author>
+      <name>Alex Collins</name>
+    </author>
+    <content type="html">&lt;p&gt;This is an article on how to improve the performance of Spring Boot applications. I've recently been working on a new project. As we primarily use Java and Spring, we've been looking at &lt;strong&gt;Spring Boot&lt;/strong&gt;.  It's allowed us to get up and running quickly. &lt;/p&gt;
+
+&lt;p&gt;Early on, I came across a problem with a prototype for one of our new applications. It was loading the Velocity web page template engine. I could not understand why – it was just some REST services, no web pages. I spent a bit of time looking into this issue, and how to improve the performance of Spring Boot applications, and this is what I found.&lt;/p&gt;
+
+&lt;h2 id="component-scanning-slows-start-up"&gt;Component Scanning Slows Start-up&lt;/h2&gt;
+&lt;p&gt;By default, you may find yourself using the &lt;a href="http://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/SpringBootApplication.html"&gt;&lt;code&gt;@SpringBootApplication&lt;/code&gt;&lt;/a&gt; annotation to get your application configured automatically. This has a couple of side-effects. One is to enable &lt;strong&gt;component scanning&lt;/strong&gt;. This looks through the classes to find ones annotated with Spring "stereotypes", such as &lt;code&gt;@Component&lt;/code&gt;. This is convenient, especially when you start out, but it has two side-effects:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;It slows application start-up time. This will have a greater impact if you have a large application, or a large number of integration tests that need to start up the application to run.&lt;/li&gt;
+  &lt;li&gt;It may load beans you don't want or need. &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You can disable component scanning by removing the &lt;code&gt;@SpringBootApplication&lt;/code&gt; and &lt;code&gt;@ComponentScan&lt;/code&gt; annotations. You'll then need to make each bean explicit in your configuration.&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="c1"&gt;// remove @SpringBootApplication and @ComponentScan, replace with @EnableAutoConfiguration&lt;/span&gt;
+&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
+&lt;span class="nd"&gt;@EnableAutoConfiguration&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SampleWebUiApplication&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+	&lt;span class="c1"&gt;// ...&lt;/span&gt;
+
+	&lt;span class="c1"&gt;// you must explicitly list all beans that were being component scanned	@Bean&lt;/span&gt;
+	&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;MessageController&lt;/span&gt; &lt;span class="n"&gt;messageController&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MessageRepository&lt;/span&gt; &lt;span class="n"&gt;messageRepository&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+		&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;MessageController&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messageRepository&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+	&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;h2 id="auto-configuration-can-load-more-than-you-need"&gt;Auto-Configuration Can Load More Than You Need&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;@SpringBootApplication&lt;/code&gt; annotation implies the &lt;code&gt;@EnableAutoConfiguration&lt;/code&gt; annotation. This enables auto-configuration. This can load components you don't need, slowing application start-up and increasing memory and CPU usage. Lets look at how to use this in a more controlled fashion.&lt;/p&gt;
+
+&lt;p&gt;If you start your application using &lt;code&gt;-Ddebug&lt;/code&gt; it'll print a report of the components it auto-configures:&lt;/p&gt;
+
+&lt;pre class="highlight shell"&gt;mvn spring-boot:run -Ddebug
+…
+&lt;span class="o"&gt;=========================&lt;/span&gt;
+AUTO-CONFIGURATION REPORT
+&lt;span class="o"&gt;=========================&lt;/span&gt;
+
+
+Positive matches:
+-----------------
+
+   DispatcherServletAutoConfiguration
+      - @ConditionalOnClass classes found: org.springframework.web.servlet.DispatcherServlet &lt;span class="o"&gt;(&lt;/span&gt;OnClassCondition&lt;span class="o"&gt;)&lt;/span&gt;
+      - found web application StandardServletEnvironment &lt;span class="o"&gt;(&lt;/span&gt;OnWebApplicationCondition&lt;span class="o"&gt;)&lt;/span&gt;
+
+...
+&lt;/pre&gt;
+
+&lt;p&gt;Copy the classes mentioned in the ""positive matches" section of the report:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;DispatcherServletAutoConfiguration
+EmbeddedServletContainerAutoConfiguration
+ErrorMvcAutoConfiguration
+HttpEncodingAutoConfiguration
+HttpMessageConvertersAutoConfiguration
+JacksonAutoConfiguration
+JmxAutoConfiguration
+MultipartAutoConfiguration
+ServerPropertiesAutoConfiguration
+PropertyPlaceholderAutoConfiguration
+ThymeleafAutoConfiguration
+WebMvcAutoConfiguration
+WebSocketAutoConfiguration
+&lt;/pre&gt;
+
+&lt;p&gt;Update your configuration to explicitly import them, and run your tests to make sure everything is OK.&lt;/p&gt;
+
+&lt;pre class="highlight java"&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
+&lt;span class="nd"&gt;@Import&lt;/span&gt;&lt;span class="o"&gt;({&lt;/span&gt;
+        &lt;span class="n"&gt;DispatcherServletAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;EmbeddedServletContainerAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;ErrorMvcAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;HttpEncodingAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;HttpMessageConvertersAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;JacksonAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;JmxAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;MultipartAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;ServerPropertiesAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;PropertyPlaceholderAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;ThymeleafAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;WebMvcAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;WebSocketAutoConfiguration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+&lt;span class="o"&gt;})&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SampleWebUiApplication&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;I can see that both JMX and web sockets are listed, but I know I'm not using them. I can delete them, and any other dependencies I don't need, to get a performance improvement.  Run your tests again to make sure everything is OK.&lt;/p&gt;
+
+&lt;h2 id="change-servlet-container-to-undertow"&gt;Change Servlet Container To Undertow&lt;/h2&gt;
+&lt;p&gt;By default, Spring Boot uses Tomcat. Tomcat uses around 110mb of heap, and has ~16 threads: &lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="tomcat" src="/images/tomcat-spring-boot-jvisualvm.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Undertow is a lightweight servlet container from JBoss. You can &lt;a href="http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-use-undertow-instead-of-tomcat"&gt;switch to Undertow&lt;/a&gt; to get a performance improvement. Firstly, exclude Tomcat from your dependencies:&lt;/p&gt;
+
+&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;exclusions&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;exclusion&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-tomcat&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/exclusion&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/exclusions&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Add Undertow:    &lt;/p&gt;
+
+&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-undertow&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Undertow uses around 90MB and has ~13 threads: &lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="undertow" src="/images/undertow-spring-boot-jvisualvm.png" /&gt;&lt;/p&gt;
+
+&lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;These are a few small tips on improving the performance of your Spring Boot applications. The benefits are smaller for smaller applications, but for larger applications can quickly become pronounced. Try it out and tell me what you think.&lt;/p&gt;
+
+&lt;p&gt;As usual, &lt;a href="https://github.com/alexec/spring-boot-performance"&gt;the code is on Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://www.techempower.com/benchmarks/"&gt;https://www.techempower.com/benchmarks/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://cloud.google.com/appengine/articles/spring_optimization"&gt;https://cloud.google.com/appengine/articles/spring_optimization&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Testing Anti-Patterns</title>
+    <link rel="alternate" href="/testing-anti-patterns/"/>
+    <id>/testing-anti-patterns/</id>
+    <published>2015-06-23T20:52:00Z</published>
+    <updated>2015-06-23T20:52:00Z</updated>
+    <author>
+      <name>Alex Collins</name>
+    </author>
+    <content type="html">&lt;p&gt;My spare time has been super-busy &lt;a href="http://selenium-webdriver-in-practice.github.io"&gt;writing my book&lt;/a&gt;, doing speeches, and going to conferences. Here are some slides I'm drafting for a future Meetup presentation I'm working on:&lt;/p&gt;
+
+&lt;iframe src="//slides.com/alexec/testing-anti-patterns/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""&gt;&lt;/iframe&gt;
+
+</content>
+  </entry>
+  <entry>
+    <title>Migrating to CircleCI</title>
+    <link rel="alternate" href="/migrating-to-circleci/"/>
+    <id>/migrating-to-circleci/</id>
+    <published>2015-04-26T10:12:00Z</published>
+    <updated>2015-04-26T10:12:00Z</updated>
+    <author>
+      <name>Alex Collins</name>
+    </author>
+    <content type="html">&lt;h2 id="oveview"&gt;Oveview&lt;/h2&gt;
+&lt;p&gt;This weekend I've been migrating my builds to &lt;a href="https://circleci.com"&gt;CircleCI&lt;/a&gt; from &lt;a href="https://travis-ci.org"&gt;TravisCI&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;In this post:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I'll tell you why I moved.&lt;/li&gt;
+  &lt;li&gt;What I like about it.&lt;/li&gt;
+  &lt;li&gt;What problems I had.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So, why would I do this?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CircleCI has Docker container support, which I really need for my Docker plugin builds.&lt;/li&gt;
+  &lt;li&gt;CircleCI has great support for JUnit XML reports.&lt;/li&gt;
+  &lt;li&gt;I need to run integration tests.&lt;/li&gt;
+  &lt;li&gt;I wanted to reduce the amount of time I spent waiting for integration builds on my laptop to run.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I've found it a pleasant, if time consuming task. I've also been able to take time to improve the builds themselves:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Support for &lt;a href="http://saucelabs.com"&gt;Saucelabs&lt;/a&gt; in my WebDriver builds.&lt;/li&gt;
+  &lt;li&gt;Run Docker integration tests.&lt;/li&gt;
+  &lt;li&gt;Deploy snapshots to &lt;a href="https://oss.sonatype.org"&gt;Nexus OSS repository&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Correct my builds together into a pipeline.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="sharing-build-artefacts"&gt;Sharing Build Artefacts&lt;/h3&gt;
+
+&lt;p&gt;The first problem I encountered wast that I wanted to share artefacts between builds. I thought that this was going to be painful, but I resolved really quickly and securely with Maven. Once you've got your OSS keys set-up, you need to do a couple of things:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create a &lt;code&gt;settings.xml&lt;/code&gt; to use for your build.&lt;/li&gt;
+  &lt;li&gt;Pass the secure settings via environment variables.&lt;/li&gt;
+  &lt;li&gt;Use the new &lt;code&gt;settings.xml&lt;/code&gt; in your &lt;code&gt;circle.yml&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You can do this by adding this to the root of your source code:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&amp;lt;settings xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"&amp;gt;
+    &amp;lt;servers&amp;gt;
+        &amp;lt;server&amp;gt;
+            &amp;lt;id&amp;gt;sonatype-nexus-snapshots&amp;lt;/id&amp;gt;
+            &amp;lt;username&amp;gt;${env.SONATYPE_USER}&amp;lt;/username&amp;gt;
+            &amp;lt;password&amp;gt;${env.SONATYPE_PASSWORD}&amp;lt;/password&amp;gt;
+        &amp;lt;/server&amp;gt;
+        &amp;lt;server&amp;gt;
+            &amp;lt;id&amp;gt;sonatype-nexus-staging&amp;lt;/id&amp;gt;
+            &amp;lt;username&amp;gt;${env.SONATYPE_USER}&amp;lt;/username&amp;gt;
+            &amp;lt;password&amp;gt;${env.SONATYPE_PASSWORD}&amp;lt;/password&amp;gt;
+        &amp;lt;/server&amp;gt;
+    &amp;lt;/servers&amp;gt;
+    &amp;lt;profiles&amp;gt;
+        &amp;lt;profile&amp;gt;
+            &amp;lt;id&amp;gt;gpg&amp;lt;/id&amp;gt;
+            &amp;lt;properties&amp;gt;
+                &amp;lt;gpg.passphrase&amp;gt;${env.GPG_PASSPHRASE}&amp;lt;/gpg.passphrase&amp;gt;
+            &amp;lt;/properties&amp;gt;
+        &amp;lt;/profile&amp;gt;
+        &amp;lt;profile&amp;gt;
+            &amp;lt;id&amp;gt;sonatype-staging&amp;lt;/id&amp;gt;
+            &amp;lt;repositories&amp;gt;
+                &amp;lt;repository&amp;gt;
+                    &amp;lt;id&amp;gt;sonatype-staging&amp;lt;/id&amp;gt;
+                    &amp;lt;url&amp;gt;https://oss.sonatype.org/service/local/staging/deploy/maven2/&amp;lt;/url&amp;gt;
+                    &amp;lt;layout&amp;gt;default&amp;lt;/layout&amp;gt;
+                    &amp;lt;releases&amp;gt;
+                        &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
+                    &amp;lt;/releases&amp;gt;
+                &amp;lt;/repository&amp;gt;
+            &amp;lt;/repositories&amp;gt;
+        &amp;lt;/profile&amp;gt;
+    &amp;lt;/profiles&amp;gt;
+    &amp;lt;activeProfiles&amp;gt;
+        &amp;lt;activeProfile&amp;gt;gpg&amp;lt;/activeProfile&amp;gt;
+        &amp;lt;activeProfile&amp;gt;sonatype-staging&amp;lt;/activeProfile&amp;gt;
+    &amp;lt;/activeProfiles&amp;gt;
+&amp;lt;/settings&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;This externalises the usernames and passwords into environment variables that you can securely add to you build. I use the same &lt;code&gt;settings.xml&lt;/code&gt; file locally as I do remotely. This means you need to add your them to you &lt;code&gt;~/.bash_profile&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;export SONATYPE_USER=secret
+export SONATYPE_PASSWORD=secret
+export GPG_PASSPHRASE=secret
+&lt;/pre&gt;
+
+&lt;p&gt;You can them update your &lt;code&gt;circle.yml&lt;/code&gt; do deploy:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;test:
+ override:
+  - mvn deploy -Prun-its -s settings.xml
+&lt;/pre&gt;
+
+&lt;p&gt;To complete this the deployment of your artefacts, you need to add your keys into the web interface.&lt;/p&gt;
+
+&lt;p&gt;For another build to consume them in another build you just need to add the repository to your &lt;code&gt;pom.xml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&amp;lt;repositories&amp;gt;
+    &amp;lt;repository&amp;gt;
+        &amp;lt;id&amp;gt;sonatype-snapshots&amp;lt;/id&amp;gt;
+        &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots/&amp;lt;/url&amp;gt;
+        &amp;lt;snapshots&amp;gt;
+            &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
+        &amp;lt;/snapshots&amp;gt;
+    &amp;lt;/repository&amp;gt;
+&amp;lt;/repositories&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;And, if you have a plugin dependency, you'll also need to add that:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&amp;lt;pluginRepositories&amp;gt;
+    &amp;lt;pluginRepository&amp;gt;
+        &amp;lt;id&amp;gt;sonatype-snapshots&amp;lt;/id&amp;gt;
+        &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots/&amp;lt;/url&amp;gt;
+        &amp;lt;snapshots&amp;gt;
+            &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
+        &amp;lt;/snapshots&amp;gt;
+    &amp;lt;/pluginRepository&amp;gt;
+&amp;lt;/pluginRepositories&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Finally, you need to tell CircleCI about how to resolve dependencies in &lt;code&gt;circle.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;dependencies:
+ override: 
+  - mvn dependency:resolve -s settings.xml
+&lt;/pre&gt;
+
+&lt;h3 id="multi-module-build-dependencies"&gt;Multi-module Build Dependencies&lt;/h3&gt;
+
+&lt;p&gt;By default, CircleCI tries to resolve dependencies before the build. This becomes a problem if you have a multi-module build, as those dependencies will not exist! To fix this, override the set-up to install them locally:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;dependencies:
+ override: 
+  - mvn install -DskipTests     
+&lt;/pre&gt;
+
+&lt;h3 id="stopping-unwanted-services"&gt;Stopping Unwanted Services&lt;/h3&gt;
+
+&lt;p&gt;One of my builds creates a MySQL Docker container listening on port 3306. But when I ran it on CircleCI, it produced a bind error as MySQL was already running. Stop it as follows (you must use &lt;code&gt;sudo&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;test:
+ override:
+  - sudo service mysql stop
+&lt;/pre&gt;
+
+&lt;h3 id="test-reports"&gt;Test Reports&lt;/h3&gt;
+
+&lt;p&gt;CircleCI can collect test reports in the ubiquitous JUnit format. Just add a few lines to your &lt;code&gt;circle.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;test:
+ post:
+  - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+  - find . -type f -regex ".*/target/.*-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+&lt;/pre&gt;
+
+&lt;p&gt;This will collect both Surefire and Failsafe reports.&lt;/p&gt;
+
+&lt;h3 id="removing-docker-containers"&gt;Removing Docker Containers&lt;/h3&gt;
+
+&lt;p&gt;I was seeing this error a lot:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;Driver btrfs failed to remove root filesystem 39ae….95ee: Failed to destroy btrfs snapshot: operation not permitted
+&lt;/pre&gt;
+
+&lt;p&gt;The Docker set-up does not support removal of containers. You need to hack around this in your build if you need to do it. &lt;/p&gt;
+
+&lt;h3 id="creating-a-build-pipeline"&gt;Creating A Build Pipeline&lt;/h3&gt;
+
+&lt;p&gt;You can create a build pipeline that starts one build when another finishes. To do this, you can create a script that uses their API. I called mine &lt;code&gt;circle.sh&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight shell"&gt;&lt;span class="c"&gt;#!/bin/bash -ex&lt;/span&gt;
+
+curl -v -X POST https://circleci.com/api/v1/project/alexec/&lt;span class="nv"&gt;$1&lt;/span&gt;/tree/master?circle-token&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$CIRCLE_TOKEN&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;You need to then create an API token and  update the environment variables for your build. Finally, you can kick it off in your &lt;code&gt;circle.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;deployment:
+ staging:
+   branch: master
+   commands:
+	  - ./circle.sh start_build docker-maven-plugin
+&lt;/pre&gt;
+
+&lt;h2 id="summary"&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;I've had a really good experience with CircleCI. Particularly, I've found it really fast. There are a few rough edges. If you've come from using Jenkins you may miss its massive ecosystem of plugins.&lt;/p&gt;
+
+&lt;p&gt;I've put my &lt;a href="https://github.com/alexec/circleci"&gt;build scripts onto Github&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Docker Maven Plugin Presentation At Docker London</title>
+    <link rel="alternate" href="/docker-maven-plugin-presentation-at-docker-london/"/>
+    <id>/docker-maven-plugin-presentation-at-docker-london/</id>
+    <published>2015-04-09T06:54:00Z</published>
+    <updated>2015-04-09T06:54:00Z</updated>
+    <author>
+      <name>Alex Collins</name>
+    </author>
+    <content type="html">&lt;center&gt;
+	&lt;iframe width="600" height="400" src="http://alexec.github.io/slides/docker-maven-plugin.html" style="border:none;"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+&lt;pre class="highlight plaintext"&gt;git checkout https://github.com/alexec/slides.git
+npm i
+ln -sf docker-maven-plugin.html index.html
+node plugin/notes-server
+&lt;/pre&gt;
+
+&lt;p&gt;Press &lt;code&gt;s&lt;/code&gt; for notes.
+## Search in A Box&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://asciinema.org/a/18581?speed=2"&gt;&lt;img alt="asciicast" src="https://asciinema.org/a/18581.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</content>
+  </entry>
+</feed>

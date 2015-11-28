@@ -1,0 +1,354 @@
+<!doctype html> <html> <head> <meta charset=utf-8 /> <meta http-equiv=X-UA-Compatible content='IE=edge;chrome=1'/> <meta name=viewport content="width=device-width, initial-scale=1.0"> <meta name=google-site-verification content=459WLyNfyiKwT7T3IzdCjzIpNP-IVQSOb4tR8b2vQhI /> <title>Alex Collins - ANTLR 4 and Maven Tutorial</title> <link href="/css/bootstrap.min.css" media=screen rel=stylesheet /> <style type="text/css">
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}	.article img {
+		border: 1px solid #bbb;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 10px;
+	}
+	@media print {
+		#disqus_thread, #sidebar {
+    			display:none;
+  		}
+	}
+</style> <link href="https://plus.google.com/101694420547181110548" rel=publisher /> </head> <body class="antlr4-and-maven-tutorial antlr4-and-maven-tutorial_index"> <div class=container> <div class=row> <div class="col-md-9 article"> <h1>ANTLR 4 and Maven Tutorial</h1> <table class=table> <tr> <td> <center> <a href="//selenium-webdriver-in-practice.github.io"><img src="/images/liang_cover100.jpg" class=thumbnail /></a> </center> </td> <td> <p class=well><b>Big news!</b> I've been working hard getting <b>Selenium WebDriver in Practice</b> ready and it is now available to buy on the <a href="//selenium-webdriver-in-practice.github.io">Manning Early Access Program</a>. It provides practical and useful techniques you can use with WebDriver, to get the very best out of it in your projects.</p> </td> </tr> </table> <p>I've been working on a side project to write an external DSL. It's partly to get some more exposure to DSLs, and Java 8. ANTLR grammar is well documented, and has great tooling, but many tutorials stop at writing code that actually uses your new grammar, so I've added a my own example here.</p> <p>This tutorial is in four simple parts, but you may wish to read up a little on DSLs and Java 8 first.</p> <p>The grammar we're going to create is for a simple command line game similar to battleships. The user digs a field containing buried treasure, if they find treasure, they score points. The DSL will allow a game designer to create their own fields, decide what treasure is buried and how much it scores. </p> <pre class="highlight plaintext">You're playing "Example Field".
+Where do you want to dig (enter x then y)?
+3 1
+You found "Golden Crown"! Your score is 50.
+Where do you want to dig (enter x then y)?
+4 2
+Sorry, nothing there!
+Where do you want to dig (enter x then y)?
+3 2
+You found "Broken Crockery"! Your score is 51.
+</pre> <p>As usual this will be <a href="https://github.com/alexec/antlr-tutorial">on Github</a>. </p> <h2 id=the-grammar>The Grammar</h2> <p>We're going to use a Maven plugin to convert our grammar into a lexer and parser:</p> <pre class="highlight xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.antlr<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>antlr4-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>4.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>antlr4<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre> <p>This plugin will generate source code from the grammars <code>src/main/antl4/*.g4</code>. We also need a run time dependency:</p> <pre class="highlight xml"> <span class="nt">&lt;dependency&gt;</span>
+     <span class="nt">&lt;groupId&gt;</span>org.antlr<span class="nt">&lt;/groupId&gt;</span>
+     <span class="nt">&lt;artifactId&gt;</span>antlr4-runtime<span class="nt">&lt;/artifactId&gt;</span>
+     <span class="nt">&lt;version&gt;</span>4.0<span class="nt">&lt;/version&gt;</span>
+ <span class="nt">&lt;/dependency&gt;</span>
+</pre> <p>Here's an example of our language:</p> <pre class="highlight plaintext">"Example Field"
+"Golden Crown" scores 50 points
+"Iron Sword" scores 20 points
+"Broken Crockery" scores 1 points
+"Golden Sword" is buried at 3,1
+"Iron Sword" is buried at 2,3
+"Broken Crockery" is buried at 3,2
+"Broken Crockery" is buried at 1,4
+"Broken Crockery" is buried at 4,1
+</pre> <p>Add this example to <code>src/main/resources/example.field</code>, so we can use it for a test later on.</p> <p>ANTLR grammars consist of a couple sections:</p> <ul> <li>A <strong>header</strong>, listing the grammar's name.</li> <li><strong>Rules</strong>, which start with a lower-case letter, indicating how ANTLR should match text.</li> <li><strong>Tokens</strong>, the basic tokens that make up the language (think of this as the actual words you use).</li> </ul> <p>Create <code>src/main/antlr4/Field.g4</code>:</p> <pre class="highlight plaintext">grammar Field;
+
+field:
+    name=Name NL
+    (points NL)+
+    (burial NL)+
+    EOF;
+
+points: treasure=Name WS 'scores' WS value=Int WS 'points';
+burial: treasure=Name WS 'is' WS 'buried' WS 'at' WS at=location ;
+location: x=Int ',' y=Int;
+
+Name: '"' ('A'..'Z' | 'a'..'z' | ' ')+ '"' ;
+Int: ('0'..'9')+;
+
+WS: (' ' | '\t')+;
+NL:  '\r'? '\n';
+</pre> <p>Run <code>mvn generate-sources</code> to create the new sources, and have a look in <code>target/generated-sources/antlr4</code> to see what is created.</p> <p>Now create a simple test:</p> <pre class="highlight java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testExampleField</span><span class="p">(</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">FieldLexer</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FieldLexer</span><span class="o">(</span><span class="k">new</span> <span class="n">ANTLRInputStream</span><span class="o">(</span><span class="n">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">"/example.field"</span><span class="o">)));</span>
+    <span class="n">FieldParser</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FieldParser</span><span class="o">(</span><span class="k">new</span> <span class="n">CommonTokenStream</span><span class="o">(</span><span class="n">l</span><span class="o">));</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">addErrorListener</span><span class="o">(</span><span class="k">new</span> <span class="n">BaseErrorListener</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">syntaxError</span><span class="o">(</span><span class="n">Recognizer</span><span class="o">&lt;?,</span> <span class="o">?&gt;</span> <span class="n">recognizer</span><span class="o">,</span> <span class="n">Object</span> <span class="n">offendingSymbol</span><span class="o">,</span> <span class="kt">int</span> <span class="n">line</span><span class="o">,</span> <span class="kt">int</span> <span class="kt">char</span><span class="n">PositionInLine</span><span class="o">,</span> <span class="n">String</span> <span class="n">msg</span><span class="o">,</span> <span class="n">RecognitionException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="o">(</span><span class="s">"failed to parse at line "</span> <span class="o">+</span> <span class="n">line</span> <span class="o">+</span> <span class="s">" due to "</span> <span class="o">+</span> <span class="n">msg</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">field</span><span class="o">();</span>
+<span class="o">}</span>
+</pre> <p>You'll notice that there's a lot of boilerplate here, but note these steps:</p> <ol> <li>Reading the file and "lexing" the text into tokens using <code>FieldLexer</code>.</li> <li>Creating a parser for the tokens using <code>FieldParser</code>.</li> <li>Adding an error listener, that reports parsing errors.</li> <li>Parse using <code>.field()</code>;</li> </ol> <h2 id=model>Model</h2> <p>Any DSL needs a model, this is what we'll build from the files written in our new language. The model should be agnostic on the grammar. We'll create a factory to create instances of our model later on. The code is pretty basic, for example, it doesn't print out the field to show you where you've already dug, or know then the game is over. </p> <pre class="highlight java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Game</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">points</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span><span class="o">[][]</span> <span class="n">grid</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">Game</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">points</span><span class="o">,</span> <span class="n">String</span><span class="o">[][]</span> <span class="n">grid</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">points</span> <span class="o">=</span> <span class="n">points</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">play</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Scanner</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"You're playing "</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"."</span><span class="o">)</span> <span class="o">;</span>
+
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Where do you want to dig (enter x then y)?"</span><span class="o">);</span>
+
+            <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="n">grid</span><span class="o">[</span><span class="n">x</span><span class="o">][</span><span class="n">y</span><span class="o">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">String</span> <span class="n">treasure</span> <span class="o">=</span> <span class="n">grid</span><span class="o">[</span><span class="n">x</span><span class="o">][</span><span class="n">y</span><span class="o">];</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="n">points</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">treasure</span><span class="o">);</span>
+                <span class="n">grid</span><span class="o">[</span><span class="n">x</span><span class="o">][</span><span class="n">y</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"You found "</span> <span class="o">+</span> <span class="n">treasure</span> <span class="o">+</span> <span class="s">"! Your score is "</span> <span class="o">+</span> <span class="n">score</span> <span class="o">+</span> <span class="s">"."</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Sorry, nothing there!"</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre> <h2 id=factory>Factory</h2> <p>We need to build a model from the grammar. We'll use an observer to do this, create this class:</p> <pre class="highlight java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GameFactory</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Game</span> <span class="n">createGame</span><span class="o">(</span><span class="n">InputStream</span> <span class="n">in</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">FieldLexer</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FieldLexer</span><span class="o">(</span><span class="k">new</span> <span class="n">ANTLRInputStream</span><span class="o">(</span><span class="n">in</span><span class="o">));</span>
+        <span class="n">FieldParser</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FieldParser</span><span class="o">(</span><span class="k">new</span> <span class="n">CommonTokenStream</span><span class="o">(</span><span class="n">l</span><span class="o">));</span>
+        <span class="n">p</span><span class="o">.</span><span class="na">addErrorListener</span><span class="o">(</span><span class="k">new</span> <span class="n">BaseErrorListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">syntaxError</span><span class="o">(</span><span class="n">Recognizer</span><span class="o">&lt;?,</span> <span class="o">?&gt;</span> <span class="n">recognizer</span><span class="o">,</span> <span class="n">Object</span> <span class="n">offendingSymbol</span><span class="o">,</span> <span class="kt">int</span> <span class="n">line</span><span class="o">,</span> <span class="kt">int</span> <span class="kt">char</span><span class="n">PositionInLine</span><span class="o">,</span> <span class="n">String</span> <span class="n">msg</span><span class="o">,</span> <span class="n">RecognitionException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="o">(</span><span class="s">"failed to parse at line "</span> <span class="o">+</span> <span class="n">line</span> <span class="o">+</span> <span class="s">" due to "</span> <span class="o">+</span> <span class="n">msg</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="kd">final</span> <span class="n">AtomicReference</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicReference</span><span class="o">&lt;&gt;();</span>
+        <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">points</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="kd">final</span> <span class="n">String</span><span class="o">[][]</span> <span class="n">grid</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="mi">5</span><span class="o">][</span><span class="mi">5</span><span class="o">];</span>
+
+        <span class="n">p</span><span class="o">.</span><span class="na">addParseListener</span><span class="o">(</span><span class="k">new</span> <span class="n">FieldBaseListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">x</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">y</span><span class="o">;</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">exitField</span><span class="o">(</span><span class="n">FieldParser</span><span class="o">.</span><span class="na">FieldContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">name</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">name</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+            <span class="o">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">exitLocation</span><span class="o">(</span><span class="n">FieldParser</span><span class="o">.</span><span class="na">LocationContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">x</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">y</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+            <span class="o">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">exitBurial</span><span class="o">(</span><span class="n">FieldParser</span><span class="o">.</span><span class="na">BurialContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">grid</span><span class="o">[</span><span class="n">x</span><span class="o">][</span><span class="n">y</span><span class="o">]</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">treasure</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+            <span class="o">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="n">exitPoints</span><span class="o">(</span><span class="n">FieldParser</span><span class="o">.</span><span class="na">PointsContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">points</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">treasure</span><span class="o">.</span><span class="na">getText</span><span class="o">(),</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">value</span><span class="o">.</span><span class="na">getText</span><span class="o">()));</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">p</span><span class="o">.</span><span class="na">field</span><span class="o">();</span>
+
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Game</span><span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">get</span><span class="o">(),</span> <span class="n">points</span><span class="o">,</span> <span class="n">grid</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre> <p>You'll notice that some code is copied from the test earlier on. We've added a listener that gets the data from the parser and builds up a game from it. This is a common pattern, but a listener is not the only approach. You can also use a visitor or a tree parser, but I won't talk about those here.</p> <h2 id=application>Application</h2> <p>Finally we can put it all together and play with a simple class:</p> <pre class="highlight java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">App</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+
+        <span class="n">Game</span> <span class="n">game</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GameFactory</span><span class="o">().</span><span class="na">createGame</span><span class="o">(</span><span class="n">App</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">"/example.field"</span><span class="o">));</span>
+
+        <span class="n">game</span><span class="o">.</span><span class="na">play</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre> <p>I hope this was useful to you. Have a play of the game, and try changing <code>example.field</code>. You might want to add some validation to the game to make sure you cannot add invalid treasures to the map.</p> <div id=disqus_thread></div> <script>
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> </div> <div class=col-md-3 id=sidebar> <center> <h2>Alex Collins</h2> <p> <a href="/"><img src="/images/alex-collins-circle.png"/></a> </p> </center> <p> Java technical lead and solutions architect in London for the UK IT industry for over ten years. <a href="/about-me">more...</a> </p> <h4>Docker Maven Plugin</h4> <p>Version 2.11.4 released, <a href="https://github.com/alexec/docker-maven-plugin/blob/master/CHANGELOG.md">more...</a></p> <pre style="font-size:50%">&lt;dependency&gt;
+  &lt;groupId&gt;com.alexecollins.docker&lt;/groupId&gt;
+  &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;2.11.4&lt;/version&gt;
+&lt;/dependency&gt;</pre> <h4>Related</h4> <ol> <li><a href="/practical-domain-specific-language-tutorial/">Practical Java Domain Specific Language Tutorial</a></li> <li><a href="/reverse-java-zip-maven-project/">Reverse a Java ZIP into Maven Project</a></li> <li><a href="/polyglot-maven-first-steps/">Polyglot Maven First Steps</a></li> <li><a href="/swing-plaf-example/">Swing PLAF Example</a></li> <li><a href="/migrating-to-circleci/">Migrating to CircleCI</a></li> </ol> <h4>Recent</h4> <ul> <li><a href="/practical-domain-specific-language-tutorial/">Practical Java Domain Specific Language Tutorial</a> <span>Sep 19</span></li> <li><a href="/sonarqube-and-java-8/">Sonarqube And Java 8</a> <span>Sep 17</span></li> <li><a href="/spring-boot-performance/">Spring Boot Performance</a> <span>Sep 5</span></li> <li><a href="/testing-anti-patterns/">Testing Anti-Patterns</a> <span>Jun 23</span></li> <li><a href="/migrating-to-circleci/">Migrating to CircleCI</a> <span>Apr 26</span></li> </ul> <h4>Tags</h4> <a href="/tags/ci/">ci</a> (3)</a>&nbsp;&nbsp; <a href="/tags/concurrency/">concurrency</a> (4)</a>&nbsp;&nbsp; <a href="/tags/docker/">docker</a> (10)</a>&nbsp;&nbsp; <a href="/tags/gist/">gist</a> (13)</a>&nbsp;&nbsp; <a href="/tags/groovy/">groovy</a> (4)</a>&nbsp;&nbsp; <a href="/tags/java/">java</a> (48)</a>&nbsp;&nbsp; <a href="/tags/jmeter/">jmeter</a> (3)</a>&nbsp;&nbsp; <a href="/tags/junit/">junit</a> (7)</a>&nbsp;&nbsp; <a href="/tags/links/">links</a> (14)</a>&nbsp;&nbsp; <a href="/tags/maven/">maven</a> (18)</a>&nbsp;&nbsp; <a href="/tags/oped/">oped</a> (8)</a>&nbsp;&nbsp; <a href="/tags/performance/">performance</a> (6)</a>&nbsp;&nbsp; <a href="/tags/plaf/">plaf</a> (14)</a>&nbsp;&nbsp; <a href="/tags/ruby/">ruby</a> (3)</a>&nbsp;&nbsp; <a href="/tags/selenium/">selenium</a> (9)</a>&nbsp;&nbsp; <a href="/tags/software/">software</a> (10)</a>&nbsp;&nbsp; <a href="/tags/spring/">spring</a> (7)</a>&nbsp;&nbsp; <a href="/tags/swing/">swing</a> (15)</a>&nbsp;&nbsp; <a href="/tags/testing/">testing</a> (23)</a>&nbsp;&nbsp; <a href="/tags/tips/">tips</a> (4)</a>&nbsp;&nbsp; <a href="/tags/tomcat/">tomcat</a> (3)</a>&nbsp;&nbsp; <a href="/tags/unix/">unix</a> (6)</a>&nbsp;&nbsp; <a href="/tags/web/">web</a> (4)</a>&nbsp;&nbsp; </hr/> <p> <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a> <a class="btn btn-primary btn-xs" href="/feed.xml">RSS</a> <a class="btn btn-primary btn-xs" href="//uk.linkedin.com/in/alexecollins">LinkedIn</a> </p> </div> </div> <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25388993-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script> </body> </html>

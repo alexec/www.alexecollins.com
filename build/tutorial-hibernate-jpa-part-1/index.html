@@ -1,0 +1,505 @@
+<!doctype html> <html> <head> <meta charset=utf-8 /> <meta http-equiv=X-UA-Compatible content='IE=edge;chrome=1'/> <meta name=viewport content="width=device-width, initial-scale=1.0"> <meta name=google-site-verification content=459WLyNfyiKwT7T3IzdCjzIpNP-IVQSOb4tR8b2vQhI /> <title>Alex Collins - Tutorial: Hibernate, JPA - Part 1</title> <link href="/css/bootstrap.min.css" media=screen rel=stylesheet /> <style type="text/css">
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}	.article img {
+		border: 1px solid #bbb;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 10px;
+	}
+	@media print {
+		#disqus_thread, #sidebar {
+    			display:none;
+  		}
+	}
+</style> <link href="https://plus.google.com/101694420547181110548" rel=publisher /> </head> <body class="tutorial-hibernate-jpa-part-1 tutorial-hibernate-jpa-part-1_index"> <div class=container> <div class=row> <div class="col-md-9 article"> <h1>Tutorial: Hibernate, JPA - Part 1</h1> <table class=table> <tr> <td> <center> <a href="//selenium-webdriver-in-practice.github.io"><img src="/images/liang_cover100.jpg" class=thumbnail /></a> </center> </td> <td> <p class=well><b>Big news!</b> I've been working hard getting <b>Selenium WebDriver in Practice</b> ready and it is now available to buy on the <a href="//selenium-webdriver-in-practice.github.io">Manning Early Access Program</a>. It provides practical and useful techniques you can use with WebDriver, to get the very best out of it in your projects.</p> </td> </tr> </table> <h1>Overview</h1> <p>This is the first part of tutorial about using Hibernate and JPA. This part is an introduction to to JPA and Hibernate. The second part will look at putting together a Spring MVC application using Spring ORM to reduce the amount of code necessary to create a CRUD application.</p> <p>To complete this you'll want to be familiar with Maven, JUnit, SQL and relational databases.</p> <h2>Dependencies</h2> <p>Firstly we'll need a couple of basic dependencies. Essentially there are three layers:</p> <ol> <li>The lowest layer is the JDBC drivers used by Hibernate to connect to the database. I'm going to use Derby, a simple embedded database. There's no server to install or configure so it's easier to set-up that even MySQL or PostgreSQL; it's not suitable for production.</li> <li>The middle layer is the Hibernate libraries. I'm going to use version 3.5.6. This works with Java 1.5, 4.x does not.</li> <li>The JPA libraries.</li> </ol> <p>Additionally we'll want JUnit for creating tests and Tomcat so we can using it's JNDI naming for tests. JNDI is a preferable system to including the server details in a properties file for reasons we'll come to.</p> <pre class="highlight xml">	<span class="nt">&lt;dependencies&gt;</span>
+	        <span class="nt">&lt;dependency&gt;</span>
+	            <span class="nt">&lt;groupId&gt;</span>org.apache.derby<span class="nt">&lt;/groupId&gt;</span>
+	            <span class="nt">&lt;artifactId&gt;</span>derby<span class="nt">&lt;/artifactId&gt;</span>
+	            <span class="nt">&lt;version&gt;</span>10.4.1.3<span class="nt">&lt;/version&gt;</span>
+	        <span class="nt">&lt;/dependency&gt;</span>
+	        <span class="nt">&lt;dependency&gt;</span>
+	            <span class="nt">&lt;groupId&gt;</span>org.hibernate<span class="nt">&lt;/groupId&gt;</span>
+	            <span class="nt">&lt;artifactId&gt;</span>hibernate-entitymanager<span class="nt">&lt;/artifactId&gt;</span>
+	            <span class="nt">&lt;version&gt;</span>3.6.9.Final<span class="nt">&lt;/version&gt;</span>
+	        <span class="nt">&lt;/dependency&gt;</span>
+	        <span class="nt">&lt;dependency&gt;</span>
+	            <span class="nt">&lt;groupId&gt;</span>org.hibernate.javax.persistence<span class="nt">&lt;/groupId&gt;</span>
+	            <span class="nt">&lt;artifactId&gt;</span>hibernate-jpa-2.0-api<span class="nt">&lt;/artifactId&gt;</span>
+	            <span class="nt">&lt;version&gt;</span>1.0.0.Final<span class="nt">&lt;/version&gt;</span>
+	        <span class="nt">&lt;/dependency&gt;</span>
+	        <span class="nt">&lt;dependency&gt;</span>
+	            <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+	            <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+	            <span class="nt">&lt;version&gt;</span>4.10<span class="nt">&lt;/version&gt;</span>
+	            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+	        <span class="nt">&lt;/dependency&gt;</span>
+	        <span class="nt">&lt;dependency&gt;</span>
+	            <span class="nt">&lt;groupId&gt;</span>org.apache.tomcat<span class="nt">&lt;/groupId&gt;</span>
+	            <span class="nt">&lt;artifactId&gt;</span>catalina<span class="nt">&lt;/artifactId&gt;</span>
+	            <span class="nt">&lt;version&gt;</span>6.0.18<span class="nt">&lt;/version&gt;</span>
+	            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+	        <span class="nt">&lt;/dependency&gt;</span>
+	    <span class="nt">&lt;/dependencies&gt;</span>
+</pre> <h2>Configuration</h2> <p>The key config file for JPA is persistence.xml. This lives in the META-INF directory. It details what the persistence driver to use and what JNDI data source to connect to. Additional properties can also be specified, in this case we'll include some Hibernate properties. </p> <p>I've added some comments on the additional properties so you know what they are for. You can configure the data source directly, but using JNDI means we can easily deploy the code in a container, as a standalone or to run unit tests, with minimal code changes.</p> <pre class="highlight xml">	<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+	<span class="nt">&lt;persistence</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/persistence"</span>
+		<span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+		<span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"</span>
+		<span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+	
+		<span class="nt">&lt;persistence-unit</span> <span class="na">name=</span><span class="s">"tutorialPU"</span> <span class="na">transaction-type=</span><span class="s">"RESOURCE_LOCAL"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;provider&gt;</span>org.hibernate.ejb.HibernatePersistence<span class="nt">&lt;/provider&gt;</span>
+			<span class="c">&lt;!-- the JNDI data source --&gt;</span>
+			<span class="nt">&lt;non-jta-data-source&gt;</span>java:comp/env/jdbc/tutorialDS<span class="nt">&lt;/non-jta-data-source&gt;</span>
+			<span class="nt">&lt;properties&gt;</span>
+				<span class="c">&lt;!-- if this is true, hibernate will print (to stdout) the SQL it executes, 
+					so you can check it to ensure it's not doing anything crazy --&gt;</span>
+				<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"hibernate.show_sql"</span> <span class="na">value=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
+				<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"hibernate.format_sql"</span> <span class="na">value=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
+				<span class="c">&lt;!-- since most database servers have slightly different versions of the 
+					SQL, Hibernate needs you to choose a dialect so it knows the subtleties of 
+					talking to that server --&gt;</span>
+				<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"hibernate.dialect"</span> <span class="na">value=</span><span class="s">"org.hibernate.dialect.DerbyDialect"</span> <span class="nt">/&gt;</span>
+				<span class="c">&lt;!-- this tell Hibernate to update the DDL when it starts, very useful 
+					for development, dangerous in production --&gt;</span>
+				<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"hibernate.hbm2ddl.auto"</span> <span class="na">value=</span><span class="s">"update"</span> <span class="nt">/&gt;</span>
+			<span class="nt">&lt;/properties&gt;</span>
+		<span class="nt">&lt;/persistence-unit&gt;</span>
+	<span class="nt">&lt;/persistence&gt;</span>
+</pre> <h2>Entities</h2> <p>JPA talks in terms of entities rather than database records. An entity is an instance of a class maps to a single record in a table (classes map to tables). The entities fields (which should use the JavaBean naming convention) are mapped to columns. </p> <p>Annotations can be used to add extra information to the class. They mark the class as being an entity, and allow you to specify meta information about the table and columns, such as names, sizes, and constraints.</p> <p>In our case we're going to start with the simplest entity possible.</p> <pre class="highlight java">	<span class="kn">package</span> <span class="n">tutorial</span><span class="o">;</span>
+	
+	<span class="kn">import</span> <span class="nn">javax.persistence.*</span><span class="o">;</span>
+	<span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+	<span class="kn">import</span> <span class="nn">java.util.Set</span><span class="o">;</span>
+	
+	<span class="nd">@Entity</span>
+	<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"usr"</span><span class="o">)</span> <span class="c1">// @Table is optional, but "user" is a keyword in many SQL variants </span>
+	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+	    <span class="nd">@Id</span> <span class="c1">// @Id indicates that this it a unique primary key</span>
+	    <span class="nd">@GeneratedValue</span> <span class="c1">// @GeneratedValue indicates that value is automatically generated by the server</span>
+	    <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
+	
+	    <span class="nd">@Column</span><span class="o">(</span><span class="n">length</span> <span class="o">=</span> <span class="mi">32</span><span class="o">,</span> <span class="n">unique</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+	    <span class="c1">// the optional @Column allows us makes sure that the name is limited to a suitable size and is unique</span>
+	    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	    <span class="c1">// note that no setter for ID is provided, Hibernate will generate the ID for us</span>
+	
+	    <span class="kd">public</span> <span class="kt">long</span> <span class="n">getId</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="n">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="n">String</span> <span class="n">getName</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	    <span class="o">}</span>
+	<span class="o">}</span>
+</pre> <p>JPA can use the meta information to create the DDL when it starts up. This is helpful for development as it allows you to quickly get up and running without delving into the SQL needed to create tables. Want to add a column? Just add the column, compile and run. Unfortunately, what you gain in convenience is also an increase in risk (e.g. what does the database server do when a table has millions of records and you add a new column?) and loss of control.</p> <p>There's a compromise, once the entities have been created by Hibernate, you can export the DDL and change Hibernate's config to stop it updating the DDL. </p> <h2>Test Case</h2> <p>There are only two pieces, first we'll create an abstract test case as a root for all our tests. This will register a data source with JNDI, and we will extend it with other tests so that they access to the database.</p> <pre class="highlight java">	<span class="kn">package</span> <span class="n">tutorial</span><span class="o">;</span>
+	
+	<span class="kn">import</span> <span class="nn">org.apache.derby.jdbc.EmbeddedDataSource</span><span class="o">;</span>
+	<span class="kn">import</span> <span class="nn">org.apache.naming.java.javaURLContextFactory</span><span class="o">;</span>
+	<span class="kn">import</span> <span class="nn">org.junit.AfterClass</span><span class="o">;</span>
+	<span class="kn">import</span> <span class="nn">org.junit.BeforeClass</span><span class="o">;</span>
+	
+	<span class="kn">import</span> <span class="nn">javax.naming.Context</span><span class="o">;</span>
+	<span class="kn">import</span> <span class="nn">javax.naming.InitialContext</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractTest</span> <span class="o">{</span>
+	
+		<span class="nd">@BeforeClass</span>
+		<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">setUpClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">INITIAL_CONTEXT_FACTORY</span><span class="o">,</span> <span class="n">javaURLContextFactory</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">URL_PKG_PREFIXES</span><span class="o">,</span> <span class="s">"org.apache.naming"</span><span class="o">);</span>
+			<span class="n">InitialContext</span> <span class="n">ic</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InitialContext</span><span class="o">();</span>
+	
+			<span class="n">ic</span><span class="o">.</span><span class="na">createSubcontext</span><span class="o">(</span><span class="s">"java:"</span><span class="o">);</span>
+			<span class="n">ic</span><span class="o">.</span><span class="na">createSubcontext</span><span class="o">(</span><span class="s">"java:comp"</span><span class="o">);</span>
+			<span class="n">ic</span><span class="o">.</span><span class="na">createSubcontext</span><span class="o">(</span><span class="s">"java:comp/env"</span><span class="o">);</span>
+			<span class="n">ic</span><span class="o">.</span><span class="na">createSubcontext</span><span class="o">(</span><span class="s">"java:comp/env/jdbc"</span><span class="o">);</span>
+	
+			<span class="n">EmbeddedDataSource</span> <span class="n">ds</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EmbeddedDataSource</span><span class="o">();</span>
+			<span class="n">ds</span><span class="o">.</span><span class="na">setDatabaseName</span><span class="o">(</span><span class="s">"tutorialDB"</span><span class="o">);</span>
+			<span class="c1">// tell Derby to create the database if it does not already exist</span>
+			<span class="n">ds</span><span class="o">.</span><span class="na">setCreateDatabase</span><span class="o">(</span><span class="s">"create"</span><span class="o">);</span>
+	
+			<span class="n">ic</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="s">"java:comp/env/jdbc/tutorialDS"</span><span class="o">,</span> <span class="n">ds</span><span class="o">);</span>
+		<span class="o">}</span>
+	
+		<span class="nd">@AfterClass</span>
+		<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">tearDownClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+	
+			<span class="n">InitialContext</span> <span class="n">ic</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InitialContext</span><span class="o">();</span>
+	
+			<span class="n">ic</span><span class="o">.</span><span class="na">unbind</span><span class="o">(</span><span class="s">"java:comp/env/jdbc/tutorialDS"</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+</pre> <p>The final piece is the test case. The entity manger provide access to the data. The persist operation (which will result in a single insert in this case) must be performed in a transaction. In fact Hibernate will not do any work until the commit. You can see this by adding a Thread.sleep immediately prior to the commit. </p> <pre class="highlight java">	<span class="nd">@Test</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="n">testNewUser</span><span class="o">()</span> <span class="o">{</span>
+	
+	        <span class="n">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"tutorialPU"</span><span class="o">).</span><span class="na">createEntityManager</span><span class="o">();</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">begin</span><span class="o">();</span>
+	
+	        <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+	
+	        <span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">getTime</span><span class="o">()));</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">commit</span><span class="o">();</span>
+	
+	        <span class="c1">// see that the ID of the user was set by Hibernate</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"user="</span> <span class="o">+</span> <span class="n">user</span> <span class="o">+</span> <span class="s">", user.id="</span> <span class="o">+</span> <span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+	
+	        <span class="n">User</span> <span class="n">foundUser</span> <span class="o">=</span> <span class="n">entityManager</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+	
+	        <span class="c1">// note that foundUser is the same instance as user and is a concrete class (not a proxy)</span>
+	        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"foundUser="</span> <span class="o">+</span> <span class="n">foundUser</span><span class="o">);</span>
+	
+	        <span class="n">assertEquals</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">foundUser</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	    <span class="o">}</span>
+</pre> <h2>Exception Handling</h2> <p>The need for a begin and commit is verbose. Additionally, the last example is incomplete, as it misses any rollback if an exception occurs. </p> <p>Exception handling is boiler plate code. Like it's JDBC equivalent, it's not pretty. Here's a example:</p> <pre class="highlight java">	 <span class="nd">@Test</span><span class="o">(</span><span class="n">expected</span> <span class="o">=</span> <span class="n">Exception</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="n">testNewUserWithTxn</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+	
+	        <span class="n">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"tutorialPU"</span><span class="o">).</span><span class="na">createEntityManager</span><span class="o">();</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">begin</span><span class="o">();</span>
+	        <span class="k">try</span> <span class="o">{</span>
+	            <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+	
+	            <span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">getTime</span><span class="o">()));</span>
+	
+	            <span class="n">entityManager</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+	
+	            <span class="k">if</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+	                <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">();</span>
+	            <span class="o">}</span>
+	
+	            <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">commit</span><span class="o">();</span>
+	        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	            <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">rollback</span><span class="o">();</span>
+	            <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
+	        <span class="o">}</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	    <span class="o">}</span>
+</pre> <p>I'll leave the exception management out for the moment as there are better ways to do it. Later we'll look at how JSR-330's @Inject and Spring Data's @Transactional can reduce the boiler plate.</p> <h2>Entity Relations</h2> <p>Since we're using relational databases, we'll almost certainly want to create a relation between entities. We'll create a role entity and have a many to many relationship between user and role. To create the role entity, just copy the User entity, name it Role and remove the @Table line. We don't need to create a UserRole entity. But we will want to add and remove roles from the user.</p> <p>Add the following field and method to the user table:</p> <pre class="highlight java">	    <span class="nd">@ManyToMany</span>
+	    <span class="kd">private</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;();</span>
+	
+	    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">addRole</span><span class="o">(</span><span class="n">Role</span> <span class="n">role</span><span class="o">)</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="n">roles</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+	    <span class="o">}</span>
+	
+	    <span class="kd">public</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="n">getRoles</span><span class="o">()</span> <span class="o">{</span>
+	        <span class="k">return</span> <span class="n">roles</span><span class="o">;</span>
+	    <span class="o">}</span>
+</pre> <p>The @ManyToMany annotation tells JPA that it's a many-to-many relation. We can test this with a new test case. This test creates a user and role in one transaction and then updates the user in the second using merge. Merges are used to update an entity in the database.</p> <pre class="highlight java">	  <span class="nd">@Test</span>
+	    <span class="kd">public</span> <span class="kt">void</span> <span class="n">testNewUserAndAddRole</span><span class="o">()</span> <span class="o">{</span>
+	
+	        <span class="n">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"tutorialPU"</span><span class="o">).</span><span class="na">createEntityManager</span><span class="o">();</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">begin</span><span class="o">();</span>
+	
+	        <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+	
+	        <span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">getTime</span><span class="o">()));</span>
+	
+	        <span class="n">Role</span> <span class="n">role</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Role</span><span class="o">();</span>
+	
+	        <span class="n">role</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">getTime</span><span class="o">()));</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">commit</span><span class="o">();</span>
+	
+	
+	        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getRoles</span><span class="o">().</span><span class="na">size</span><span class="o">());</span>
+	
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">begin</span><span class="o">();</span>
+	
+	        <span class="n">user</span><span class="o">.</span><span class="na">addRole</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">commit</span><span class="o">();</span>
+	
+	
+	        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getRoles</span><span class="o">().</span><span class="na">size</span><span class="o">());</span>
+	
+	
+	        <span class="n">entityManager</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	    <span class="o">}</span>
+</pre> <h2>Queries</h2> <p>JPA allows you to use a query language with a strong similarity to SQL called JPQL. Queries can be written directly, but named queries are easier to control, to maintain and exhibit better performance as Hibernate can prepare the statement. They are specified using the @NamedQuery annotation. Add this line to the User class after the @Table annotation:</p> <pre class="highlight java">	<span class="nd">@NamedQuery</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"User.findByName"</span><span class="o">,</span> <span class="n">query</span> <span class="o">=</span> <span class="s">"select u from User u where u.name = :name"</span><span class="o">)</span>
+
+<span class="n">You</span> <span class="n">can</span> <span class="n">test</span> <span class="k">this</span> <span class="n">as</span> <span class="nl">follows:</span>
+
+		<span class="nd">@Test</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="n">testFindUser</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+	
+			<span class="n">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"tutorialPU"</span><span class="o">).</span><span class="na">createEntityManager</span><span class="o">();</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">begin</span><span class="o">();</span>
+	
+			<span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+	
+			<span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Long</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">getTime</span><span class="o">());</span>
+	
+			<span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+	
+			<span class="n">Role</span> <span class="n">role</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Role</span><span class="o">();</span>
+	
+			<span class="n">role</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+	
+			<span class="n">user</span><span class="o">.</span><span class="na">addRole</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">commit</span><span class="o">();</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	
+			<span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"tutorialPU"</span><span class="o">).</span><span class="na">createEntityManager</span><span class="o">();</span>
+	
+			<span class="n">User</span> <span class="n">foundUser</span> <span class="o">=</span> <span class="n">entityManager</span><span class="o">.</span><span class="na">createNamedQuery</span><span class="o">(</span><span class="s">"User.findByName"</span><span class="o">,</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">setParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="n">name</span><span class="o">)</span>
+					<span class="o">.</span><span class="na">getSingleResult</span><span class="o">();</span>
+	
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">foundUser</span><span class="o">);</span>
+	
+			<span class="n">assertEquals</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">foundUser</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+	
+			<span class="n">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">foundUser</span><span class="o">.</span><span class="na">getRoles</span><span class="o">().</span><span class="na">size</span><span class="o">());</span>
+	
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">foundUser</span><span class="o">.</span><span class="na">getRoles</span><span class="o">().</span><span class="na">getClass</span><span class="o">());</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+</pre> <p>In this example I've closed and reopened the entity manager. This forces Hibernate to request the user from the database. Notice anything interesting about the output? The SQL for getting the roles appears after the toString of the found user. Hibernate creates a proxy object for the roles (in this case a org.hibernate.collection.PersistentSet), and only populates it when you first access the object. This can result in counter-intuitive behaviour and has its own set of pitfalls.</p> <p>Try this variation of the above test where we close the entity manager before we first query the roles:</p> <pre class="highlight java">		<span class="nd">@Test</span><span class="o">(</span><span class="n">expected</span> <span class="o">=</span> <span class="n">LazyInitializationException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="n">testFindUser1</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+	
+			<span class="n">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"tutorialPU"</span><span class="o">).</span><span class="na">createEntityManager</span><span class="o">();</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">begin</span><span class="o">();</span>
+	
+			<span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+	
+			<span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Long</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">getTime</span><span class="o">());</span>
+	
+			<span class="n">user</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+	
+			<span class="n">Role</span> <span class="n">role</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Role</span><span class="o">();</span>
+	
+			<span class="n">role</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+	
+			<span class="n">user</span><span class="o">.</span><span class="na">addRole</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">persist</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">().</span><span class="na">commit</span><span class="o">();</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	
+			<span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"tutorialPU"</span><span class="o">).</span><span class="na">createEntityManager</span><span class="o">();</span>
+	
+			<span class="n">User</span> <span class="n">foundUser</span> <span class="o">=</span> <span class="n">entityManager</span><span class="o">.</span><span class="na">createNamedQuery</span><span class="o">(</span><span class="s">"User.findByName"</span><span class="o">,</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">setParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="n">name</span><span class="o">)</span>
+					<span class="o">.</span><span class="na">getSingleResult</span><span class="o">();</span>
+	
+			<span class="n">entityManager</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	
+			<span class="n">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">foundUser</span><span class="o">.</span><span class="na">getRoles</span><span class="o">().</span><span class="na">size</span><span class="o">());</span>
+		<span class="o">}</span>
+</pre> <p>The LazyInitializationException will be thrown on the getRoles() call. This is not a bug. Once the entity manager is closed, any entity can become unusable.</p> <h2>End</h2> <p>This is the basics to get up and running with Hibernate JPA. In the next part of this tutorial, I'll discuss validation, and look at some other details in more depth.</p> <p>This tutorial is <a href="https://github.com/alexec/tutorial-hibernate-jpa/tree/part-1">on Github</a>.</p> <p>You might want to do <a href="/content/tutorial-hibernate-jpa-spring-mvc-part-2">Part 2</a>.</p> <div id=disqus_thread></div> <script>
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> </div> <div class=col-md-3 id=sidebar> <center> <h2>Alex Collins</h2> <p> <a href="/"><img src="/images/alex-collins-circle.png"/></a> </p> </center> <p> Java technical lead and solutions architect in London for the UK IT industry for over ten years. <a href="/about-me">more...</a> </p> <h4>Docker Maven Plugin</h4> <p>Version 2.11.4 released, <a href="https://github.com/alexec/docker-maven-plugin/blob/master/CHANGELOG.md">more...</a></p> <pre style="font-size:50%">&lt;dependency&gt;
+  &lt;groupId&gt;com.alexecollins.docker&lt;/groupId&gt;
+  &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;2.11.4&lt;/version&gt;
+&lt;/dependency&gt;</pre> <h4>Related</h4> <ol> <li><a href="/tutorial-hibernate-jpa-spring-mvc-part-2/">Tutorial: Hibernate, JPA & Spring MVC - Part 2</a></li> <li><a href="/tutorial-swing-synth-plaf-template-part-8-check-boxes-and-radio-buttons/">Tutorial: Swing Synth PLAF Template - Part 8: Check-boxes and Radio-buttons</a></li> <li><a href="/polyglot-maven-first-steps/">Polyglot Maven First Steps</a></li> <li><a href="/java-annotation-processor-tutorial/">Java Annotation Processor Tutorial</a></li> <li><a href="/documenting-junit-tests/">Documenting XML APIs Tests</a></li> </ol> <h4>Recent</h4> <ul> <li><a href="/practical-domain-specific-language-tutorial/">Practical Java Domain Specific Language Tutorial</a> <span>Sep 19</span></li> <li><a href="/sonarqube-and-java-8/">Sonarqube And Java 8</a> <span>Sep 17</span></li> <li><a href="/spring-boot-performance/">Spring Boot Performance</a> <span>Sep 5</span></li> <li><a href="/testing-anti-patterns/">Testing Anti-Patterns</a> <span>Jun 23</span></li> <li><a href="/migrating-to-circleci/">Migrating to CircleCI</a> <span>Apr 26</span></li> </ul> <h4>Tags</h4> <a href="/tags/ci/">ci</a> (3)</a>&nbsp;&nbsp; <a href="/tags/concurrency/">concurrency</a> (4)</a>&nbsp;&nbsp; <a href="/tags/docker/">docker</a> (10)</a>&nbsp;&nbsp; <a href="/tags/gist/">gist</a> (13)</a>&nbsp;&nbsp; <a href="/tags/groovy/">groovy</a> (4)</a>&nbsp;&nbsp; <a href="/tags/java/">java</a> (48)</a>&nbsp;&nbsp; <a href="/tags/jmeter/">jmeter</a> (3)</a>&nbsp;&nbsp; <a href="/tags/junit/">junit</a> (7)</a>&nbsp;&nbsp; <a href="/tags/links/">links</a> (14)</a>&nbsp;&nbsp; <a href="/tags/maven/">maven</a> (18)</a>&nbsp;&nbsp; <a href="/tags/oped/">oped</a> (8)</a>&nbsp;&nbsp; <a href="/tags/performance/">performance</a> (6)</a>&nbsp;&nbsp; <a href="/tags/plaf/">plaf</a> (14)</a>&nbsp;&nbsp; <a href="/tags/ruby/">ruby</a> (3)</a>&nbsp;&nbsp; <a href="/tags/selenium/">selenium</a> (9)</a>&nbsp;&nbsp; <a href="/tags/software/">software</a> (10)</a>&nbsp;&nbsp; <a href="/tags/spring/">spring</a> (7)</a>&nbsp;&nbsp; <a href="/tags/swing/">swing</a> (15)</a>&nbsp;&nbsp; <a href="/tags/testing/">testing</a> (23)</a>&nbsp;&nbsp; <a href="/tags/tips/">tips</a> (4)</a>&nbsp;&nbsp; <a href="/tags/tomcat/">tomcat</a> (3)</a>&nbsp;&nbsp; <a href="/tags/unix/">unix</a> (6)</a>&nbsp;&nbsp; <a href="/tags/web/">web</a> (4)</a>&nbsp;&nbsp; </hr/> <p> <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a> <a class="btn btn-primary btn-xs" href="/feed.xml">RSS</a> <a class="btn btn-primary btn-xs" href="//uk.linkedin.com/in/alexecollins">LinkedIn</a> </p> </div> </div> <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25388993-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script> </body> </html>

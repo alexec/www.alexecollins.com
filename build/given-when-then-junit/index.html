@@ -1,0 +1,302 @@
+<!doctype html> <html> <head> <meta charset=utf-8 /> <meta http-equiv=X-UA-Compatible content='IE=edge;chrome=1'/> <meta name=viewport content="width=device-width, initial-scale=1.0"> <meta name=google-site-verification content=459WLyNfyiKwT7T3IzdCjzIpNP-IVQSOb4tR8b2vQhI /> <title>Alex Collins - Given/When/Then JUnit</title> <link href="/css/bootstrap.min.css" media=screen rel=stylesheet /> <style type="text/css">
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}	.article img {
+		border: 1px solid #bbb;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 10px;
+	}
+	@media print {
+		#disqus_thread, #sidebar {
+    			display:none;
+  		}
+	}
+</style> <link href="https://plus.google.com/101694420547181110548" rel=publisher /> </head> <body class="given-when-then-junit given-when-then-junit_index"> <div class=container> <div class=row> <div class="col-md-9 article"> <h1>Given/When/Then JUnit</h1> <table class=table> <tr> <td> <center> <a href="//selenium-webdriver-in-practice.github.io"><img src="/images/liang_cover100.jpg" class=thumbnail /></a> </center> </td> <td> <p class=well><b>Big news!</b> I've been working hard getting <b>Selenium WebDriver in Practice</b> ready and it is now available to buy on the <a href="//selenium-webdriver-in-practice.github.io">Manning Early Access Program</a>. It provides practical and useful techniques you can use with WebDriver, to get the very best out of it in your projects.</p> </td> </tr> </table> <p>I was recently introduced to a way to take some of the benefits of using the given/when/then style of specification based testing, and use them directly with JUnit.</p> <p>You can get some of the benefits of using BDD style testing, but without the dependency on a system such as Cucumber JVM.</p> <p>The code is on <a href="https://github.com/alexec/givenwhenthenjunit">Github</a>.</p> <p>Let consider the Gherkin from <a href="//en.wikipedia.org/wiki/Behavior-driven_development">Wikipedia's page on BDD</a>.</p> <pre class="highlight gherkin"><span class="kd">Feature</span><span class="p">:</span> Returns go to stock
+
+	In order to keep track of stock
+	As a store owner
+	I want to add items back to stock when they're returned
+
+<span class="kn">Scenario</span><span class="p">:</span> Refunded items should be returned to stock
+	<span class="nf">Given</span> a customer previously bought a black sweater from me
+	  <span class="nf">And</span> I currently have three black sweaters left in stock
+	 <span class="nf">When</span> he returns the sweater for a refund
+ 	 <span class="nf">Then</span> I should have four black sweaters in stock
+
+<span class="kn">Scenario</span><span class="p">:</span> Replaced items should be returned to stock
+	<span class="nf">Given</span> that a customer buys a blue garment
+	  <span class="nf">And</span> I have two blue garments in stock
+  	  <span class="nf">And</span> three black garments in stock.
+	 <span class="nf">When</span> he returns the garment for a replacement in black,
+	 <span class="nf">Then</span> I should have three blue garments in stock
+	  <span class="nf">And</span> two black garments in stock
+</pre> <p>We can code this into JUnit test (<a href="https://github.com/alexec/givenwhenthenjunit/commit/2f5527ce11869bfae86a84428183e395cf1425d5">commit</a>). The class represents the story, and each scenario is a method.</p> <pre class="highlight java"><span class="cm">/**
+ * In order to keep track of stock
+ * As a store owner
+ * I want to add items back to stock when they're returned
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReturnsGoToStockStoryTest</span> <span class="o">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">refundedItemsShouldBeReturnedToStock</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// Given a customer previously bought a black sweater from me</span>
+        <span class="c1">// And I currently have three black sweaters left in stock</span>
+        <span class="c1">// When he returns the sweater for a refund</span>
+        <span class="c1">// Then I should have four black sweaters in stock</span>
+        <span class="n">fail</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">replacedItemsShouldBeReturnedToStock</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// Given that a customer buys a blue garment</span>
+        <span class="c1">// And I have two blue garments in stock</span>
+        <span class="c1">// And three black garments in stock.</span>
+        <span class="c1">// When he returns the garment for a replacement in black,</span>
+        <span class="c1">// Then I should have three blue garments in stock</span>
+        <span class="c1">// And two black garments in stock</span>
+        <span class="n">fail</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre> <p>There's a couple of things to note here:</p> <ul> <li>None of the comments will appear on display in the CI.</li> <li>I've added a <code>fail()</code> at the end of each test to make sure I complete it. Analygous to "pending".</li> <li>I'm sticking with Java and JUnit naming conventions.</li> </ul> <p>Now we can implment the first test scenario (<a href="https://github.com/alexec/givenwhenthenjunit/commit/7c964872a44056f374faee97ae2d28ee2b1c40eb">commit</a>):</p> <pre class="highlight java">    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">refundedItemsShouldBeReturnedToStock</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">Inventory</span> <span class="n">inventory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Inventory</span><span class="o">();</span>
+
+        <span class="c1">// Given a customer previously bought a black sweater from me</span>
+        <span class="n">BlackSweater</span> <span class="n">blackSweater</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BlackSweater</span><span class="o">();</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">sellItem</span><span class="o">(</span><span class="n">blackSweater</span><span class="o">,</span> <span class="k">new</span> <span class="n">Customer</span><span class="o">());</span>
+        
+        <span class="c1">// And I currently have three black sweaters left in stock</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="k">new</span> <span class="n">BlackSweater</span><span class="o">());</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="k">new</span> <span class="n">BlackSweater</span><span class="o">());</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="k">new</span> <span class="n">BlackSweater</span><span class="o">());</span>
+
+        <span class="c1">// When he returns the sweater for a refund</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">returnItem</span><span class="o">(</span><span class="n">blackSweater</span><span class="o">);</span>
+
+        <span class="c1">// Then I should have four black sweaters in stock</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">inventory</span><span class="o">.</span><span class="na">countStock</span><span class="o">(</span><span class="n">BlackSweater</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+    <span class="o">}</span>
+</pre> <p>Go ahead and implement the logic if you like. I've implement hard-coded returns in my code. Lets complete the second test (<a href="https://github.com/alexec/givenwhenthenjunit/commit/8a4ddf75e06148a13674417032d4988898ec93ba">commit</a>).</p> <pre class="highlight java">    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">replacedItemsShouldBeReturnedToStock</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">Inventory</span> <span class="n">inventory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Inventory</span><span class="o">();</span>
+
+        <span class="c1">// Given that a customer buys a blue garment</span>
+        <span class="n">BlueGarment</span> <span class="n">blueGarment</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BlueGarment</span><span class="o">();</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">sellItem</span><span class="o">(</span><span class="n">blueGarment</span><span class="o">,</span> <span class="k">new</span> <span class="n">Customer</span><span class="o">());</span>
+
+        <span class="c1">// And I have two blue garments in stock</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="k">new</span> <span class="n">BlueGarment</span><span class="o">());</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="k">new</span> <span class="n">BlueGarment</span><span class="o">());</span>
+
+        <span class="c1">// And three black garments in stock.</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="k">new</span> <span class="n">BlackGarment</span><span class="o">());</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="k">new</span> <span class="n">BlackGarment</span><span class="o">());</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="k">new</span> <span class="n">BlackGarment</span><span class="o">());</span>
+
+        <span class="c1">// When he returns the garment for a replacement in black,</span>
+        <span class="n">inventory</span><span class="o">.</span><span class="na">replaceItem</span><span class="o">(</span><span class="n">blueGarment</span><span class="o">,</span> <span class="n">inventory</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">BlackGarment</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+
+        <span class="c1">// Then I should have three blue garments in stock</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">inventory</span><span class="o">.</span><span class="na">countStock</span><span class="o">(</span><span class="n">BlueGarment</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+
+        <span class="c1">// And two black garments in stock</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">inventory</span><span class="o">.</span><span class="na">countStock</span><span class="o">(</span><span class="n">BlueGarment</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+    <span class="o">}</span>
+</pre> <p>These test share both customer and inventory. We can refactor this out.</p> <pre class="highlight java">    <span class="kd">private</span> <span class="n">Inventory</span> <span class="n">inventory</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Customer</span> <span class="n">customer</span><span class="o">;</span>
+
+    <span class="nd">@Before</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">setUp</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">inventory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Inventory</span><span class="o">();</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Customer</span><span class="o">();</span>
+    <span class="o">}</span>
+</pre> <p>Finally, we can implement the main code (<a href="https://github.com/alexec/givenwhenthenjunit/commit/83409db87271dffb9b634819e1afb9e2937173fd">commit</a>). See that I've still got TODOs in the code, as I can clearly see some other scenarios that we'll want to test.</p> <p>I hope this shows you one interesting way to write tests and bring some new ideas to your code without having to depend on another technology to do so.</p> <p><a href="//www.alexecollins.com/tags/testing/">Read more about unit testing</a>.</p> <div id=disqus_thread></div> <script>
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> </div> <div class=col-md-3 id=sidebar> <center> <h2>Alex Collins</h2> <p> <a href="/"><img src="/images/alex-collins-circle.png"/></a> </p> </center> <p> Java technical lead and solutions architect in London for the UK IT industry for over ten years. <a href="/about-me">more...</a> </p> <h4>Docker Maven Plugin</h4> <p>Version 2.11.4 released, <a href="https://github.com/alexec/docker-maven-plugin/blob/master/CHANGELOG.md">more...</a></p> <pre style="font-size:50%">&lt;dependency&gt;
+  &lt;groupId&gt;com.alexecollins.docker&lt;/groupId&gt;
+  &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;2.11.4&lt;/version&gt;
+&lt;/dependency&gt;</pre> <h4>Related</h4> <ol> <li><a href="/beyond-junit/">Beyond JUnit</a></li> <li><a href="/tutorial-junit-rule/">Tutorial: JUnit @Rule</a></li> <li><a href="/tomcat-context-junit-rule/">Tomcat Context JUnit @Rule</a></li> <li><a href="/try-fail-catch-assert-junit-patttern/">Try-Fail-Catch-Assert JUnit Patttern</a></li> <li><a href="/mocking-test-dependencies-with-spring/">Mocking Test Dependencies with Spring</a></li> </ol> <h4>Recent</h4> <ul> <li><a href="/practical-domain-specific-language-tutorial/">Practical Java Domain Specific Language Tutorial</a> <span>Sep 19</span></li> <li><a href="/sonarqube-and-java-8/">Sonarqube And Java 8</a> <span>Sep 17</span></li> <li><a href="/spring-boot-performance/">Spring Boot Performance</a> <span>Sep 5</span></li> <li><a href="/testing-anti-patterns/">Testing Anti-Patterns</a> <span>Jun 23</span></li> <li><a href="/migrating-to-circleci/">Migrating to CircleCI</a> <span>Apr 26</span></li> </ul> <h4>Tags</h4> <a href="/tags/ci/">ci</a> (3)</a>&nbsp;&nbsp; <a href="/tags/concurrency/">concurrency</a> (4)</a>&nbsp;&nbsp; <a href="/tags/docker/">docker</a> (10)</a>&nbsp;&nbsp; <a href="/tags/gist/">gist</a> (13)</a>&nbsp;&nbsp; <a href="/tags/groovy/">groovy</a> (4)</a>&nbsp;&nbsp; <a href="/tags/java/">java</a> (48)</a>&nbsp;&nbsp; <a href="/tags/jmeter/">jmeter</a> (3)</a>&nbsp;&nbsp; <a href="/tags/junit/">junit</a> (7)</a>&nbsp;&nbsp; <a href="/tags/links/">links</a> (14)</a>&nbsp;&nbsp; <a href="/tags/maven/">maven</a> (18)</a>&nbsp;&nbsp; <a href="/tags/oped/">oped</a> (8)</a>&nbsp;&nbsp; <a href="/tags/performance/">performance</a> (6)</a>&nbsp;&nbsp; <a href="/tags/plaf/">plaf</a> (14)</a>&nbsp;&nbsp; <a href="/tags/ruby/">ruby</a> (3)</a>&nbsp;&nbsp; <a href="/tags/selenium/">selenium</a> (9)</a>&nbsp;&nbsp; <a href="/tags/software/">software</a> (10)</a>&nbsp;&nbsp; <a href="/tags/spring/">spring</a> (7)</a>&nbsp;&nbsp; <a href="/tags/swing/">swing</a> (15)</a>&nbsp;&nbsp; <a href="/tags/testing/">testing</a> (23)</a>&nbsp;&nbsp; <a href="/tags/tips/">tips</a> (4)</a>&nbsp;&nbsp; <a href="/tags/tomcat/">tomcat</a> (3)</a>&nbsp;&nbsp; <a href="/tags/unix/">unix</a> (6)</a>&nbsp;&nbsp; <a href="/tags/web/">web</a> (4)</a>&nbsp;&nbsp; </hr/> <p> <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a> <a class="btn btn-primary btn-xs" href="/feed.xml">RSS</a> <a class="btn btn-primary btn-xs" href="//uk.linkedin.com/in/alexecollins">LinkedIn</a> </p> </div> </div> <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25388993-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script> </body> </html>

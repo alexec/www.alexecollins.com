@@ -1,0 +1,356 @@
+<!doctype html> <html> <head> <meta charset=utf-8 /> <meta http-equiv=X-UA-Compatible content='IE=edge;chrome=1'/> <meta name=viewport content="width=device-width, initial-scale=1.0"> <meta name=google-site-verification content=459WLyNfyiKwT7T3IzdCjzIpNP-IVQSOb4tR8b2vQhI /> <title>Alex Collins - Geb, Selenium, Cucumber & Maven Tutorial</title> <link href="/css/bootstrap.min.css" media=screen rel=stylesheet /> <style type="text/css">
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}	.article img {
+		border: 1px solid #bbb;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 10px;
+	}
+	@media print {
+		#disqus_thread, #sidebar {
+    			display:none;
+  		}
+	}
+</style> <link href="https://plus.google.com/101694420547181110548" rel=publisher /> </head> <body class="geb-selenium-cucumber-maven-tutorial geb-selenium-cucumber-maven-tutorial_index"> <div class=container> <div class=row> <div class="col-md-9 article"> <h1>Geb, Selenium, Cucumber & Maven Tutorial</h1> <table class=table> <tr> <td> <center> <a href="//selenium-webdriver-in-practice.github.io"><img src="/images/liang_cover100.jpg" class=thumbnail /></a> </center> </td> <td> <p class=well><b>Big news!</b> I've been working hard getting <b>Selenium WebDriver in Practice</b> ready and it is now available to buy on the <a href="//selenium-webdriver-in-practice.github.io">Manning Early Access Program</a>. It provides practical and useful techniques you can use with WebDriver, to get the very best out of it in your projects.</p> </td> </tr> </table> <p>A while ago I wrote some <a href="/tags/selenium/">tutorials</a> on writing Selenium tests in Java. I've been using Selenium on and off for a while and I've found somethings are always tricky:</p> <ul> <li>The Java code tends to be very verbose and has a lot of boiler plate. But you're not tied to the backend language, so you could use any language, or even a DSL.</li> <li>JUnit is great for unit testing, but it's not really ideal for functional tests. These tests could be Product Owner facing, and framework choice should suite this.</li> <li>I've found that the main drivers (e.g the Firefox driver) can be slow, prone to crashing, or not cleaning up after themselves.</li> </ul> <p>It struck me that I needed to research an alternative, so this led me to the following stack:</p> <ul> <li>HtmlUnit driver rather than FirefoxDriver. While it's not a featured as the other drivers, it's faster and more reliable.</li> <li>Geb for defining pages, navigating and assertions. </li> <li>Cucumber Groovy for creating test scenarios. It's really well known and understood, integration with major IDE and build tools is mature.</li> </ul> <p>I've put the <a href="https://github.com/alexec/geb-maven-tutorial">code for this tutorial on Github</a>.</p> <h2 id=maven-set-up>Maven Set-up</h2> <p>You can create a basic Maven web-app very easily:</p> <pre class="highlight plaintext">mvn archetype:generate -DgroupId=test -DartifactId=test-webapp -Dversion=1.0.0-SNAPSHOT -DarchetypeArtifactId=maven-archetype-webapp
+</pre> <p>We want it to run integration tests, so add the Cargo and Failsafe plugins:</p> <pre class="highlight xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.codehaus.cargo<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>cargo-maven2-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.2.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;id&gt;</span>start<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;phase&gt;</span>pre-integration-test<span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>start<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;id&gt;</span>stop<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;phase&gt;</span>post-integration-test<span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>stop<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+<span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>maven-failsafe-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>integration-test<span class="nt">&lt;/goal&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>verify<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre> <p>You can now execute <code>mvm cargo:run</code> to run a local server for testing, or <code>mvm install</code> to run tests automatically.</p> <h2 id=groovy-set-up>Groovy Set-up</h2> <p>As Geb is Groovy based, and some of our code will be in Groovy, we'll need the correct, matching, compiler and dependencies. There are a few options to do this, I've found this combination to be most reliable (note I'm using v1.8):</p> <pre class="highlight xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.codehaus.gmaven<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>gmaven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>generateTestStubs<span class="nt">&lt;/goal&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>testCompile<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;providerSelection&gt;</span>1.8<span class="nt">&lt;/providerSelection&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+...
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.codehaus.groovy<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>groovy-all<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.8.6<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre> <h2 id=geb-set-up>Geb Set-up</h2> <p>We'll need some Geb/Selenium dependencies:</p> <pre class="highlight xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.gebish<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>geb-core<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.9.2<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.seleniumhq.selenium<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>selenium-htmlunit-driver<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.36.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre> <p>Geb requires some basic config stating which driver to use and when to navigate relative to, in the form of a <code>GebConfig.groovy</code> file is the class path root:</p> <pre class="highlight plaintext">driver = "htmlunit"
+baseUrl = "http://localhost:8080/test-webapp/"
+</pre> <h2 id=cucumber-set-up>Cucumber Set-up</h2> <p>Again, we'll need some dependencies:</p> <pre class="highlight xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>info.cukes<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>cucumber-junit<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.1.5<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>info.cukes<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>cucumber-groovy<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.1.5<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre> <p>We'll need a single test so that Maven runs it during the integration-test phase:</p> <pre class="highlight groovy"><span class="nd">@RunWith</span><span class="o">(</span><span class="n">Cucumber</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">class</span> <span class="nc">RunCukesIT</span> <span class="o">{</span>
+<span class="o">}</span>
+</pre> <h2 id=putting-it-together>Putting it Together</h2> <p>To bind Geb and Cucumber we need an <code>env.groovy</code> that lives with the step defs:</p> <pre class="highlight java"><span class="kn">package</span> <span class="n">stepdefs</span>
+
+<span class="kn">import</span> <span class="nn">geb.Browser</span>
+<span class="kn">import</span> <span class="nn">geb.binding.BindingUpdater</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">cucumber</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">groovy</span><span class="o">.</span><span class="na">Hooks</span><span class="o">.</span><span class="na">After</span>
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">cucumber</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">groovy</span><span class="o">.</span><span class="na">Hooks</span><span class="o">.</span><span class="na">Before</span>
+
+<span class="nf">Before</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">bindingUpdater</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BindingUpdater</span><span class="o">(</span><span class="n">binding</span><span class="o">,</span> <span class="k">new</span> <span class="n">Browser</span><span class="o">())</span>
+    <span class="n">bindingUpdater</span><span class="o">.</span><span class="na">initialize</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="n">After</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">bindingUpdater</span><span class="o">.</span><span class="na">remove</span><span class="o">()</span>
+<span class="o">}</span>
+</pre> <p>Phew! That's the boiler plate over and done with! Fortunately, you only need to do it once, and you're not going to see too much Groovy code from now on. Instead, much of the code will be DSL-ish.</p> <p>The first thing we'll need is a couple of <a href="https://code.google.com/p/selenium/wiki/PageObjects">page objects</a>. I'm including one for the index and one for a create order page, e.g.:</p> <pre class="highlight groovy"><span class="kn">package</span> <span class="nn">pages</span>
+
+<span class="kn">import</span> <span class="nn">geb.Page</span>
+
+<span class="kd">class</span> <span class="nc">CreateOrderPage</span> <span class="kd">extends</span> <span class="n">Page</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="n">url</span> <span class="o">=</span> <span class="s2">"create-order.jsp"</span>
+    <span class="kd">static</span> <span class="n">at</span> <span class="o">=</span> <span class="o">{</span> <span class="n">$</span><span class="o">(</span><span class="s2">"h2"</span><span class="o">).</span><span class="na">text</span><span class="o">()</span> <span class="o">==</span> <span class="s2">"Create Order"</span> <span class="o">}</span>
+    <span class="kd">static</span> <span class="n">content</span> <span class="o">=</span> <span class="o">{</span>
+        <span class="n">form</span> <span class="o">{</span> <span class="n">$</span><span class="o">(</span><span class="s2">"form"</span><span class="o">)</span> <span class="o">}</span>
+        <span class="n">item</span> <span class="o">{</span> <span class="n">form</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="s2">"input[name='item']"</span><span class="o">)</span> <span class="o">}</span>
+        <span class="n">amount</span> <span class="o">{</span> <span class="n">form</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="s2">"input[name='amount']"</span><span class="o">)</span> <span class="o">}</span>
+        <span class="n">submit</span> <span class="o">{</span> <span class="n">form</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="s2">"input[type='submit']"</span><span class="o">)</span> <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kt">def</span> <span class="nf">createOrder</span><span class="o">(</span><span class="n">item1</span><span class="o">,</span> <span class="n">amount1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">item1</span>
+        <span class="n">amount</span> <span class="o">=</span> <span class="n">amount1</span>
+        <span class="n">submit</span><span class="o">.</span><span class="na">click</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre> <p>This page object class provides a few things:</p> <ul> <li><code>url</code> is the path to the page, relative to the <code>baseUrl</code> in the config.</li> <li><code>at</code> is a closure that verifies you're on the page.</li> <li><code>content</code> creates a series of fields on the page object mapped to page elements, in this case a form.</li> <li><code>createOrder</code> is a method that fills the form and submits it.</li> </ul> <p>The step defs provides an insight in how we use the pages:</p> <pre class="highlight groovy"><span class="kn">package</span> <span class="nn">stepdefs</span>
+
+<span class="kn">import</span> <span class="nn">pages.CreateOrderPage</span>
+<span class="kn">import</span> <span class="nn">pages.IndexPage</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">cucumber</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">groovy</span><span class="o">.</span><span class="na">EN</span><span class="o">.*</span>
+
+<span class="n">Given</span><span class="o">(~</span><span class="s2">"I'm at the index page"</span><span class="o">)</span> <span class="o">{</span> <span class="o">-&gt;</span>
+    <span class="n">to</span> <span class="n">IndexPage</span>
+    <span class="n">at</span> <span class="n">IndexPage</span>
+<span class="o">}</span>
+<span class="n">When</span><span class="o">(~</span><span class="s2">"I click 'Create Order'"</span><span class="o">)</span> <span class="o">{</span> <span class="o">-&gt;</span>
+    <span class="n">page</span><span class="o">.</span><span class="na">clickCreateOrder</span><span class="o">()</span>
+<span class="o">}</span>
+<span class="n">Then</span><span class="o">(~</span><span class="s2">"I see the create order page"</span><span class="o">)</span> <span class="o">{</span> <span class="o">-&gt;</span>
+    <span class="n">at</span> <span class="n">CreateOrderPage</span>
+<span class="o">}</span>
+<span class="n">Given</span><span class="o">(~</span><span class="s2">"I'm at the create order page"</span><span class="o">)</span> <span class="o">{</span> <span class="o">-&gt;</span>
+    <span class="n">to</span> <span class="n">CreateOrderPage</span>
+    <span class="n">at</span> <span class="n">CreateOrderPage</span>
+<span class="o">}</span>
+<span class="n">When</span><span class="o">(~</span><span class="s2">"I enter (.*) (.*)"</span><span class="o">)</span> <span class="o">{</span> <span class="n">item</span><span class="o">,</span> <span class="n">amount</span> <span class="o">-&gt;</span>
+    <span class="n">page</span><span class="o">.</span><span class="na">createOrder</span><span class="o">(</span><span class="n">item</span><span class="o">,</span> <span class="n">amount</span><span class="o">)</span>
+<span class="o">}</span>
+</pre> <p>This file uses <code>at</code> and <code>to</code> from Geb to navigate to the appropriate pages, and the implicit <code>page</code> object to access the page You can see two examples here, <code>page.clickCreateOrder()</code> refers to the index page, whereas <code>page.createOrder(..)</code> refers to the order page.</p> <p>Finally, you can create <code>create-order.feature</code>:</p> <pre class="highlight gherkin"><span class="kd">Feature</span><span class="p">:</span> Create Order
+
+  <span class="kn">Scenario</span><span class="p">:</span> Navigate to Create Order
+    <span class="nf">Given</span> I'm at the index page
+    <span class="nf">When</span> I click 'Create Order'
+    <span class="nf">Then</span> I see the create order page
+
+  <span class="kn">Scenario</span><span class="p">:</span> Input Order
+    <span class="nf">Given</span> I'm at the create order page
+    <span class="nf">When</span> I enter test 1.0
+    <span class="nf">Then</span> I'm at the create order page
+</pre> <p>You can now run the <code>RunCukesIT</code> or the <code>create-order.feature</code> within your IDE (after starting Cargo), or as part of a build using <code>mvn install</code>. </p> <h2 id=exercise-for-the-reader>Exercise for the Reader</h2> <p>Check out the code, add a new order confirmation page and create a test scenario for it.</p> <h2 id=conclusion>Conclusion</h2> <p>Combining Geb with Cucumber provides a compact, expressive, and PO/QA friendly way to create browser tests. Using the HTML Unit driver provides speed and reliability, but at the expense of power. Using Groovy instead of Java provides a terser way to write tests, which reduces boiler, plate and takes advantage of Groovy's closures.</p> <p>Geb is currently v0.9.2. I've not had problems with the libraries, and you'll find that hunting down tutorials (such as this one) can be very helpful. Some of the examples are incomplete, or out dated and hopefully this tutorial will help</p> <h2 id=references>References</h2> <ul> <li><a href="//www.gebish.org/">The Book of Geb (Geb's manual)</a></li> <li><a href="https://github.com/alexec/geb-maven-tutorial/releases/tag/spock">Spock version on Github</a></li> <li><a href="https://github.com/hauner/grails-cucumber/wiki/Testing-Grails-with-Cucumber-and-Geb">Geb Grails Tutorial</a></li> </ul> <div id=disqus_thread></div> <script>
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> </div> <div class=col-md-3 id=sidebar> <center> <h2>Alex Collins</h2> <p> <a href="/"><img src="/images/alex-collins-circle.png"/></a> </p> </center> <p> Java technical lead and solutions architect in London for the UK IT industry for over ten years. <a href="/about-me">more...</a> </p> <h4>Docker Maven Plugin</h4> <p>Version 2.11.4 released, <a href="https://github.com/alexec/docker-maven-plugin/blob/master/CHANGELOG.md">more...</a></p> <pre style="font-size:50%">&lt;dependency&gt;
+  &lt;groupId&gt;com.alexecollins.docker&lt;/groupId&gt;
+  &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;2.11.4&lt;/version&gt;
+&lt;/dependency&gt;</pre> <h4>Related</h4> <ol> <li><a href="/elastic-search-in-a-box-with-docker/">Search In A Box With Docker, Elastic Search, Spring Boot, and Selenium</a></li> <li><a href="/gatling-in-10-minutes/">Gatling in 10 Minutes</a></li> <li><a href="/tutorial-integration-testing-selenium-part-2/">Tutorial: Integration Testing with Selenium - Part 2</a></li> <li><a href="/tutorial-integration-testing-selenium-part-1/">Tutorial: Integration Testing with Selenium - Part 1</a></li> <li><a href="/selenium-and-selenide/">Selenium and Selenide (vs Geb)</a></li> </ol> <h4>Recent</h4> <ul> <li><a href="/practical-domain-specific-language-tutorial/">Practical Java Domain Specific Language Tutorial</a> <span>Sep 19</span></li> <li><a href="/sonarqube-and-java-8/">Sonarqube And Java 8</a> <span>Sep 17</span></li> <li><a href="/spring-boot-performance/">Spring Boot Performance</a> <span>Sep 5</span></li> <li><a href="/testing-anti-patterns/">Testing Anti-Patterns</a> <span>Jun 23</span></li> <li><a href="/migrating-to-circleci/">Migrating to CircleCI</a> <span>Apr 26</span></li> </ul> <h4>Tags</h4> <a href="/tags/ci/">ci</a> (3)</a>&nbsp;&nbsp; <a href="/tags/concurrency/">concurrency</a> (4)</a>&nbsp;&nbsp; <a href="/tags/docker/">docker</a> (10)</a>&nbsp;&nbsp; <a href="/tags/gist/">gist</a> (13)</a>&nbsp;&nbsp; <a href="/tags/groovy/">groovy</a> (4)</a>&nbsp;&nbsp; <a href="/tags/java/">java</a> (48)</a>&nbsp;&nbsp; <a href="/tags/jmeter/">jmeter</a> (3)</a>&nbsp;&nbsp; <a href="/tags/junit/">junit</a> (7)</a>&nbsp;&nbsp; <a href="/tags/links/">links</a> (14)</a>&nbsp;&nbsp; <a href="/tags/maven/">maven</a> (18)</a>&nbsp;&nbsp; <a href="/tags/oped/">oped</a> (8)</a>&nbsp;&nbsp; <a href="/tags/performance/">performance</a> (6)</a>&nbsp;&nbsp; <a href="/tags/plaf/">plaf</a> (14)</a>&nbsp;&nbsp; <a href="/tags/ruby/">ruby</a> (3)</a>&nbsp;&nbsp; <a href="/tags/selenium/">selenium</a> (9)</a>&nbsp;&nbsp; <a href="/tags/software/">software</a> (10)</a>&nbsp;&nbsp; <a href="/tags/spring/">spring</a> (7)</a>&nbsp;&nbsp; <a href="/tags/swing/">swing</a> (15)</a>&nbsp;&nbsp; <a href="/tags/testing/">testing</a> (23)</a>&nbsp;&nbsp; <a href="/tags/tips/">tips</a> (4)</a>&nbsp;&nbsp; <a href="/tags/tomcat/">tomcat</a> (3)</a>&nbsp;&nbsp; <a href="/tags/unix/">unix</a> (6)</a>&nbsp;&nbsp; <a href="/tags/web/">web</a> (4)</a>&nbsp;&nbsp; </hr/> <p> <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a> <a class="btn btn-primary btn-xs" href="/feed.xml">RSS</a> <a class="btn btn-primary btn-xs" href="//uk.linkedin.com/in/alexecollins">LinkedIn</a> </p> </div> </div> <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25388993-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script> </body> </html>
