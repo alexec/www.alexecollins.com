@@ -1,3 +1,7 @@
+machine:
+  post:
+  - apt-get install -y gcc python-dev python-setuptools libffi-dev
+  - apt-get install -y python-pip
 dependencies:
   pre:
   - pip install gsutil
