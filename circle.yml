@@ -1,3 +1,6 @@
 checkout:
   post:
   - bundler install
+test:
+  override:
+  - true
