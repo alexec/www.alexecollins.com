@@ -14,7 +14,7 @@ Firstly, it's important to understand some key things about how the Sonar plugin
 
 Static Analysis
 ---
-If you need to exclude some source file for static analysis (e.g. generated sources) you need to add a Sonar property. Unusually for a Maven plugin, you can only configure Sonar via properties.:
+If you need to exclude some source file for static analysis (e.g. generated sources) you need to add a Sonar property. Unusually for a Maven plugin, you can only configure Sonar via properties:
 
 ~~~xml
 <properties>
@@ -47,13 +47,16 @@ Jacoco allows you to gather coverage metrics. It attaches to the JVM when Surefi
 
 [Lombok](https://projectlombok.org) generates code from annotated class. You'd want to exclude this generated code from analysis and from test coverage. Therefore you need to configure both Sonar and Jacoco.
 
-Lombok annotated fields and methods with `@SuppressWarnings("all")`. Jacoco ignores this. It does not support exclusion by annotation. You must do this manually. Here is a script you can use:
+Lombok annotated fields and methods with `@SuppressWarnings("all")`. Jacoco ignores this. It does not support exclusion by annotation. You must do this manually:
 
 ~~~xml
-<sonar.exclusions>**/generated-sources/**,**/mypackage/MyVO.java/<sonar.exclusions>
+<sonar.exclusions>
+	**/generated-sources/**,\
+	**/mypackage/MyVO.java
+<sonar.exclusions>
 ~~~
 	
-You'll need to update this every time you wanted to update this.
+You'll need to update this every time you add a new VO.
 
 PiTest
 ---
@@ -65,7 +68,7 @@ PiTest
 <version>1.1.6</version>
 <configuration>
     <targetClasses>
-    	<!-- it is best to specify which classes you want mutation coverage on -->
+    	<!-- specify which classes you want mutation coverage on -->
         <targetClass>mypackage*</targetClass>
     </targetClasses>
     <targetTests>
@@ -77,7 +80,7 @@ PiTest
         <outputFormat>XML</outputFormat>
         <outputFormat>HTML</outputFormat>
     </outputFormats>
-    <!-- Sonar expects reports to not have timestamps -->
+    <!-- Sonar expects reports not to have timestamps -->
     <timestampedReports>false</timestampedReports>
 </configuration>
 </plugin>
@@ -94,5 +97,6 @@ To enable PiTest on Sonar, use this property:
 Finally, you can create your analysis using:
 
 ~~~
-mvn clean test sonar:sonar
+mvn clean install 
+mvn sonar:sonar
 ~~~
