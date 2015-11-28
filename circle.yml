@@ -1,5 +1,5 @@
-machine:
-  post:
+dependencies:
+  pre:
   - pip install gsutil
 checkout:
   post:
