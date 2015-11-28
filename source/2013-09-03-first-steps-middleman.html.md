@@ -11,7 +11,7 @@ I ended up doing the following steps:
 * Writing [a script](https://github.com/alexec/www.alexecollins.com/blob/master/convert.rb) that parsed the CSV file, extracting the date, title and content and creating a blog post for each page.
 * Tweaking the output several times to fix problems, e.g. un-closed tags, stop-words in page title.
 * As it doesn't support /?=... style URLs, I created [a 404 page](/404) with a list of the most popular posts.
-* Running [my link checker](/content/web-site-link-checker) to check I'd not broken too many links.
+* Running [my link checker](/web-site-link-checker) to check I'd not broken too many links.
 * Updating the template to have Google Analytics tracking, and Disqus comments.
 * Manually inspecting the most popular pages for errors.
 * Checking on mobile and tablet.

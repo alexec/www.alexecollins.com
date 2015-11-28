@@ -144,7 +144,7 @@ server {
   &lt;li&gt;Debugging using &lt;code&gt;docker exec&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Routing messages out of a cluster to your local machine.&lt;/li&gt;
 &lt;/ol&gt;
-</content>
+<>
   </entry>
   <entry>
     <title>Practical Java Domain Specific Language Tutorial</title>
@@ -309,7 +309,7 @@ server {
 &lt;/pre&gt;
 
 &lt;p&gt;Now you have a fully formed, mini-DSL. You can add words to your DSL until you're happy with it!&lt;/p&gt;
-</content>
+<>
   </entry>
   <entry>
     <title>Sonarqube And Java 8</title>
@@ -410,7 +410,7 @@ server {
 &lt;pre class="highlight plaintext"&gt;mvn clean install 
 mvn sonar:sonar
 &lt;/pre&gt;
-</content>
+<>
   </entry>
   <entry>
     <title>Spring Boot Performance</title>
@@ -547,7 +547,7 @@ WebSocketAutoConfiguration
   &lt;li&gt;&lt;a href="https://www.techempower.com/benchmarks/"&gt;https://www.techempower.com/benchmarks/&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href="https://cloud.google.com/appengine/articles/spring_optimization"&gt;https://cloud.google.com/appengine/articles/spring_optimization&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</content>
+<>
   </entry>
   <entry>
     <title>Testing Anti-Patterns</title>
@@ -562,7 +562,7 @@ WebSocketAutoConfiguration
 
 &lt;iframe src="//slides.com/alexec/testing-anti-patterns/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""&gt;&lt;/iframe&gt;
 
-</content>
+<>
   </entry>
   <entry>
     <title>Migrating to CircleCI</title>
@@ -677,7 +677,7 @@ export GPG_PASSPHRASE=secret
 &lt;pre class="highlight plaintext"&gt;&amp;lt;repositories&amp;gt;
     &amp;lt;repository&amp;gt;
         &amp;lt;id&amp;gt;sonatype-snapshots&amp;lt;/id&amp;gt;
-        &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots/&amp;lt;/url&amp;gt;
+        &amp;lt;url&amp;gt;https://oss.sonatype.org/repositories/snapshots/&amp;lt;/url&amp;gt;
         &amp;lt;snapshots&amp;gt;
             &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
         &amp;lt;/snapshots&amp;gt;
@@ -690,7 +690,7 @@ export GPG_PASSPHRASE=secret
 &lt;pre class="highlight plaintext"&gt;&amp;lt;pluginRepositories&amp;gt;
     &amp;lt;pluginRepository&amp;gt;
         &amp;lt;id&amp;gt;sonatype-snapshots&amp;lt;/id&amp;gt;
-        &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots/&amp;lt;/url&amp;gt;
+        &amp;lt;url&amp;gt;https://oss.sonatype.org/repositories/snapshots/&amp;lt;/url&amp;gt;
         &amp;lt;snapshots&amp;gt;
             &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
         &amp;lt;/snapshots&amp;gt;
@@ -767,6 +767,6 @@ curl -v -X POST https://circleci.com/api/v1/project/alexec/&lt;span class="nv"&g
 &lt;p&gt;I've had a really good experience with CircleCI. Particularly, I've found it really fast. There are a few rough edges. If you've come from using Jenkins you may miss its massive ecosystem of plugins.&lt;/p&gt;
 
 &lt;p&gt;I've put my &lt;a href="https://github.com/alexec/circleci"&gt;build scripts onto Github&lt;/a&gt;.&lt;/p&gt;
-</content>
+<>
   </entry>
 </feed>

@@ -294,7 +294,7 @@
 </pre> <p>Run the test. You'll see this exception:</p> <pre class="highlight plaintext">IllegalArgumentException: Superclass has no null constructors but no arguments were given
 </pre> <p>You can't use <code>@Transactional</code> on a class without a no-args constructor. Revert this change.</p> <p>You may need to delete the database now if you see <code>Table "TEST" already exists</code>:</p> <pre class="highlight shell">rm -R /tmp/test.<span class="k">*</span>
 </pre> <h2 id=non-public-method-gotcha>Non-Public Method Gotcha</h2> <p>Now lets look a more insidious error, change <code>App</code> so that the insert method is protected like this:</p> <pre class="highlight plaintext">protected void insertOneRecordAndThenThrowException() {
-</pre> <p>The test will fail. <code>@Transactional</code> only works on public methods, but you get no error or warning about it.</p> <h2 id=conclusion>Conclusion</h2> <p>Watch out for these problems! In <a href="//www.alexecollins.com/content/java-annotation-processor-tutorial/index.html">my next post</a> I'll show how to prevent these errors at compile time. </p> <div id=disqus_thread></div> <script>
+</pre> <p>The test will fail. <code>@Transactional</code> only works on public methods, but you get no error or warning about it.</p> <h2 id=conclusion>Conclusion</h2> <p>Watch out for these problems! In <a href="//www.alexecollins.com/java-annotation-processor-tutorial/index.html">my next post</a> I'll show how to prevent these errors at compile time. </p> <div id=disqus_thread></div> <script>
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'alexecollins'; // required: replace example with your forum shortname
 

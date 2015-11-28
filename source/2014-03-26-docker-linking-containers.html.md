@@ -3,7 +3,7 @@ title: Docker - Linking Containers
 date: 2014-03-26 21:36 UTC
 tags: docker
 ---
-I've talked a bit about [creating a simple application container](/content/first-steps-with-docker), and a bit about [having  persistence by using "data only containers"](/content/docker-persistence). This tutorial is about how to create one container that can access a service on another.
+I've talked a bit about [creating a simple application container](/first-steps-with-docker), and a bit about [having  persistence by using "data only containers"](/docker-persistence). This tutorial is about how to create one container that can access a service on another.
 
 Build this MySQL container:
 

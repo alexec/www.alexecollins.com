@@ -3,7 +3,7 @@ title: Docker - Persistence
 date: 2014-03-15 10:02 UTC
 tags: docker
 ---
-I've already [written about Docker](/content/first-steps-with-docker/). One big thing is that when you run a Docker image, the data for the last run is not persisted. If you're creating a database container, you probably want this data kept around. There is a pattern for this, generally called the **data only container**.
+I've already [written about Docker](/first-steps-with-docker/). One big thing is that when you run a Docker image, the data for the last run is not persisted. If you're creating a database container, you probably want this data kept around. There is a pattern for this, generally called the **data only container**.
 
 Consider the following MySQL `Dockerfile`:
 

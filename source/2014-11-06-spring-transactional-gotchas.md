@@ -188,4 +188,4 @@ The test will fail. `@Transactional` only works on public methods, but you get n
 
 Conclusion
 ---
-Watch out for these problems! In [my next post](http://www.alexecollins.com/content/java-annotation-processor-tutorial/index.html) I'll show how to prevent these errors at compile time. 
+Watch out for these problems! In [my next post](http://www.alexecollins.com/java-annotation-processor-tutorial/index.html) I'll show how to prevent these errors at compile time. 

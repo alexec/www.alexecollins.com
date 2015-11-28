@@ -223,7 +223,7 @@ export GPG_PASSPHRASE=secret
 </pre> <p>To complete this the deployment of your artefacts, you need to add your keys into the web interface.</p> <p>For another build to consume them in another build you just need to add the repository to your <code>pom.xml</code>:</p> <pre class="highlight plaintext">&lt;repositories&gt;
     &lt;repository&gt;
         &lt;id&gt;sonatype-snapshots&lt;/id&gt;
-        &lt;url&gt;https://oss.sonatype.org/content/repositories/snapshots/&lt;/url&gt;
+        &lt;url&gt;https://oss.sonatype.org/repositories/snapshots/&lt;/url&gt;
         &lt;snapshots&gt;
             &lt;enabled&gt;true&lt;/enabled&gt;
         &lt;/snapshots&gt;
@@ -232,7 +232,7 @@ export GPG_PASSPHRASE=secret
 </pre> <p>And, if you have a plugin dependency, you'll also need to add that:</p> <pre class="highlight plaintext">&lt;pluginRepositories&gt;
     &lt;pluginRepository&gt;
         &lt;id&gt;sonatype-snapshots&lt;/id&gt;
-        &lt;url&gt;https://oss.sonatype.org/content/repositories/snapshots/&lt;/url&gt;
+        &lt;url&gt;https://oss.sonatype.org/repositories/snapshots/&lt;/url&gt;
         &lt;snapshots&gt;
             &lt;enabled&gt;true&lt;/enabled&gt;
         &lt;/snapshots&gt;

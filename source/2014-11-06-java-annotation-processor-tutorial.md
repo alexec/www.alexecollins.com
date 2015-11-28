@@ -5,7 +5,7 @@ tags: java, annotation processor, sprint, annotation tutorial
 ---
 I've been using [Project Lombok](http://projectlombok.org), the excellent Java tool that create value-object classes with minimal code. Under the hood it uses the [Java Annotation Processor](http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/Processor.html) to generate code based on your source code before compilation. Annotation processing a somewhat niche technique, but it has some great use cases. Lombok uses it for generate code, but another good use it to verify your source code.
 
-In a [recent tutorial](http://www.alexecollins.com/content/spring-transactional-gotchas/), I showed how Spring `@Transactional` annotation can cause problems. Today we'll write an annotation processor to identify these prevent these problems at compile time.
+In a [recent tutorial](http://www.alexecollins.com/spring-transactional-gotchas/), I showed how Spring `@Transactional` annotation can cause problems. Today we'll write an annotation processor to identify these prevent these problems at compile time.
 
 All the following code can be found on [Github](https://github.com/alexec/spring-tx-ann-proc).
 

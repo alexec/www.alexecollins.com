@@ -3,7 +3,7 @@ title: More Maven Plugin Tips
 date: 2014-04-26 19:47 UTC
 tags: maven
 ---
-I've been writing a couple more Maven plugins recently, including [one to start/stop groups of Docker containers](/content/docker-maven-plugin). I wanted to extend [my previous tips](/content/tips-writing-maven-plugins) with three new tips I've found really helpful.
+I've been writing a couple more Maven plugins recently, including [one to start/stop groups of Docker containers](/docker-maven-plugin). I wanted to extend [my previous tips](/tips-writing-maven-plugins) with three new tips I've found really helpful.
 
 Tip 7: Don't Do Any Work In Your Mojo Class
 ---
