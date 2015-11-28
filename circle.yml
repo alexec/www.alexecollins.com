@@ -9,3 +9,6 @@ checkout:
 test:
   override:
   - true
+general:
+  artifacts:
+  - build
