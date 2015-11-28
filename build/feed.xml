@@ -5,10 +5,147 @@
   <id>http://www.alexecollins.com/</id>
   <link href="http://www.alexecollins.com/"/>
   <link href="http://www.alexecollins.com/feed.xml" rel="self"/>
-  <updated>2015-09-19T17:08:00Z</updated>
+  <updated>2015-11-28T01:00:00Z</updated>
   <author>
     <name>Alex Collins</name>
   </author>
+  <entry>
+    <title>Developing With Docker - Using The Proxy Container Pattern To Make Development Easier</title>
+    <link rel="alternate" href="/developing-with-docker-proxy-container-pattern/"/>
+    <id>/developing-with-docker-proxy-container-pattern/</id>
+    <published>2015-11-28T01:00:00Z</published>
+    <updated>2015-11-28T01:00:00Z</updated>
+    <author>
+      <name>Alex Collins</name>
+    </author>
+    <content type="html">&lt;p&gt;I've been working with Docker a lot more recently. I've started to find some issue with it when working with several containers. One solution to the problem of accessing containers who exposing the same port is what I call a &lt;strong&gt;proxy container&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;As I work on OS-X, these tips will be OS-X + Docker Machine, and Docker Compose based.&lt;/p&gt;
+
+&lt;p&gt;You can find the example on &lt;a href="https://github.com/alexec/docker-proxy-container-example"&gt;Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id="problem"&gt;Problem&lt;/h3&gt;
+
+&lt;p&gt;So – here's the problem:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You running a cluster of containers for local devolpment (e.g. using Docker Compose).&lt;/li&gt;
+  &lt;li&gt;You'd like to connect to Docker containers using their hostname and port from your host PC. This means you do not need to change any configuration when developing or testing apps to point to your local machine, or to your Docker machine, it'll just work.&lt;/li&gt;
+  &lt;li&gt;This must work even if you have two containers working on the same port.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="solution"&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;Have a single public container in your cluster that accepts all HTTP requests, and proxies them to correct container.&lt;/p&gt;
+
+&lt;p&gt;HTTP requests have a header named &lt;code&gt;Host&lt;/code&gt; that contains the name of the host the request was sent to. We can use this is our proxy.&lt;/p&gt;
+
+&lt;p&gt;Our steps will be:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Changing the dev machines &lt;code&gt;/etc/hosts&lt;/code&gt; to sent HTTP requests for our services to Docker machine.&lt;/li&gt;
+  &lt;li&gt;Create a the proxy container on the Docker machine that inspects the &lt;code&gt;Host&lt;/code&gt; HTTP header, and then proxies the request to the correct container.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;To demostrate this, lets have two containers: "foo" and "bar". Both are listening on port 80 and display a simple static web page. So what I want is if I open &lt;a href="http://foo"&gt;http://foo&lt;/a&gt; in a browser I should see the side on the &lt;code&gt;foo&lt;/code&gt; container.&lt;/p&gt;
+
+&lt;p&gt;In a &lt;code&gt;foo&lt;/code&gt; directory, create a &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;FROM nginx:1.9.7
+
+ADD index.html /usr/share/nginx/html/
+&lt;/pre&gt;
+
+&lt;p&gt;And an &lt;code&gt;index.html&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight html"&gt;&lt;span class="nt"&gt;&amp;lt;html&amp;gt;&lt;/span&gt;Hello Foo!&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Repeat this for a directory named &lt;code&gt;bar&lt;/code&gt;, but change the &lt;code&gt;index.html&lt;/code&gt; to some something eles.&lt;/p&gt;
+
+&lt;p&gt;Finally, create this &lt;code&gt;docker-compose.yml&lt;/code&gt; file to your project root:&lt;/p&gt;
+
+&lt;pre class="highlight yaml"&gt;&lt;span class="s"&gt;foo&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
+  &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;foo&lt;/span&gt;
+  &lt;span class="s"&gt;container_name&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;foo&lt;/span&gt;
+&lt;span class="s"&gt;bar&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
+  &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
+  &lt;span class="s"&gt;container_name&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;If you run &lt;code&gt;docker-compose up&lt;/code&gt; it will create two Nginx containers that have different HTML pages.&lt;/p&gt;
+
+&lt;p&gt;We want to have all requests to &lt;code&gt;foo&lt;/code&gt; and &lt;code&gt;bar&lt;/code&gt; sent to the Docker machine. I'm using Docker Machine on OS-X, and by default it runs on &lt;code&gt;192.168.99.100&lt;/code&gt;, so add these lines to your &lt;code&gt;/etc/hosts&lt;/code&gt; file so that requests to those hosts get forwarded:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;192.168.99.100 foo
+192.168.99.100 bar
+&lt;/pre&gt;
+
+&lt;p&gt;But unfortunately, you cannot expose more than one container on port 80 on the host. You can make a third container called &lt;code&gt;proxy&lt;/code&gt; to sit in front of both of the containers, and proxy requests. This has the following &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;FROM nginx:1.9.7
+
+ADD default.conf /etc/nginx/conf.d/
+&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;default.conf&lt;/code&gt; is an Nginx configuration file. This file forwards requests to containers based on the host name:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;upstream foo {
+    server foo;
+}
+upstream bar {
+    server bar;
+}
+server {
+    listen       80;
+    server_name  localhost;
+
+    location / {
+       proxy_pass http://$host;
+    }
+}
+&lt;/pre&gt;
+
+&lt;p&gt;This configuration will proxy any request to which has a HTTP header of &lt;code&gt;Host: foo&lt;/code&gt; to &lt;code&gt;foo&lt;/code&gt;, and likewise &lt;code&gt;Host: bar&lt;/code&gt; to &lt;code&gt;bar&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Finally, create this &lt;code&gt;docker-compose.yml&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre class="highlight yaml"&gt;&lt;span class="s"&gt;foo&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
+  &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;foo&lt;/span&gt;
+  &lt;span class="s"&gt;container_name&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;foo&lt;/span&gt;
+&lt;span class="s"&gt;bar&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
+  &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
+  &lt;span class="s"&gt;container_name&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
+&lt;span class="s"&gt;proxy&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
+  &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;proxy&lt;/span&gt;
+  &lt;span class="s"&gt;container_name&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;proxy&lt;/span&gt;
+  &lt;span class="s"&gt;links&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
+  &lt;span class="pi"&gt;-&lt;/span&gt; &lt;span class="s"&gt;foo&lt;/span&gt;
+  &lt;span class="pi"&gt;-&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
+  &lt;span class="s"&gt;ports&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
+  &lt;span class="pi"&gt;-&lt;/span&gt; &lt;span class="s"&gt;80:80&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Finally, do &lt;code&gt;docker-compose up&lt;/code&gt; to get them all up and running.&lt;/p&gt;
+
+&lt;p&gt;If you request either URL from your host machine, the request will go to the correct container.&lt;/p&gt;
+
+&lt;h3 id="discussion"&gt;Discussion&lt;/h3&gt;
+
+&lt;p&gt;This technique is a good starting point. It's aimed at making development easier, but putting a proxy container in front of a cluster of containers can also be used in production so that you do not need to expose the container directly.&lt;/p&gt;
+
+&lt;p&gt;The above &lt;code&gt;default.conf&lt;/code&gt; is not secure for production. But, you could also easily modify it to be more secure. I've used Nginx, as I'm familiar with it, but you could also you HA Proxy for this task.&lt;/p&gt;
+
+&lt;p&gt;This is the first article in a series on &lt;strong&gt;developing with Docker&lt;/strong&gt; I'm planning on writing:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The Proxy Container Pattern&lt;/li&gt;
+  &lt;li&gt;The Debug Container&lt;/li&gt;
+  &lt;li&gt;Debugging using &lt;code&gt;docker exec&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Routing messages out of a cluster to your local machine.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+  </entry>
   <entry>
     <title>Practical Java Domain Specific Language Tutorial</title>
     <link rel="alternate" href="/practical-domain-specific-language-tutorial/"/>
@@ -195,7 +332,7 @@
 &lt;p&gt;Firstly, it's important to understand some key things about how the Sonar plugin works.  Sonar does static analysis using built in plugins, but test and mutation coverage require Maven plugins to be set-up. This means you need to configure all the plugins in separately.&lt;/p&gt;
 
 &lt;h2 id="static-analysis"&gt;Static Analysis&lt;/h2&gt;
-&lt;p&gt;If you need to exclude some source file for static analysis (e.g. generated sources) you need to add a Sonar property. Unusually for a Maven plugin, you can only configure Sonar via properties.:&lt;/p&gt;
+&lt;p&gt;If you need to exclude some source file for static analysis (e.g. generated sources) you need to add a Sonar property. Unusually for a Maven plugin, you can only configure Sonar via properties:&lt;/p&gt;
 
 &lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;sonar.exclusions&amp;gt;&lt;/span&gt;**/generated-sources/**&lt;span class="nt"&gt;&amp;lt;/sonar.exclusions&amp;gt;&lt;/span&gt;
@@ -225,12 +362,15 @@
 
 &lt;p&gt;&lt;a href="https://projectlombok.org"&gt;Lombok&lt;/a&gt; generates code from annotated class. You'd want to exclude this generated code from analysis and from test coverage. Therefore you need to configure both Sonar and Jacoco.&lt;/p&gt;
 
-&lt;p&gt;Lombok annotated fields and methods with &lt;code&gt;@SuppressWarnings("all")&lt;/code&gt;. Jacoco ignores this. It does not support exclusion by annotation. You must do this manually. Here is a script you can use:&lt;/p&gt;
+&lt;p&gt;Lombok annotated fields and methods with &lt;code&gt;@SuppressWarnings("all")&lt;/code&gt;. Jacoco ignores this. It does not support exclusion by annotation. You must do this manually:&lt;/p&gt;
 
-&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;sonar.exclusions&amp;gt;&lt;/span&gt;**/generated-sources/**,**/mypackage/MyVO.java/&lt;span class="nt"&gt;&amp;lt;sonar.exclusions&amp;gt;&lt;/span&gt;
+&lt;pre class="highlight xml"&gt;&lt;span class="nt"&gt;&amp;lt;sonar.exclusions&amp;gt;&lt;/span&gt;
+	**/generated-sources/**,\
+	**/mypackage/MyVO.java
+&lt;span class="nt"&gt;&amp;lt;sonar.exclusions&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;You'll need to update this every time you wanted to update this.&lt;/p&gt;
+&lt;p&gt;You'll need to update this every time you add a new VO.&lt;/p&gt;
 
 &lt;h2 id="pitest"&gt;PiTest&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://pitest.org"&gt;PiTest&lt;/a&gt; is a mutation coverage tool that help you find untested or redundant code. You need to install &lt;a href="https://github.com/SonarCommunity/sonar-pitest"&gt;the plugin&lt;/a&gt; into Sonar.&lt;/p&gt;
@@ -240,7 +380,7 @@
 &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.1.6&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;targetClasses&amp;gt;&lt;/span&gt;
-    	&lt;span class="c"&gt;&amp;lt;!-- it is best to specify which classes you want mutation coverage on --&amp;gt;&lt;/span&gt;
+    	&lt;span class="c"&gt;&amp;lt;!-- specify which classes you want mutation coverage on --&amp;gt;&lt;/span&gt;
         &lt;span class="nt"&gt;&amp;lt;targetClass&amp;gt;&lt;/span&gt;mypackage*&lt;span class="nt"&gt;&amp;lt;/targetClass&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;/targetClasses&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;targetTests&amp;gt;&lt;/span&gt;
@@ -252,7 +392,7 @@
         &lt;span class="nt"&gt;&amp;lt;outputFormat&amp;gt;&lt;/span&gt;XML&lt;span class="nt"&gt;&amp;lt;/outputFormat&amp;gt;&lt;/span&gt;
         &lt;span class="nt"&gt;&amp;lt;outputFormat&amp;gt;&lt;/span&gt;HTML&lt;span class="nt"&gt;&amp;lt;/outputFormat&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;/outputFormats&amp;gt;&lt;/span&gt;
-    &lt;span class="c"&gt;&amp;lt;!-- Sonar expects reports to not have timestamps --&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!-- Sonar expects reports not to have timestamps --&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;timestampedReports&amp;gt;&lt;/span&gt;false&lt;span class="nt"&gt;&amp;lt;/timestampedReports&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
@@ -267,7 +407,8 @@
 
 &lt;p&gt;Finally, you can create your analysis using:&lt;/p&gt;
 
-&lt;pre class="highlight plaintext"&gt;mvn clean test sonar:sonar
+&lt;pre class="highlight plaintext"&gt;mvn clean install 
+mvn sonar:sonar
 &lt;/pre&gt;
 </content>
   </entry>
@@ -626,32 +767,6 @@ curl -v -X POST https://circleci.com/api/v1/project/alexec/&lt;span class="nv"&g
 &lt;p&gt;I've had a really good experience with CircleCI. Particularly, I've found it really fast. There are a few rough edges. If you've come from using Jenkins you may miss its massive ecosystem of plugins.&lt;/p&gt;
 
 &lt;p&gt;I've put my &lt;a href="https://github.com/alexec/circleci"&gt;build scripts onto Github&lt;/a&gt;.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Docker Maven Plugin Presentation At Docker London</title>
-    <link rel="alternate" href="/docker-maven-plugin-presentation-at-docker-london/"/>
-    <id>/docker-maven-plugin-presentation-at-docker-london/</id>
-    <published>2015-04-09T06:54:00Z</published>
-    <updated>2015-04-09T06:54:00Z</updated>
-    <author>
-      <name>Alex Collins</name>
-    </author>
-    <content type="html">&lt;center&gt;
-	&lt;iframe width="600" height="400" src="http://alexec.github.io/slides/docker-maven-plugin.html" style="border:none;"&gt;&lt;/iframe&gt;
-&lt;/center&gt;
-
-&lt;pre class="highlight plaintext"&gt;git checkout https://github.com/alexec/slides.git
-npm i
-ln -sf docker-maven-plugin.html index.html
-node plugin/notes-server
-&lt;/pre&gt;
-
-&lt;p&gt;Press &lt;code&gt;s&lt;/code&gt; for notes.
-## Search in A Box&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="https://asciinema.org/a/18581?speed=2"&gt;&lt;img alt="asciicast" src="https://asciinema.org/a/18581.png" /&gt;&lt;/a&gt;&lt;/p&gt;
-
 </content>
   </entry>
 </feed>
