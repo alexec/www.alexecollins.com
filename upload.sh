@@ -1,4 +1,4 @@
-$! /bin/sh
+#! /bin/sh
 set -eux
 
 gsutil -m rsync -R build gs://www.alexecollins.com
