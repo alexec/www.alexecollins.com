@@ -124,6 +124,8 @@ This technique is a good starting point. It's aimed at making development easier
 
 The above `default.conf` is not secure for production. But, you would need to modify it to be more secure if you want to use it there. I've used Nginx, as I'm familiar with it, but you could also you HA Proxy for this task.
 
+In fact, you can do this automatically using [Jason Wilder's Nginx proxy](http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/), and this is well worthwhile looking at for complex projects.
+
 This is the first article in a series on **developing with Docker** I'm planning on writing:
 
 1. The Proxy Container Pattern
