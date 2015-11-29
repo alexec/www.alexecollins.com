@@ -10,9 +10,9 @@
     <name>Alex Collins</name>
   </author>
   <entry>
-    <title>Developing With Docker - Using The Proxy Container Pattern To Make Development Easier</title>
-    <link rel="alternate" href="/developing-with-docker-proxy-container-pattern/"/>
-    <id>/developing-with-docker-proxy-container-pattern/</id>
+    <title>Developing With Docker - Using A Proxy Container To Make Development Easier</title>
+    <link rel="alternate" href="/developing-with-docker-proxy-container/"/>
+    <id>/developing-with-docker-proxy-container/</id>
     <published>2015-11-28T01:00:00Z</published>
     <updated>2015-11-28T01:00:00Z</updated>
     <author>
@@ -30,24 +30,24 @@
 
 &lt;ul&gt;
   &lt;li&gt;You running a cluster of containers for local devolpment (e.g. using Docker Compose).&lt;/li&gt;
-  &lt;li&gt;You'd like to connect to Docker containers using their hostname and port from your host PC. This means you do not need to change any configuration when developing or testing apps to point to your local machine, or to your Docker machine, it'll just work.&lt;/li&gt;
-  &lt;li&gt;This must work even if you have two containers working on the same port.&lt;/li&gt;
+  &lt;li&gt;You'd like to connect to Docker containers using their hostname and port from your host PC. This means you do not need to change any configuration when developing or testing apps to point to your local machine, or to your Docker machine, it should just work.&lt;/li&gt;
+  &lt;li&gt;This must work even if you have two containers are listening on the same port.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id="solution"&gt;Solution&lt;/h3&gt;
 
 &lt;p&gt;Have a single public container in your cluster that accepts all HTTP requests, and proxies them to correct container.&lt;/p&gt;
 
-&lt;p&gt;HTTP requests have a header named &lt;code&gt;Host&lt;/code&gt; that contains the name of the host the request was sent to. We can use this is our proxy.&lt;/p&gt;
+&lt;p&gt;HTTP requests have a header named &lt;code&gt;Host&lt;/code&gt; that contains the name of the host the request was sent to. We can use this in our proxy.&lt;/p&gt;
 
-&lt;p&gt;Our steps will be:&lt;/p&gt;
+&lt;p&gt;The steps will be:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Changing the dev machines &lt;code&gt;/etc/hosts&lt;/code&gt; to sent HTTP requests for our services to Docker machine.&lt;/li&gt;
   &lt;li&gt;Create a the proxy container on the Docker machine that inspects the &lt;code&gt;Host&lt;/code&gt; HTTP header, and then proxies the request to the correct container.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;To demostrate this, lets have two containers: "foo" and "bar". Both are listening on port 80 and display a simple static web page. So what I want is if I open &lt;a href="http://foo"&gt;http://foo&lt;/a&gt; in a browser I should see the side on the &lt;code&gt;foo&lt;/code&gt; container.&lt;/p&gt;
+&lt;p&gt;To demostrate this, lets have two containers: "foo" and "bar". Both are listening on port 80 and display a simple static web page. If I open &lt;a href="http://foo"&gt;http://foo&lt;/a&gt; in a browser, I should see the HTML page served by the &lt;code&gt;foo&lt;/code&gt; container.&lt;/p&gt;
 
 &lt;p&gt;In a &lt;code&gt;foo&lt;/code&gt; directory, create a &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
 
@@ -61,9 +61,9 @@ ADD index.html /usr/share/nginx/html/
 &lt;pre class="highlight html"&gt;&lt;span class="nt"&gt;&amp;lt;html&amp;gt;&lt;/span&gt;Hello Foo!&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Repeat this for a directory named &lt;code&gt;bar&lt;/code&gt;, but change the &lt;code&gt;index.html&lt;/code&gt; to some something eles.&lt;/p&gt;
+&lt;p&gt;Repeat this for a directory named &lt;code&gt;bar&lt;/code&gt;, but change the &lt;code&gt;index.html&lt;/code&gt; to contain some different HTML (e.g. "Hello Bar!").&lt;/p&gt;
 
-&lt;p&gt;Finally, create this &lt;code&gt;docker-compose.yml&lt;/code&gt; file to your project root:&lt;/p&gt;
+&lt;p&gt;Create this &lt;code&gt;docker-compose.yml&lt;/code&gt; file to your project root:&lt;/p&gt;
 
 &lt;pre class="highlight yaml"&gt;&lt;span class="s"&gt;foo&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
   &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;foo&lt;/span&gt;
@@ -75,13 +75,13 @@ ADD index.html /usr/share/nginx/html/
 
 &lt;p&gt;If you run &lt;code&gt;docker-compose up&lt;/code&gt; it will create two Nginx containers that have different HTML pages.&lt;/p&gt;
 
-&lt;p&gt;We want to have all requests to &lt;code&gt;foo&lt;/code&gt; and &lt;code&gt;bar&lt;/code&gt; sent to the Docker machine. I'm using Docker Machine on OS-X, and by default it runs on &lt;code&gt;192.168.99.100&lt;/code&gt;, so add these lines to your &lt;code&gt;/etc/hosts&lt;/code&gt; file so that requests to those hosts get forwarded:&lt;/p&gt;
+&lt;p&gt;We want to have all requests to &lt;code&gt;foo&lt;/code&gt; and &lt;code&gt;bar&lt;/code&gt; sent to the Docker machine. Docker Machine on OS-X by default has the IP &lt;code&gt;192.168.99.100&lt;/code&gt;, so add these lines to your &lt;code&gt;/etc/hosts&lt;/code&gt; file so that requests to those hosts get forwarded:&lt;/p&gt;
 
 &lt;pre class="highlight plaintext"&gt;192.168.99.100 foo
 192.168.99.100 bar
 &lt;/pre&gt;
 
-&lt;p&gt;But unfortunately, you cannot expose more than one container on port 80 on the host. You can make a third container called &lt;code&gt;proxy&lt;/code&gt; to sit in front of both of the containers, and proxy requests. This has the following &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;You cannot expose more than one container per machine on port 80. You can make a third container called &lt;code&gt;proxy&lt;/code&gt; to sit in front of both of the containers, and proxy requests. Create the following &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
 
 &lt;pre class="highlight plaintext"&gt;FROM nginx:1.9.7
 
@@ -108,7 +108,7 @@ server {
 
 &lt;p&gt;This configuration will proxy any request to which has a HTTP header of &lt;code&gt;Host: foo&lt;/code&gt; to &lt;code&gt;foo&lt;/code&gt;, and likewise &lt;code&gt;Host: bar&lt;/code&gt; to &lt;code&gt;bar&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Finally, create this &lt;code&gt;docker-compose.yml&lt;/code&gt; file:&lt;/p&gt;
+&lt;p&gt;Update the &lt;code&gt;docker-compose.yml&lt;/code&gt; file to add the proxy:&lt;/p&gt;
 
 &lt;pre class="highlight yaml"&gt;&lt;span class="s"&gt;foo&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
   &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;foo&lt;/span&gt;
@@ -134,7 +134,7 @@ server {
 
 &lt;p&gt;This technique is a good starting point. It's aimed at making development easier, but putting a proxy container in front of a cluster of containers can also be used in production so that you do not need to expose the container directly.&lt;/p&gt;
 
-&lt;p&gt;The above &lt;code&gt;default.conf&lt;/code&gt; is not secure for production. But, you could also easily modify it to be more secure. I've used Nginx, as I'm familiar with it, but you could also you HA Proxy for this task.&lt;/p&gt;
+&lt;p&gt;The above &lt;code&gt;default.conf&lt;/code&gt; is not secure for production. But, you would need to modify it to be more secure if you want to use it there. I've used Nginx, as I'm familiar with it, but you could also you HA Proxy for this task.&lt;/p&gt;
 
 &lt;p&gt;This is the first article in a series on &lt;strong&gt;developing with Docker&lt;/strong&gt; I'm planning on writing:&lt;/p&gt;
 
@@ -144,7 +144,7 @@ server {
   &lt;li&gt;Debugging using &lt;code&gt;docker exec&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Routing messages out of a cluster to your local machine.&lt;/li&gt;
 &lt;/ol&gt;
-<>
+</content>
   </entry>
   <entry>
     <title>Practical Java Domain Specific Language Tutorial</title>
@@ -309,7 +309,7 @@ server {
 &lt;/pre&gt;
 
 &lt;p&gt;Now you have a fully formed, mini-DSL. You can add words to your DSL until you're happy with it!&lt;/p&gt;
-<>
+</content>
   </entry>
   <entry>
     <title>Sonarqube And Java 8</title>
@@ -410,7 +410,7 @@ server {
 &lt;pre class="highlight plaintext"&gt;mvn clean install 
 mvn sonar:sonar
 &lt;/pre&gt;
-<>
+</content>
   </entry>
   <entry>
     <title>Spring Boot Performance</title>
@@ -547,7 +547,7 @@ WebSocketAutoConfiguration
   &lt;li&gt;&lt;a href="https://www.techempower.com/benchmarks/"&gt;https://www.techempower.com/benchmarks/&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href="https://cloud.google.com/appengine/articles/spring_optimization"&gt;https://cloud.google.com/appengine/articles/spring_optimization&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-<>
+</content>
   </entry>
   <entry>
     <title>Testing Anti-Patterns</title>
@@ -562,7 +562,7 @@ WebSocketAutoConfiguration
 
 &lt;iframe src="//slides.com/alexec/testing-anti-patterns/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""&gt;&lt;/iframe&gt;
 
-<>
+</content>
   </entry>
   <entry>
     <title>Migrating to CircleCI</title>
@@ -677,7 +677,7 @@ export GPG_PASSPHRASE=secret
 &lt;pre class="highlight plaintext"&gt;&amp;lt;repositories&amp;gt;
     &amp;lt;repository&amp;gt;
         &amp;lt;id&amp;gt;sonatype-snapshots&amp;lt;/id&amp;gt;
-        &amp;lt;url&amp;gt;https://oss.sonatype.org/repositories/snapshots/&amp;lt;/url&amp;gt;
+        &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots/&amp;lt;/url&amp;gt;
         &amp;lt;snapshots&amp;gt;
             &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
         &amp;lt;/snapshots&amp;gt;
@@ -690,7 +690,7 @@ export GPG_PASSPHRASE=secret
 &lt;pre class="highlight plaintext"&gt;&amp;lt;pluginRepositories&amp;gt;
     &amp;lt;pluginRepository&amp;gt;
         &amp;lt;id&amp;gt;sonatype-snapshots&amp;lt;/id&amp;gt;
-        &amp;lt;url&amp;gt;https://oss.sonatype.org/repositories/snapshots/&amp;lt;/url&amp;gt;
+        &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots/&amp;lt;/url&amp;gt;
         &amp;lt;snapshots&amp;gt;
             &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
         &amp;lt;/snapshots&amp;gt;
@@ -767,6 +767,6 @@ curl -v -X POST https://circleci.com/api/v1/project/alexec/&lt;span class="nv"&g
 &lt;p&gt;I've had a really good experience with CircleCI. Particularly, I've found it really fast. There are a few rough edges. If you've come from using Jenkins you may miss its massive ecosystem of plugins.&lt;/p&gt;
 
 &lt;p&gt;I've put my &lt;a href="https://github.com/alexec/circleci"&gt;build scripts onto Github&lt;/a&gt;.&lt;/p&gt;
-<>
+</content>
   </entry>
 </feed>
