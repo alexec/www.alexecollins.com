@@ -8,7 +8,7 @@ checkout:
   - bundler install
 test:
   override:
-  - true
+  - /bin/true
 general:
   artifacts:
   - build
