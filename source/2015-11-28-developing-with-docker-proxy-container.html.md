@@ -1,5 +1,5 @@
 ---
-title: Developing With Docker - Using The Proxy Container Pattern To Make Development Easier
+title: Developing With Docker - Using A Proxy Container To Make Development Easier
 date: 2015-11-28 01:00 UTC
 tags: docker
 ---
@@ -28,7 +28,7 @@ The steps will be:
 1. Changing the dev machines `/etc/hosts` to sent HTTP requests for our services to Docker machine.
 2. Create a the proxy container on the Docker machine that inspects the `Host` HTTP header, and then proxies the request to the correct container.
 
-To demostrate this, lets have two containers: "foo" and "bar". Both are listening on port 80 and display a simple static web page. If I open <http://foo> in a browser, I should see the HTML page served by the `foo` container.  
+To demostrate this, lets have two containers: "foo" and "bar". Both are listening on port 80 and display a simple static web page. If I open <http://foo> in a browser, I should see the HTML page served by the `foo` container.
 
 In a `foo` directory, create a `Dockerfile`:
 
