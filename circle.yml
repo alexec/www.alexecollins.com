@@ -1,14 +1,11 @@
-#dependencies:
-#  pre:
-#  - sudo apt-get install -y gcc python-dev python-setuptools libffi-dev
-#  - sudo apt-get install -y python-pip
-#  - pip install gsutil
 checkout:
   post:
   - bundler install
 test:
   override:
   - /bin/true
+  post:
+  - tar zcf build.tar.gz build
 general:
   artifacts:
-  - build
+  - build.zip
