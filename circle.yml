@@ -8,4 +8,4 @@ test:
   - tar zcf build.tar.gz build
 general:
   artifacts:
-  - build.zip
+  - build.tar.gz
