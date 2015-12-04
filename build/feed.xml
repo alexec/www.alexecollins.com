@@ -18,7 +18,7 @@
     <author>
       <name>Alex Collins</name>
     </author>
-    <content type="html">&lt;p&gt;I've been working with Docker a lot more recently. I've started to find some issue with it when working with several containers. One solution to the problem of accessing containers who exposing the same port is what I call a &lt;strong&gt;proxy container&lt;/strong&gt;.&lt;/p&gt;
+    <content type="html">&lt;p&gt;I've been working with Docker a lot recently. I've started to find issuess when working with several containers. In this post I will show you a solution to the problem of developing containers that expose the same port, with what I call a &lt;strong&gt;proxy container&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;As I work on OS-X, these tips will be OS-X + Docker Machine, and Docker Compose based.&lt;/p&gt;
 
@@ -29,9 +29,9 @@
 &lt;p&gt;So – here's the problem:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You running a cluster of containers for local devolpment (e.g. using Docker Compose).&lt;/li&gt;
-  &lt;li&gt;You'd like to connect to Docker containers using their hostname and port from your host PC. This means you do not need to change any configuration when developing or testing apps to point to your local machine, or to your Docker machine, it should just work.&lt;/li&gt;
-  &lt;li&gt;This must work even if you have two containers are listening on the same port.&lt;/li&gt;
+  &lt;li&gt;You're running a cluster of containers for local development (e.g. using Docker Compose).&lt;/li&gt;
+  &lt;li&gt;You'd like to connect to your Docker containers using hostname and port from your host PC. This will mean that you do not need to change any configuration when developing or testing apps to point to your local machine, or to your Docker machine, it should just work.&lt;/li&gt;
+  &lt;li&gt;This must work even if you have two containers that are listening on the same port.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id="solution"&gt;Solution&lt;/h3&gt;
@@ -43,8 +43,8 @@
 &lt;p&gt;The steps will be:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Changing the dev machines &lt;code&gt;/etc/hosts&lt;/code&gt; to sent HTTP requests for our services to Docker machine.&lt;/li&gt;
-  &lt;li&gt;Create a the proxy container on the Docker machine that inspects the &lt;code&gt;Host&lt;/code&gt; HTTP header, and then proxies the request to the correct container.&lt;/li&gt;
+  &lt;li&gt;Changing the dev machine's &lt;code&gt;/etc/hosts&lt;/code&gt; to send HTTP requests for our services to our Docker machine.&lt;/li&gt;
+  &lt;li&gt;Create a proxy container on our Docker machine that inspects the &lt;code&gt;Host&lt;/code&gt; HTTP header, and then proxies the request to the correct container.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;To demostrate this, lets have two containers: "foo" and "bar". Both are listening on port 80 and display a simple static web page. If I open &lt;a href="http://foo"&gt;http://foo&lt;/a&gt; in a browser, I should see the HTML page served by the &lt;code&gt;foo&lt;/code&gt; container.&lt;/p&gt;
@@ -61,9 +61,9 @@ ADD index.html /usr/share/nginx/html/
 &lt;pre class="highlight html"&gt;&lt;span class="nt"&gt;&amp;lt;html&amp;gt;&lt;/span&gt;Hello Foo!&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Repeat this for a directory named &lt;code&gt;bar&lt;/code&gt;, but change the &lt;code&gt;index.html&lt;/code&gt; to contain some different HTML (e.g. "Hello Bar!").&lt;/p&gt;
+&lt;p&gt;Repeat this for a directory named &lt;code&gt;bar&lt;/code&gt;, but change the &lt;code&gt;index.html&lt;/code&gt; to have different HTML (e.g. "Hello Bar!").&lt;/p&gt;
 
-&lt;p&gt;Create this &lt;code&gt;docker-compose.yml&lt;/code&gt; file to your project root:&lt;/p&gt;
+&lt;p&gt;Create this &lt;code&gt;docker-compose.yml&lt;/code&gt; file in your project root:&lt;/p&gt;
 
 &lt;pre class="highlight yaml"&gt;&lt;span class="s"&gt;foo&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt;
   &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;foo&lt;/span&gt;
@@ -73,15 +73,15 @@ ADD index.html /usr/share/nginx/html/
   &lt;span class="s"&gt;container_name&lt;/span&gt;&lt;span class="pi"&gt;:&lt;/span&gt; &lt;span class="s"&gt;bar&lt;/span&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;If you run &lt;code&gt;docker-compose up&lt;/code&gt; it will create two Nginx containers that have different HTML pages.&lt;/p&gt;
+&lt;p&gt;If you run &lt;code&gt;docker-compose up&lt;/code&gt; it will create two Nginx containers that serve two different HTML pages.&lt;/p&gt;
 
-&lt;p&gt;We want to have all requests to &lt;code&gt;foo&lt;/code&gt; and &lt;code&gt;bar&lt;/code&gt; sent to the Docker machine. Docker Machine on OS-X by default has the IP &lt;code&gt;192.168.99.100&lt;/code&gt;, so add these lines to your &lt;code&gt;/etc/hosts&lt;/code&gt; file so that requests to those hosts get forwarded:&lt;/p&gt;
+&lt;p&gt;We want to have all requests to &lt;code&gt;foo&lt;/code&gt; and &lt;code&gt;bar&lt;/code&gt; sent to our Docker machine. Docker Machine on OS-X by default has the IP &lt;code&gt;192.168.99.100&lt;/code&gt;, so add these lines to your &lt;code&gt;/etc/hosts&lt;/code&gt; file so that requests to those hosts get forwarded:&lt;/p&gt;
 
 &lt;pre class="highlight plaintext"&gt;192.168.99.100 foo
 192.168.99.100 bar
 &lt;/pre&gt;
 
-&lt;p&gt;You cannot expose more than one container per machine on port 80. You can make a third container called &lt;code&gt;proxy&lt;/code&gt; to sit in front of both of the containers, and proxy requests. Create the following &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;You cannot expose more than one container per machine on port 80. But, you can make a third container called &lt;code&gt;proxy&lt;/code&gt; to sit in front of both of the containers, and proxy requests. In a new directory name &lt;code&gt;proxy&lt;/code&gt;, create the following &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
 
 &lt;pre class="highlight plaintext"&gt;FROM nginx:1.9.7
 
@@ -126,15 +126,17 @@ server {
   &lt;span class="pi"&gt;-&lt;/span&gt; &lt;span class="s"&gt;80:80&lt;/span&gt;
 &lt;/pre&gt;
 
-&lt;p&gt;Finally, do &lt;code&gt;docker-compose up&lt;/code&gt; to get them all up and running.&lt;/p&gt;
+&lt;p&gt;Finally, do &lt;code&gt;docker-compose up&lt;/code&gt; to get them up and running.&lt;/p&gt;
 
 &lt;p&gt;If you request either URL from your host machine, the request will go to the correct container.&lt;/p&gt;
 
 &lt;h3 id="discussion"&gt;Discussion&lt;/h3&gt;
 
-&lt;p&gt;This technique is a good starting point. It's aimed at making development easier, but putting a proxy container in front of a cluster of containers can also be used in production so that you do not need to expose the container directly.&lt;/p&gt;
+&lt;p&gt;This technique is a good starting point. It's aimed at making development easier, but putting a proxy container in front of a cluster of containers can also be used in production, so that you do not need to expose containers directly.&lt;/p&gt;
 
-&lt;p&gt;The above &lt;code&gt;default.conf&lt;/code&gt; is not secure for production. But, you would need to modify it to be more secure if you want to use it there. I've used Nginx, as I'm familiar with it, but you could also you HA Proxy for this task.&lt;/p&gt;
+&lt;p&gt;The above &lt;code&gt;default.conf&lt;/code&gt; is not secure enough for production. I've used Nginx, as I'm familiar with it, but you could also you HA Proxy for this task.&lt;/p&gt;
+
+&lt;p&gt;In fact, you can do this automatically using &lt;a href="http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/"&gt;Jason Wilder's Nginx proxy&lt;/a&gt;, and this is well worthwhile looking at for complex projects.&lt;/p&gt;
 
 &lt;p&gt;This is the first article in a series on &lt;strong&gt;developing with Docker&lt;/strong&gt; I'm planning on writing:&lt;/p&gt;
 
