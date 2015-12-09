@@ -1,7 +1,7 @@
 ---
 title: Developing With Docker - Using A Proxy Container To Make Development Easier
 date: 2015-11-28 01:00 UTC
-tags: docker
+tags: docker, developing-with-docker
 ---
 I've been working with Docker a lot recently. I've started to find issuess when working with several containers. In this post I will show you a solution to the problem of developing containers that expose the same port, with what I call a **proxy container**.
 
