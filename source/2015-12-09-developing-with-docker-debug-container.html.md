@@ -1,6 +1,6 @@
 ---
 title: Developing With Docker - The Debug Container
-date: 2015-11-28 01:00 UTC
+date: 2015-12-09 01:00 UTC
 tags: docker, developing-with-docker
 ---
 One technique that's proven to be useful over and over again when working with Docker is a *Debug Container*. The debug container isn't a proper application, nor is it a one off job. It's simply used for debugging problems. 
