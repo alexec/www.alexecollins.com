@@ -5,10 +5,87 @@
   <id>http://www.alexecollins.com/</id>
   <link href="http://www.alexecollins.com/"/>
   <link href="http://www.alexecollins.com/feed.xml" rel="self"/>
-  <updated>2015-11-28T01:00:00Z</updated>
+  <updated>2015-12-09T01:00:00Z</updated>
   <author>
     <name>Alex Collins</name>
   </author>
+  <entry>
+    <title>Developing With Docker - The Debug Container</title>
+    <link rel="alternate" href="/developing-with-docker-debug-container/"/>
+    <id>/developing-with-docker-debug-container/</id>
+    <published>2015-12-09T01:00:00Z</published>
+    <updated>2015-12-09T01:00:00Z</updated>
+    <author>
+      <name>Alex Collins</name>
+    </author>
+    <content type="html">&lt;p&gt;One technique that's proven to be useful over and over again when working with Docker is a &lt;em&gt;Debug Container&lt;/em&gt;. The debug container isn't a proper application, nor is it a one off job. It's simply used for debugging problems. &lt;/p&gt;
+
+&lt;p&gt;Lets have a look at a common problem.&lt;/p&gt;
+
+&lt;h3 id="problem"&gt;Problem&lt;/h3&gt;
+
+&lt;p&gt;You want to connect to get a URL from an application listening on a port, but no connected containers or hosts have curl installed.&lt;/p&gt;
+
+&lt;h3 id="solution"&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;Create a &lt;em&gt;Debug Container&lt;/em&gt; and link it to the problem container. &lt;/p&gt;
+
+&lt;p&gt;I'm going to assume the container running the app is called &lt;code&gt;foo&lt;/code&gt; here, but change it to whatever you want. Firstly, create the following &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;FROM centos:centos7
+
+RUN yum install -y curl
+
+CMD ["/bin/sleep", "9999"]
+&lt;/pre&gt;
+
+&lt;p&gt;Build and tag the image:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;docker build -t debug:1 .
+&lt;/pre&gt;
+
+&lt;p&gt;Now we can test it out to run a one off command:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;docker run -ti --rm --link foo:foo debug:1 curl -v http://foo
+&lt;/pre&gt;
+
+&lt;h3 id="discussion"&gt;Discussion&lt;/h3&gt;
+
+&lt;p&gt;You can use the image in a number of ways. You can start it up in the background, name it, and then use &lt;code&gt;docker exec&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;docker run --rm --link foo:foo --name debug debug:1 
+docker exec debug curl http://foo
+&lt;/pre&gt;
+
+&lt;p&gt;You can run &lt;code&gt;bash&lt;/code&gt; in the container:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;docker run --rm -ti --link foo:foo debug:1 bash
+$ curl -v http://foo
+$ exit
+&lt;/pre&gt;
+
+&lt;p&gt;Or use&lt;code&gt; docker exec&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;docker run --rm --link foo:foo --name debug debug:1 
+docker exec -ti debug bash
+$ curl...
+&lt;/pre&gt;
+
+&lt;p&gt;When you're pairing, we call this "docker bash" :)&lt;/p&gt;
+
+&lt;p&gt;I hope you've gotten the outline. Here are some thing to consider:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I've used CentOS as my base image, naturally you can use whatever you're comfortable with.&lt;/li&gt;
+  &lt;li&gt;You probably want to install more packages. For example, I find &lt;code&gt;telnet&lt;/code&gt; and &lt;code&gt;nslookup&lt;/code&gt; useful.&lt;/li&gt;
+  &lt;li&gt;Creating the debug container can be done just when you need it, but you'll save time by doing it up front.&lt;/li&gt;
+  &lt;li&gt;The &lt;code&gt;sleep&lt;/code&gt; command keeps the conntainer running, but doing nothing.&lt;/li&gt;
+  &lt;li&gt;The &lt;code&gt;--rm&lt;/code&gt; option to &lt;code&gt;docker run&lt;/code&gt; makes sure the container is removed when no longer in use, this prevent resource leakage.&lt;/li&gt;
+  &lt;li&gt;This can also be used in a cluster. As the container is within the cluster's subnet, it'll be subject to all the networking rules and restrictions a normal container would be.&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+  </entry>
   <entry>
     <title>Developing With Docker - Using A Proxy Container To Make Development Easier</title>
     <link rel="alternate" href="/developing-with-docker-proxy-container/"/>
@@ -564,211 +641,6 @@ WebSocketAutoConfiguration
 
 &lt;iframe src="//slides.com/alexec/testing-anti-patterns/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""&gt;&lt;/iframe&gt;
 
-</content>
-  </entry>
-  <entry>
-    <title>Migrating to CircleCI</title>
-    <link rel="alternate" href="/migrating-to-circleci/"/>
-    <id>/migrating-to-circleci/</id>
-    <published>2015-04-26T10:12:00Z</published>
-    <updated>2015-04-26T10:12:00Z</updated>
-    <author>
-      <name>Alex Collins</name>
-    </author>
-    <content type="html">&lt;h2 id="oveview"&gt;Oveview&lt;/h2&gt;
-&lt;p&gt;This weekend I've been migrating my builds to &lt;a href="https://circleci.com"&gt;CircleCI&lt;/a&gt; from &lt;a href="https://travis-ci.org"&gt;TravisCI&lt;/a&gt;. &lt;/p&gt;
-
-&lt;p&gt;In this post:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;I'll tell you why I moved.&lt;/li&gt;
-  &lt;li&gt;What I like about it.&lt;/li&gt;
-  &lt;li&gt;What problems I had.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;So, why would I do this?&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CircleCI has Docker container support, which I really need for my Docker plugin builds.&lt;/li&gt;
-  &lt;li&gt;CircleCI has great support for JUnit XML reports.&lt;/li&gt;
-  &lt;li&gt;I need to run integration tests.&lt;/li&gt;
-  &lt;li&gt;I wanted to reduce the amount of time I spent waiting for integration builds on my laptop to run.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I've found it a pleasant, if time consuming task. I've also been able to take time to improve the builds themselves:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Support for &lt;a href="http://saucelabs.com"&gt;Saucelabs&lt;/a&gt; in my WebDriver builds.&lt;/li&gt;
-  &lt;li&gt;Run Docker integration tests.&lt;/li&gt;
-  &lt;li&gt;Deploy snapshots to &lt;a href="https://oss.sonatype.org"&gt;Nexus OSS repository&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Correct my builds together into a pipeline.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id="sharing-build-artefacts"&gt;Sharing Build Artefacts&lt;/h3&gt;
-
-&lt;p&gt;The first problem I encountered wast that I wanted to share artefacts between builds. I thought that this was going to be painful, but I resolved really quickly and securely with Maven. Once you've got your OSS keys set-up, you need to do a couple of things:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Create a &lt;code&gt;settings.xml&lt;/code&gt; to use for your build.&lt;/li&gt;
-  &lt;li&gt;Pass the secure settings via environment variables.&lt;/li&gt;
-  &lt;li&gt;Use the new &lt;code&gt;settings.xml&lt;/code&gt; in your &lt;code&gt;circle.yml&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;You can do this by adding this to the root of your source code:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;&amp;lt;settings xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"&amp;gt;
-    &amp;lt;servers&amp;gt;
-        &amp;lt;server&amp;gt;
-            &amp;lt;id&amp;gt;sonatype-nexus-snapshots&amp;lt;/id&amp;gt;
-            &amp;lt;username&amp;gt;${env.SONATYPE_USER}&amp;lt;/username&amp;gt;
-            &amp;lt;password&amp;gt;${env.SONATYPE_PASSWORD}&amp;lt;/password&amp;gt;
-        &amp;lt;/server&amp;gt;
-        &amp;lt;server&amp;gt;
-            &amp;lt;id&amp;gt;sonatype-nexus-staging&amp;lt;/id&amp;gt;
-            &amp;lt;username&amp;gt;${env.SONATYPE_USER}&amp;lt;/username&amp;gt;
-            &amp;lt;password&amp;gt;${env.SONATYPE_PASSWORD}&amp;lt;/password&amp;gt;
-        &amp;lt;/server&amp;gt;
-    &amp;lt;/servers&amp;gt;
-    &amp;lt;profiles&amp;gt;
-        &amp;lt;profile&amp;gt;
-            &amp;lt;id&amp;gt;gpg&amp;lt;/id&amp;gt;
-            &amp;lt;properties&amp;gt;
-                &amp;lt;gpg.passphrase&amp;gt;${env.GPG_PASSPHRASE}&amp;lt;/gpg.passphrase&amp;gt;
-            &amp;lt;/properties&amp;gt;
-        &amp;lt;/profile&amp;gt;
-        &amp;lt;profile&amp;gt;
-            &amp;lt;id&amp;gt;sonatype-staging&amp;lt;/id&amp;gt;
-            &amp;lt;repositories&amp;gt;
-                &amp;lt;repository&amp;gt;
-                    &amp;lt;id&amp;gt;sonatype-staging&amp;lt;/id&amp;gt;
-                    &amp;lt;url&amp;gt;https://oss.sonatype.org/service/local/staging/deploy/maven2/&amp;lt;/url&amp;gt;
-                    &amp;lt;layout&amp;gt;default&amp;lt;/layout&amp;gt;
-                    &amp;lt;releases&amp;gt;
-                        &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
-                    &amp;lt;/releases&amp;gt;
-                &amp;lt;/repository&amp;gt;
-            &amp;lt;/repositories&amp;gt;
-        &amp;lt;/profile&amp;gt;
-    &amp;lt;/profiles&amp;gt;
-    &amp;lt;activeProfiles&amp;gt;
-        &amp;lt;activeProfile&amp;gt;gpg&amp;lt;/activeProfile&amp;gt;
-        &amp;lt;activeProfile&amp;gt;sonatype-staging&amp;lt;/activeProfile&amp;gt;
-    &amp;lt;/activeProfiles&amp;gt;
-&amp;lt;/settings&amp;gt;
-&lt;/pre&gt;
-
-&lt;p&gt;This externalises the usernames and passwords into environment variables that you can securely add to you build. I use the same &lt;code&gt;settings.xml&lt;/code&gt; file locally as I do remotely. This means you need to add your them to you &lt;code&gt;~/.bash_profile&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;export SONATYPE_USER=secret
-export SONATYPE_PASSWORD=secret
-export GPG_PASSPHRASE=secret
-&lt;/pre&gt;
-
-&lt;p&gt;You can them update your &lt;code&gt;circle.yml&lt;/code&gt; do deploy:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;test:
- override:
-  - mvn deploy -Prun-its -s settings.xml
-&lt;/pre&gt;
-
-&lt;p&gt;To complete this the deployment of your artefacts, you need to add your keys into the web interface.&lt;/p&gt;
-
-&lt;p&gt;For another build to consume them in another build you just need to add the repository to your &lt;code&gt;pom.xml&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;&amp;lt;repositories&amp;gt;
-    &amp;lt;repository&amp;gt;
-        &amp;lt;id&amp;gt;sonatype-snapshots&amp;lt;/id&amp;gt;
-        &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots/&amp;lt;/url&amp;gt;
-        &amp;lt;snapshots&amp;gt;
-            &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
-        &amp;lt;/snapshots&amp;gt;
-    &amp;lt;/repository&amp;gt;
-&amp;lt;/repositories&amp;gt;
-&lt;/pre&gt;
-
-&lt;p&gt;And, if you have a plugin dependency, you'll also need to add that:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;&amp;lt;pluginRepositories&amp;gt;
-    &amp;lt;pluginRepository&amp;gt;
-        &amp;lt;id&amp;gt;sonatype-snapshots&amp;lt;/id&amp;gt;
-        &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots/&amp;lt;/url&amp;gt;
-        &amp;lt;snapshots&amp;gt;
-            &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
-        &amp;lt;/snapshots&amp;gt;
-    &amp;lt;/pluginRepository&amp;gt;
-&amp;lt;/pluginRepositories&amp;gt;
-&lt;/pre&gt;
-
-&lt;p&gt;Finally, you need to tell CircleCI about how to resolve dependencies in &lt;code&gt;circle.yml&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;dependencies:
- override: 
-  - mvn dependency:resolve -s settings.xml
-&lt;/pre&gt;
-
-&lt;h3 id="multi-module-build-dependencies"&gt;Multi-module Build Dependencies&lt;/h3&gt;
-
-&lt;p&gt;By default, CircleCI tries to resolve dependencies before the build. This becomes a problem if you have a multi-module build, as those dependencies will not exist! To fix this, override the set-up to install them locally:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;dependencies:
- override: 
-  - mvn install -DskipTests     
-&lt;/pre&gt;
-
-&lt;h3 id="stopping-unwanted-services"&gt;Stopping Unwanted Services&lt;/h3&gt;
-
-&lt;p&gt;One of my builds creates a MySQL Docker container listening on port 3306. But when I ran it on CircleCI, it produced a bind error as MySQL was already running. Stop it as follows (you must use &lt;code&gt;sudo&lt;/code&gt;):&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;test:
- override:
-  - sudo service mysql stop
-&lt;/pre&gt;
-
-&lt;h3 id="test-reports"&gt;Test Reports&lt;/h3&gt;
-
-&lt;p&gt;CircleCI can collect test reports in the ubiquitous JUnit format. Just add a few lines to your &lt;code&gt;circle.yml&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;test:
- post:
-  - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-  - find . -type f -regex ".*/target/.*-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
-&lt;/pre&gt;
-
-&lt;p&gt;This will collect both Surefire and Failsafe reports.&lt;/p&gt;
-
-&lt;h3 id="removing-docker-containers"&gt;Removing Docker Containers&lt;/h3&gt;
-
-&lt;p&gt;I was seeing this error a lot:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;Driver btrfs failed to remove root filesystem 39ae….95ee: Failed to destroy btrfs snapshot: operation not permitted
-&lt;/pre&gt;
-
-&lt;p&gt;The Docker set-up does not support removal of containers. You need to hack around this in your build if you need to do it. &lt;/p&gt;
-
-&lt;h3 id="creating-a-build-pipeline"&gt;Creating A Build Pipeline&lt;/h3&gt;
-
-&lt;p&gt;You can create a build pipeline that starts one build when another finishes. To do this, you can create a script that uses their API. I called mine &lt;code&gt;circle.sh&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre class="highlight shell"&gt;&lt;span class="c"&gt;#!/bin/bash -ex&lt;/span&gt;
-
-curl -v -X POST https://circleci.com/api/v1/project/alexec/&lt;span class="nv"&gt;$1&lt;/span&gt;/tree/master?circle-token&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$CIRCLE_TOKEN&lt;/span&gt;
-&lt;/pre&gt;
-
-&lt;p&gt;You need to then create an API token and  update the environment variables for your build. Finally, you can kick it off in your &lt;code&gt;circle.yml&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre class="highlight plaintext"&gt;deployment:
- staging:
-   branch: master
-   commands:
-	  - ./circle.sh start_build docker-maven-plugin
-&lt;/pre&gt;
-
-&lt;h2 id="summary"&gt;Summary&lt;/h2&gt;
-
-&lt;p&gt;I've had a really good experience with CircleCI. Particularly, I've found it really fast. There are a few rough edges. If you've come from using Jenkins you may miss its massive ecosystem of plugins.&lt;/p&gt;
-
-&lt;p&gt;I've put my &lt;a href="https://github.com/alexec/circleci"&gt;build scripts onto Github&lt;/a&gt;.&lt;/p&gt;
 </content>
   </entry>
 </feed>
