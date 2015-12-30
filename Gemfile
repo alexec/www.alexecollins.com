@@ -1,16 +1,17 @@
 source 'https://rubygems.org'
 
+# Faster JS compression
 gem 'therubyracer'
+
 gem "middleman"
 gem "middleman-blog"
-#gem "middleman-gh-pages"
 gem "middleman-syntax"
+gem 'middleman-minify-html'
+gem "middleman-imageoptim"
+gem "middleman-livereload"
 
 # For feed.xml.builder
 gem "builder"
 
-#gem 'rack-rewrite'
-#gem 'middleman-livereload'
+# for blog summaries
 gem 'nokogiri'
-gem 'middleman-minify-html'
-gem 'middleman-deploy'

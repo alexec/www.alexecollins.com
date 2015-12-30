@@ -1,6 +1,8 @@
 www.alexecollins.com
 ====================
 
+	docker run ..TODO
+	cd site
 	bundler install
 	middleman
 
@@ -15,4 +17,17 @@ Promote to:
 
 Reference:
 
-	startbootstrap-agency-1.0.6.zip
+* http://ironsummitmedia.github.io/startbootstrap-agency/
+
+Testing
+
+* Home
+* Sitemap
+* RSS
+* Blog Home
+* Blog Post
+* linkedin
+* twitter
+* Contact
+* On iPad
+* On iPhone
