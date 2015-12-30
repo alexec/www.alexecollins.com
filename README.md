@@ -31,3 +31,4 @@ Testing
 * Contact
 * On iPad
 * On iPhone
+* Analytics
