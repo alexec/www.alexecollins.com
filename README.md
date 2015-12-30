@@ -1,7 +1,7 @@
 www.alexecollins.com
 ====================
 
-	docker run ..TODO
+	docker run -it -v $(pwd):/site -p 4567:4567 ruby:2.1.2 bash
 	cd site
 	bundler install
 	middleman
