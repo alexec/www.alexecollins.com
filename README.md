@@ -5,6 +5,13 @@ www.alexecollins.com
 	docker run -it -v $(pwd):/site -p 4567:4567 site:1
 	open 192.168.99.100:4567
 
+To upload:
+
+	docker run -it -v $(pwd):/site -p 4567:4567 site:1 bash
+	cd site
+	middleman build
+	quit
+
 Promote to:
 
 	http://www.dzone.com/links/add.html
