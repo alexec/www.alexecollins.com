@@ -30,8 +30,6 @@ end
 
 page "/feed.xml", :layout => false
 
-activate :syntax
-
 ###
 # Compass
 ###
