@@ -1,10 +1,9 @@
 www.alexecollins.com
 ====================
 
-	docker run -it -v $(pwd):/site -p 4567:4567 ruby:2.1.2 bash
-	cd site
-	bundler install
-	middleman
+	docker build -t site:1 .
+	docker run -it -v $(pwd):/site -p 4567:4567 site:1
+	open 192.168.99.100:4567
 
 Promote to:
 

@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'less'
+
 # Faster JS compression
 gem 'therubyracer'
 
