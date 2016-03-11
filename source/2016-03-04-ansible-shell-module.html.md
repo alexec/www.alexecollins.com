@@ -1,7 +1,7 @@
 ---
 title: Ansible Shell Module
 date: 2016-03-04 14:00 UTC
-tags: ansible
+tags: ansible, bash
 ---
 I've been using Ansible at work for sometime now. It has a number of great built-in modules. However, for some tasks, there is no available module. You could write your own, but it's often simpler to use the **shell module** to achieve you goal. One difference between the shell and other modules is that rather than idempotently attempting to bring the host into a specific state (e.g.  `yum: name=docker-engine` would mean mean "make sure Docker is installed"), it executes a command. This means a couple of things:
 
@@ -18,24 +18,28 @@ The `when` attribute can be used to determine when to run a task. Use this to pr
 
 Typically you'll need to run a information gathering task before, so for example:
 
-    - name: check to see if file X has already been created
-      stat: path=fileThatWillBeCreated
-      register: precondition
-      changed_when: false
+~~~yml
+- name: check to see if file X has already been created
+  stat: path=fileThatWillBeCreated
+  register: precondition
+  changed_when: false
 
-    - name: create file X
-      shell: touch fileThatWillBeCreated
-      when: not precondtion.stat.exists
+- name: create file X
+  shell: touch fileThatWillBeCreated
+  when: not precondtion.stat.exists
+~~~
 
 Note that the information gather task is never changed.
 
 If we know that a task will change something into a new state, or print an error if it is already in that state, we can use that:
 
-    - name: create user
-      shell: mongo create-user.js
-      register: create_user
-      changed_when: "'already created' not in create_user.stdout"
-      failed_when: "not (create_user.stdout | search('Successfully created|already created'))"
+~~~yml
+- name: create user
+  shell: mongo create-user.js
+  register: create_user
+  changed_when: "'already created' not in create_user.stdout"
+  failed_when: "not (create_user.stdout | search('Successfully created|already created'))"
+~~~
 
 This create user task can have already created a user, but we don't want to treat that as changed, so we ignore it. Nor do we want to treat an already created user as a failure scenario, but we can treat everything else as failure.
 
