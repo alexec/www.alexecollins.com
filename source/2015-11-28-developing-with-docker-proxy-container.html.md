@@ -126,7 +126,7 @@ The above `default.conf` is not secure enough for production. I've used Nginx, a
 
 In fact, you can do this automatically using [Jason Wilder's Nginx proxy](http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/), and this is well worthwhile looking at for complex projects.
 
-This is the first article in a series on **developing with Docker** I'm planning on writing:
+This is the first article in a series on [developing with Docker](/tags/developing-with-docker) I'm planning on writing:
 
 1. The Proxy Container Pattern
 2. The Debug Container

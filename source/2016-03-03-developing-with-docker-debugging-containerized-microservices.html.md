@@ -3,7 +3,7 @@ title: Developing With Docker - Debugging Containerized Micro-services
 date: 2016-03-03 21:00 UTC
 tags: docker, developing-with-docker
 ---
-This is my third post in a series on [developing with Docker](/tags/developing-with-docker/). If you're developing micro-services, there's a very good chance you are if you're using Docker, then you probably have a number of them communicating over TCP (or maybe UDP). This technique will show you how to debug those containers, especially useful when your logs simply don't give you enough information alone.
+This is my third post in a series on [developing with Docker](/tags/docker). If you're developing micro-services, there's a very good chance you are if you're using Docker, then you probably have a number of them communicating over TCP (or maybe UDP). This technique will show you how to debug those containers, especially useful when your logs simply don't give you enough information alone.
 
 You'll need experience of Docker and be comfortable in a terminal.
 
