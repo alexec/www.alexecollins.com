@@ -2,15 +2,13 @@ www.alexecollins.com
 ====================
 
 	docker build -t site:1 .
-	docker run -it -v $(pwd):/site -p 4567:4567 site:1
+	docker run --rm -it -v $(pwd):/site -p 4567:4567 site:1 middleman serve
 	open 192.168.99.100:4567
 
 To upload:
 
-	docker run -it -v $(pwd):/site -p 4567:4567 site:1 bash
-	cd site
-	middleman build
-	quit
+	docker run --rm -it -v $(pwd):/site -p 4567:4567 site:1 middleman build
+	./upload.sh
 
 Promote to:
 

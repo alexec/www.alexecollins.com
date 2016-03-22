@@ -3,19 +3,19 @@ title: Developing With Docker - Building Patterns
 date: 2016-03-20 16:00 UTC
 tags: docker, developing-with-docker
 ---
-This is my 4th post on [developing with Docker](/tags/developing-with-docker)). In previous posts I've focussed on debugging applications. This post deals with some common ways you can build Docker images.
+This is my 4th post on [developing with Docker](/tags/developing-with-docker). In this post deals with some common ways you can build Docker images.
 
 I'm going to assuming you've already packaged your application (e.g. into a JAR).
 
 There are several choices: **scratch + binary**, <!-- **scratch + zip**,--> **language stack**, and **distro + package manager**.
 
+As usual, you can find the [source code on Github](https://github.com/alexec/docker-building-patterns).
+
 ## Scratch + Binary
 
-Scratch is the most basic image, it does not contain any files at all. You must build a **standalone binary application** if you are going to use this. Lets seen an example.
+Scratch is the most basic base image, it does not contain any files or programs at all. You must build a **standalone binary application** if you are going to use this. Lets see an example.
 
-Firstly, we'll build a standalone binary application using Docker.
-
-Create an empty directory, and then create `main.go` with the following content:
+Firstly, we'll build a standalone binary application using Docker. Create an empty directory, and then create `main.go` with the following content:
 
 ~~~go
 package main
@@ -92,7 +92,7 @@ Compile this application using the Java Development Kit:
 docker run --rm -ti -v $(pwd):/myapp -w /myapp java:8-jdk javac Main.java
 ~~~
 
-Create the following `Dockerfile`:
+Create the following `Dockerfile` (which contains the Java Runtime Environment):
 
 ~~~Dockerfile
 FROM java:8-jre
@@ -100,7 +100,7 @@ ADD Main.class /
 CMD ["java", "-cp", "/", "Main"]
 ~~~
 
-Finally, you can run this:
+Finally, you can build and run this image:
 
 ~~~shell
 docker build -t myapp:1 .
@@ -121,7 +121,7 @@ Disadvantages
 
 If you want to build an image that is not on a supported language stack, then you'll need to roll your own, starting with a **distro**, and then using a **package manager** to add any dependencies you need.
 
-Linux always contains a package manager, we can build a similar images to the Java image above using it by starting with Ubuntu:
+Linux always contains a package manager, we can build a similar images to the Java base image used above by starting with Ubuntu:
 
 ~~~Dockerfile
 FROM ubuntu:15.10
@@ -149,3 +149,6 @@ Disadvantages
 
 - Longer build time.
 - You'll need to consider how you re-build and re-deploy images if you find a security vulnerability in the base.
+
+
+I hope this gives a few ideas about the various pros and cons of different ways to build images. I have a [number of other posts on Docker](/tags/docker).

@@ -6,4 +6,6 @@ RUN bundler install
 
 EXPOSE 4567
 
-CMD ["bash", "-c", "cd site && middleman serve"]
+WORKDIR site
+
+CMD ["middleman"]
