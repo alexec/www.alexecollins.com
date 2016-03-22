@@ -1,0 +1,9 @@
+
+  <!-- begin recent -->
+  <h4>Recent</h4>
+  <ul>
+  <% blog.articles[0...3].each do |article| %>
+    <li><%= link_to article.title, article %> <small class="text-mute"><%= article.date.strftime('%b %e') %></small></li>
+  <% end %>
+  </ul>
+  <!-- end recent -->
