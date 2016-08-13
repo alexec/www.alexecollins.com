@@ -3,7 +3,7 @@ www.alexecollins.com
 
 	docker build -t site:1 .
 	./run.sh
-	open 192.168.99.100:4567
+	open http://192.168.99.100:4567
 
 To upload:
 

@@ -2,7 +2,7 @@ FROM ruby:2.1.2
 
 ADD Gemfile .
 
-RUN bundler install
+RUN bundle install
 
 EXPOSE 4567
 
