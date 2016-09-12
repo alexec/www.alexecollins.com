@@ -20,4 +20,5 @@
 /.idea
 /*.iml
 /build
+/upload
 /Gemfile.lock

@@ -1,15 +1,14 @@
 #! /bin/sh
 set -eu
 
-cd build
+rm -Rf upload
+cp -R build upload
+cd upload
 
-if [ $(file js/jquery.js | grep -c gzip || echo) = 0 ]; then
-  echo "gzipping"
-  for F in $(find . -path '*.css' -or -path '*.html' -or -path '*.js'); do
-      cat $F | gzip > tmp
-      mv tmp $F
-  done
-fi
+for F in $(find . -path '*.css' -or -path '*.html' -or -path '*.js'); do
+    cat $F | gzip > tmp
+    mv tmp $F
+done
 
 find . -name tmp | xargs rm -
 

@@ -125,6 +125,6 @@ configure :build do
 
 	activate :directory_indexes
 #	activate :gzip
-  activate :livereload
+#  activate :livereload
   activate :syntax
 end
