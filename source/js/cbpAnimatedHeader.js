@@ -1,1 +1,45 @@
-var cbpAnimatedHeader=function(){function t(){window.addEventListener("scroll",function(){r||(r=!0,setTimeout(e,250))},!1),e()}function e(){var t=n();t>=a?classie.add(o,"navbar-shrink"):classie.remove(o,"navbar-shrink"),r=!1}function n(){return window.pageYOffset||i.scrollTop}var i=document.documentElement,o=document.querySelector(".navbar-default"),r=!1,a=$("body").hasClass("index")?300:0;t()}();
+/**
+ * cbpAnimatedHeader.js v1.0.0
+ * http://www.codrops.com
+ *
+ * Licensed under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * Copyright 2013, Codrops
+ * http://www.codrops.com
+ */
+var cbpAnimatedHeader = (function() {
+
+	var docElem = document.documentElement,
+		header = document.querySelector( '.navbar-default' ),
+		didScroll = false,
+		changeHeaderOn = $("body").hasClass("index") ? 300 : 0;
+
+	function init() {
+		window.addEventListener( 'scroll', function( event ) {
+			if( !didScroll ) {
+				didScroll = true;
+				setTimeout( scrollPage, 250 );
+			}
+		}, false );
+		scrollPage();
+	}
+
+	function scrollPage() {
+		var sy = scrollY();
+		if ( sy >= changeHeaderOn ) {
+			classie.add( header, 'navbar-shrink' );
+		}
+		else {
+			classie.remove( header, 'navbar-shrink' );
+		}
+		didScroll = false;
+	}
+
+	function scrollY() {
+		return window.pageYOffset || docElem.scrollTop;
+	}
+
+	init();
+
+})();
