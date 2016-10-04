@@ -82,17 +82,11 @@
           <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
         <% end %>
         </ul>
-      <h4>Tags</h4>
-              <% blog.tags.sort.find_all{|tag,article| article.size>2}.each do |tag, articles| %>
-          <%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a>&nbsp;&nbsp;
-        <% end %>
     <!-- end recent -->
     </hr/>
     <!-- begin buttons -->
 	<p>
       <a class="btn btn-primary btn-xs" href="/sitemap">Sitemap</a>
-      <a class="btn btn-primary btn-xs" href="/feed.xml">RSS</a>
-      <a class="btn btn-primary btn-xs" href="http://uk.linkedin.com/in/alexecollins">LinkedIn</a>
 </p>
       <!-- end buttons -->
 
