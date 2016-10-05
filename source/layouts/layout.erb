@@ -6,22 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="459WLyNfyiKwT7T3IzdCjzIpNP-IVQSOb4tR8b2vQhI" />
     <title>Alex Collins - <%= current_page.data.title  %></title>
-      <%= stylesheet_link_tag 'bootstrap.min' %>
-<style type="text/css">
-<%= Rouge::Themes::ThankfulEyes.render(:scope => '.highlight') %>
-	.article img {
-		border: 1px solid #bbb;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-		padding: 10px;
-	}
-	@media print {
-		#disqus_thread, #sidebar {
-    			display:none;
-  		}
-	}
-</style>
 <link href="https://plus.google.com/101694420547181110548" rel="publisher" />
   </head>
   <body class="<%= page_classes %>">
@@ -92,6 +76,22 @@
 
     </div>
 </div>
+<noscript id="deferred-styles">
+      <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    </noscript>
+    <script>
+      var loadDeferredStyles = function() {
+        var addStylesNode = document.getElementById("deferred-styles");
+        var replacement = document.createElement("div");
+        replacement.innerHTML = addStylesNode.textContent;
+        document.body.appendChild(replacement)
+        addStylesNode.parentElement.removeChild(addStylesNode);
+      };
+      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+          webkitRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+      else window.addEventListener('load', loadDeferredStyles);
+    </script>
 
       <!-- begin analytics -->
 <script>
