@@ -1,0 +1,77 @@
+@startuml
+
+skinparam monochrome true
+skinparam style strictuml
+
+title End to end testing
+
+cloud "Internal Integration Test Environment" {
+  node "Service A" as A
+  node "Service B" as B
+}
+
+cloud "External Company Integration Test Environment" {
+  node "External Service C" as C
+  node "External Service D" as D
+  node "External Service E" as E
+}
+
+A --> B
+A --> C
+
+B --> D
+C --> E
+
+newpage
+
+skinparam monochrome true
+skinparam style strictuml
+
+title Ensuring the API simulations meet the specification
+
+node "API Simulation of B" as B
+node "API Simulation of\n External Service C" as C
+
+frame "Contract Tests for B" as TB
+frame "Contract Tests for C" as TC
+
+TB --> B: ensures contract
+TC --> C: ensures contract
+
+newpage
+
+skinparam monochrome true
+skinparam style strictuml
+
+title Ensuring the API implementation meet the specification
+
+node "Service B" as B
+node "External Service C" as C
+
+frame "Contract Tests for B" as TB
+frame "Contract Tests for C" as TC
+
+TB --> B: ensures contract
+TC --> C: ensures contract
+
+newpage
+
+skinparam monochrome true
+skinparam style strictuml
+
+title Testing using simulations
+
+node "Service A" as A
+node "API Simulation of B" as B
+node "API Simulation of\n External Service C" as C
+
+frame "Test Suite" as TA
+
+A --> B
+A --> C
+
+TA --> A: test
+TA --> B: priming
+TA --> C: priming
+
+@enduml
