@@ -13,8 +13,6 @@
 <div class="container">
 <div class="row">
     <div class="col-md-9 article">
-   		<h1><%= current_page.data.title  %></h1>
-
 <!-- begin advert -->
 <table class="table">
     <tr>
@@ -34,19 +32,8 @@
     </table>
         <!-- end advert -->
 
+      <h1><%= current_page.data.title  %></h1>
     	<%= yield %>
-                <!-- begin related -->
-        <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
-        <% if (related.length >0) %>
-      <h4>Related</h4>
-      <ol>
-        <% related.each do |article| %>
-          <li><%= link_to article.title, article %></li>
-        <% end %>
-      </ol>
-    <% end %>
-        <!-- end related -->
-
 	</div>
     <div class="col-md-3" id="sidebar">
 		<center>
@@ -58,6 +45,17 @@
 		<p>
 			Java technical architect in London for the UK IT industry for fifteen years.
 		</p>
+    <!-- begin related -->
+    <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
+    <% if (related.length >0) %>
+    <h4>Related</h4>
+    <ol>
+    <% related.each do |article| %>
+    <li><%= link_to article.title, article %></li>
+    <% end %>
+    </ol>
+    <% end %>
+    <!-- end related -->
 
         <!-- begin recent -->
       <h4>Recent</h4>
@@ -106,5 +104,15 @@
 
 </script>
       <!-- end analytics -->
+      <!-- begin share -->
+      <script type="text/javascript">var switchTo5x=true;</script>
+      <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+      <script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
+      <script type="text/javascript">stLight.options({publisher: "1b007fac-711f-48ce-9d1e-f37fcbc7a21c", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+      <script>
+var options={ "publisher": "1b007fac-711f-48ce-9d1e-f37fcbc7a21c", "position": "left", "ad": { "visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": { "items": ["facebook", "twitter", "linkedin", "googleplus", "email", "sharethis"]}};
+var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
+      </script>
+      <!-- end share -->
   </body>
 </html>
