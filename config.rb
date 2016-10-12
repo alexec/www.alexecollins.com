@@ -21,10 +21,11 @@ config[:casper] = {
   },
   navigation: {
     "Home" => "/",
-    "Docker" => "/tags/docker",
-    "Testing" => "/tags/testing",
+    "Docker" => "/tag/docker",
+    "Testing" => "/tag/testing",
+    "Selenium" => "/tag/selenium",
     "GitHub" => "https://github.com/alexec",
-    "Linked In" => "https://www.linkedin.com/in/alexecollins"
+    "LinkedIn" => "https://www.linkedin.com/in/alexecollins"
   }
 }
 
