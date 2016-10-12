@@ -1,6 +1,10 @@
 www.alexecollins.com
 ====================
 
+Set-up:
+
+	brew install advancecomp gifsicle jhead jpegoptim jpeg optipng pngcrush pngquant
+	
 To upload:
 
 	./build.sh
