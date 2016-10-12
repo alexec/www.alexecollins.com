@@ -1,5 +1,0 @@
-<ul>
-<% sitemap.resources.find_all{|p| !p.url.match(/\.(png|js|css)/)}.each do |p| %>
-<li><a href="<%=p.url%>"><%=(p.data.title && p.data.title != 'Home' ? p.data.title : p.url)%></a></li>
-<% end %>
-</ul>

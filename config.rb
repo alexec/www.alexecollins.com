@@ -1,47 +1,32 @@
-
 ###
-# Blog settings
-###
-
-# Time.zone = "UTC"
-
-set :markdown_engine, :kramdown
-
-activate :blog do |blog|
-  # blog.prefix = "blog"
-  blog.permalink = "/:title"
-  # blog.sources = ":year-:month-:day-:title.html"
-  blog.taglink = "tags/:tag.html"
-  #blog.layout = "layouts/blog"
-  blog.summary_separator = /(READMORE)/
-  blog.summary_length = 250
-  # blog.year_link = ":year.html"
-  # blog.month_link = ":year/:month.html"
-  # blog.day_link = ":year/:month/:day.html"
-  blog.default_extension = ".md"
-
-  blog.tag_template = "tag.html"
-  blog.calendar_template = "calendar.html"
-
-  blog.paginate = true
-  blog.per_page = 20
-  blog.page_link = "page/:num"
-end
-
-page "/feed.xml", :layout => false
-
-###
-# Compass
+# middleman-casper configuration
 ###
 
-# Susy grids in Compass
-# First: gem install susy
-# require 'susy'
-
-# Change Compass configuration
-# compass_config do |config|
-#   config.output_style = :compact
-# end
+config[:casper] = {
+  blog: {
+    url: 'http://www.alexecollins.com',
+    name: 'Alex Collins',
+    description: 'Java technical architect in London for the UK IT industry for fifteen years.',
+    date_format: '%d %B %Y',
+    navigation: true,
+    logo: nil # Optional
+  },
+  author: {
+    name: 'Alex Collins',
+    bio: "Java technical architect in London for the UK IT industry for fifteen years.", # Optional
+    location: "London, UK", # Optional
+    website: nil, # Optional
+    gravatar_email: "alex.e.c@gmail.com", # Optional
+    twitter: "@alexecldn" # Optional
+  },
+  navigation: {
+    "Home" => "/",
+    "Docker" => "/tags/docker",
+    "Testing" => "/tags/testing",
+    "GitHub" => "https://github.com/alexec",
+    "Linked In" => "https://www.linkedin.com/in/alexecollins"
+  }
+}
 
 ###
 # Page options, layouts, aliases and proxies
@@ -50,27 +35,89 @@ page "/feed.xml", :layout => false
 # Per-page layout changes:
 #
 # With no layout
-# page "/path/to/file.html", :layout => false
-#
-# With alternative layout
-# page "/path/to/file.html", :layout => :otherlayout
-#
-# A path which all have the same layout
-# with_layout :admin do
-#   page "/admin/*"
-# end
+page '/*.xml', layout: false
+page '/*.json', layout: false
+page '/*.txt', layout: false
 
-# Proxy (fake) files
-# page "/this-page-has-no-template.html", :proxy => "/template-file.html" do
-#   @which_fake_page = "Rendering a fake page with a variable"
-# end
+# With alternative layout
+# page "/path/to/file.html", layout: :otherlayout
+
+# Proxy pages (https://middlemanapp.com/advanced/dynamic_pages/)
+# proxy "/this-page-has-no-template.html", "/template-file.html", locals: {
+#  which_fake_page: "Rendering a fake page with a local variable" }
+
+def get_tags(resource)
+  if resource.data.tags.is_a? String
+    resource.data.tags.split(',').map(&:strip)
+  else
+    resource.data.tags
+  end
+end
+
+def group_lookup(resource, sum)
+  results = Array(get_tags(resource)).map(&:to_s).map(&:to_sym)
+
+  results.each do |k|
+    sum[k] ||= []
+    sum[k] << resource
+  end
+end
+
+tags = resources
+  .select { |resource| resource.data.tags }
+  .each_with_object({}, &method(:group_lookup))
+
+tags.each do |tagname, articles|
+  proxy "/tag/#{tagname.downcase.to_s.parameterize}/feed.xml", '/feed.xml',
+    locals: { tagname: tagname, articles: articles[0..5] }, layout: false
+end
+
+proxy "/author/#{config.casper[:author][:name].parameterize}.html",
+  '/author.html', ignore: true
+
+# General configuration
 
 ###
 # Helpers
 ###
 
-# Automatic image dimensions on image_tag helper
-# activate :automatic_image_sizes
+activate :blog do |blog|
+  # This will add a prefix to all links, template references and source paths
+  # blog.prefix = "blog"
+
+  # blog.permalink = "{year}/{month}/{day}/{title}.html"
+  # Matcher for blog source files
+  blog.sources = "articles/{year}-{month}-{day}-{title}.html"
+  blog.taglink = "tag/{tag}.html"
+  blog.layout = "post"
+  # blog.summary_separator = /(READMORE)/
+  # blog.summary_length = 250
+  # blog.year_link = "{year}.html"
+  # blog.month_link = "{year}/{month}.html"
+  # blog.day_link = "{year}/{month}/{day}.html"
+  # blog.default_extension = ".markdown"
+
+  blog.tag_template = "tag.html"
+  # blog.calendar_template = "calendar.html"
+
+  # Enable pagination
+  blog.paginate = true
+  # blog.per_page = 10
+  # blog.page_link = "page/{num}"
+end
+
+# Pretty URLs - https://middlemanapp.com/advanced/pretty_urls/
+activate :directory_indexes
+
+# Middleman-Syntax - https://github.com/middleman/middleman-syntax
+set :haml, { ugly: true }
+set :markdown_engine, :redcarpet
+set :markdown, fenced_code_blocks: true, smartypants: true, footnotes: true,
+  link_attributes: { rel: 'nofollow' }, tables: true
+activate :syntax, line_numbers: false
+
+# Middleman-Sprockets - https://github.com/middleman/middleman-sprockets
+activate :sprockets
 
 # Methods defined in the helpers block are available in templates
 # helpers do
@@ -79,52 +126,23 @@ page "/feed.xml", :layout => false
 #   end
 # end
 
-set :css_dir, 'css'
-
-set :js_dir, 'js'
-
-set :images_dir, 'images'
-
-
-# Adds a .html unless we're GETing /
-#use Rack::Rewrite do
-#  rewrite %r{^/(.[^.]+)$}, '/$1.html'
-#end
-
-#activate :deploy do |deploy|
-#  deploy.method = :rsync
-#  deploy.host   = "ec2"
-#  deploy.path   = "/var/www/html"
-#  deploy.clean = true
-# => end
-
 # Build-specific configuration
 configure :build do
-  # For example, change the Compass output style for deployment
-  activate :minify_css
+  # Minify CSS on build
+  # activate :minify_css
 
   # Minify Javascript on build
-  activate :minify_javascript
-
-  activate :minify_html
+  # activate :minify_javascript
 
   # Enable cache buster
-  # activate :cache_buster
+  # activate :asset_hash
 
   # Use relative URLs
-	# screws 404 page
   # activate :relative_assets
 
-  # Compress PNGs after build
-  # First: gem install middleman-smusher
-  # require "middleman-smusher"
-  # activate :smusher
-
-  # Or use a different image path
-  # set :http_path, "/Content/images/"
-
-	activate :directory_indexes
-#	activate :gzip
-#  activate :livereload
-  activate :syntax
+  # Ignoring Files
+  ignore 'javascripts/_*'
+  ignore 'javascripts/vendor/*'
+  ignore 'stylesheets/_*'
+  ignore 'stylesheets/vendor/*'
 end
