@@ -1,18 +1,24 @@
+# If you do not have OpenSSL installed, change
+# the following line to use 'http://'
 source 'https://rubygems.org'
 
-gem 'less'
+# For faster file watcher updates on Windows:
+gem 'wdm', '~> 0.1.1', platforms: [:mswin, :mingw]
 
-# Faster JS compression
-gem 'therubyracer'
+# Windows does not come with time zone data
+gem 'tzinfo-data', platforms: [:mswin, :mingw, :jruby]
 
-gem "middleman"
-gem "middleman-blog"
-gem "middleman-syntax"
-gem 'middleman-minify-html'
-gem "middleman-imageoptim"
+# Middleman Gems
+gem 'middleman', '~> 4.0'
+gem 'middleman-blog', '~> 4.0'
+gem 'middleman-sprockets', '~> 4.0.0'
 
 # For feed.xml.builder
-gem "builder"
+gem 'builder', '~> 3.2.2'
 
-# for blog summaries
-gem 'nokogiri'
+# Code syntax highlighting
+gem 'middleman-syntax', '~> 3.0.0'
+gem 'redcarpet', '~> 3.3.4'
+
+# For "summary"-Helper
+gem 'nokogiri', '~> 1.6.8'
