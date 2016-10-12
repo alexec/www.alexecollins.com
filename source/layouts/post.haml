@@ -45,6 +45,8 @@
                 %span.author-link.icon-link
                   %a{href: blog_author.website}= blog_author.website
 
+        = partial('shared/book')
+
         %section.share
           %h4 Share this post
           %a.icon-twitter{href: twitter_url, onclick: "window.open(this.href, 'twitter-share', 'width=550,height=235');return false;"}
