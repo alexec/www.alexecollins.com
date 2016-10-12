@@ -1,10 +1,6 @@
 www.alexecollins.com
 ====================
 
-	docker build -t site:1 .
-	./run.sh
-	open http://192.168.99.100:4567
-
 To upload:
 
 	./build.sh
@@ -18,20 +14,11 @@ Promote to:
 	https://news.ycombinator.com/submit
 	https://twitter.com/
 
-Reference:
-
-* http://ironsummitmedia.github.io/startbootstrap-agency/
-
 Testing
 
 * Home
-* Sitemap
-* RSS
 * Blog Home
 * Blog Post
-* linkedin
-* twitter
-* Contact
 * On iPad
 * On iPhone
 * Analytics
