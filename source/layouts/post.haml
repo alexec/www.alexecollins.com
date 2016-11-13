@@ -7,7 +7,11 @@
       - if blog_settings.navigation
         %a.menu-button.icon-menu{href: '#'}
           %span.word Menu
-      = partial('shared/book')
+
+  %main.content
+    %article.post
+      %header.post-header
+        = partial('shared/book')
 
   %main.content{role: :main}
     %article.post
