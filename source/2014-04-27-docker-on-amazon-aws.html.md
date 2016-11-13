@@ -1,10 +1,9 @@
 ---
 title: Docker on Amazon AWS
 date: 2014-04-27 19:47 UTC
-publish: false
 tags: docker, amazon, aws, centos
 ---
-This is a short tutorial about getting Docker running on AWS Ubuntu. I've done this as I found that [boot2docker](https://github.com/boot2docker/boot2docker) was using a lot of memory and CPU on my laptop, and port forwarding is a pain. As I already have a free instance on Amazon AWS, I can use this. 
+This is a short tutorial about getting Docker running on AWS Ubuntu. I've done this as I found that [boot2docker](https://github.com/boot2docker/boot2docker) was using a lot of memory and CPU on my laptop, and port forwarding is a pain. As I already have a free instance on Amazon AWS, I can use this.
 
 **(1) Get an [Amazon EC2](http://aws.amazon.com/ec2/) instance and install Ubuntu on it.**
 
@@ -41,11 +40,11 @@ You probably want to perform some basic smoke tests. You'll need to set-up an en
 Pull an image:
 
 	docker pull centos
-	
+
 Run a simple command:
 
 	docker run -t -i centos echo 'Hello world!'
-	
+
 Download from a repo:
 
 	docker run -t -i centos yum -y install ping
