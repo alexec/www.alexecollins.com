@@ -51,6 +51,27 @@
         <!-- end advert -->
 
     	<%= yield %>
+
+
+      <!-- begin advert -->
+      <table class="table">
+          <tr>
+          <td>
+              <center>
+                <a href="https://leanpub.com/selenium-webdriver-book?utm_source=alexblog&utm_medium=banner&utm_content=banner_bottom" onclick=" ga('send', 'event', {eventCategory: 'Outbound Link', eventAction: 'click', eventLabel: event.target.href, transport: 'beacon'})" > <img src="/images/cover.png" ></a>
+              </center>
+          </td>
+          <td>
+                      <p class="well"> Free, Selenium 3.0 compatible, and at over 420 pages this book will help you learn the fundamentals of the WebDriver API such as locating and interacting with web pages, through advanced topics such as Page Objects and mobile testing, and finally teach you how to build up your own web application testing framework.
+                        <br>
+                        <a href="https://leanpub.com/selenium-webdriver-book?utm_source=alexblog&utm_medium=banner&utm_content=banner_bottom" onclick=" ga('send', 'event', {eventCategory: 'Outbound Link', eventAction: 'click', eventLabel: event.target.href, transport: 'beacon'})"> Get the free book! </a> </p>
+
+
+          </td>
+          </tr>
+          </table>
+              <!-- end advert -->
+
                 <!-- begin related -->
         <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
         <% if (related.length >0) %>
