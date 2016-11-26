@@ -1,5 +1,5 @@
 ---
-title: Message Journey Diagrams
+title: Message Diagrams
 date: 2016-11-26 17:28 UTC
 tags: uml, architecture
 ---
@@ -12,7 +12,7 @@ I've developed a new diagram that I think it much better at communicating how th
 
 This very simple flow produces a large diagram:
 
-![Sequence Diagram](/images/message-journey-diagrams/sequence-diagram-example.png)
+![Sequence Diagram](/images/message-diagrams/sequence-diagram-example.png)
 
 What's wrong with this?
 
@@ -32,6 +32,6 @@ The rules are basic:
 * A process is not a service, it can appear more than once (this maybe confusing the first time you see this)
 * Everything else is a note
 
-![Message Journey Diagram](/images/message-journey-diagrams/message-journey-diagram-example.png)
+![Message Journey Diagram](/images/message-diagrams/message-diagram-example.png)
 
 I'd love to get your feedback - please add your comments below.
