@@ -1,0 +1,68 @@
+@startuml
+
+
+!define BORDER Black
+!define ARROW Black
+!define BACKGROUND White
+
+skinparam shadowing false
+
+skinparam activityArrowColor ARROW
+' skinparam activityBackgroundColor BACKGROUND
+skinparam activityBorderColor BORDER
+
+' skinparam actorBackgroundColor BACKGROUND
+skinparam actorBorderColor BORDER
+
+skinparam agentBorderColor BORDER
+
+skinparam usecaseArrowColor ARROW
+skinparam usecaseBorderColor BORDER
+
+skinparam classArrowColor ARROW
+' skinparam classBackgroundColor BACKGROUND
+skinparam classBorderColor BORDER
+skinparam objectArrowColor ARROW
+' skinparam objectBackgroundColor BACKGROUND
+skinparam objectBorderColor BORDER
+
+' skinparam packageBackgroundColor BACKGROUND
+skinparam packageBorderColor BORDER
+
+skinparam componentArrowColor ARROW
+' skinparam componentBackgroundColor BACKGROUND
+skinparam componentBorderColor BORDER
+' skinparam componentInterfaceBackgroundColor BACKGROUND
+skinparam componentInterfaceBorderColor BORDER
+
+skinparam noteBorderColor BORDER
+
+skinparam stateBorderColor BORDER
+skinparam stateArrowColor ARROW
+
+skinparam sequenceArrowColor ARROW
+skinparam sequenceLifeLineBorderColor BORDER
+' skinparam sequenceParticipantBackgroundColor BACKGROUND
+skinparam sequenceParticipantBorderColor BORDER
+skinparam sequenceBoxLineColor BORDER
+skinparam sequenceBoxBorderColor BORDER
+
+' skinparam frameBackgroundColor BACKGROUND
+skinparam frameBorderColor BORDER
+skinparam interfaceBorderColor BORDER
+' skinparam interfaceBackgroundColor BACKGROUND
+
+' skinparam databaseBackgroundColor BACKGROUND
+
+skinparam noteBackgroundColor LightYellow
+
+skinparam LegendFontColor White
+skinparam LegendBackgroundColor #02827c
+skinparam LegendBorderColor #02827c
+
+skinparam roundCorner 0
+
+hide footbox
+
+
+@enduml

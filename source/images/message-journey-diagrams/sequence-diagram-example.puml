@@ -1,0 +1,38 @@
+@startuml
+
+!include ../config.puml
+
+actor User
+participant "Website" as FE
+participant "Checkout Service" as BE
+database "Basket DB" as DB
+database "Audit Log" as Audit
+
+activate User
+User -> FE: open basket page
+activate FE
+FE -\ Audit: write page access
+FE -> BE: get items
+activate BE
+BE -> DB: get items
+activate DB
+DB --> BE: items
+deactivate DB
+BE --> FE: items
+deactivate BE
+
+FE -> BE: get recommendations
+activate BE
+BE -> DB: get recommendations
+activate DB
+DB --> BE: recommendations
+deactivate DB
+BE --> FE: recommendations
+deactivate BE
+alt no items
+  FE --> User: basket empty, recommendations
+else
+  FE --> User: item &recommendations
+end
+deactivate FE
+@enduml

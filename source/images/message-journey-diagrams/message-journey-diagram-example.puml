@@ -1,0 +1,34 @@
+@startuml
+
+!include ../config.puml
+
+actor User
+usecase "Website" as FE
+usecase "Checkout Service" as BE
+database "Basket DB" as DB
+database "Audit Log" as Audit
+usecase "Checkout Service" as BE2
+database "Basket DB" as DB2
+
+User -right-> FE: open basket page            .
+FE .left.> User: item & recommendations
+
+note bottom
+  if there are not items
+  display "empty basket"
+end note
+FE -up-> Audit: write page access
+
+FE -right-> BE: get items
+BE .left-> FE: items
+
+BE -right-> DB: get items
+DB .left.> BE: items
+
+FE -down-> BE2: get recommendations
+BE2 .up.> FE: recommendations
+
+BE2 -right-> DB2: get recommendations
+DB2 .left.> BE2: recommendations
+
+@enduml
