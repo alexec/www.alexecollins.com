@@ -1,5 +1,5 @@
 ---
-title: Continuous Deliver With Kubernetes, Docker, and CircleCI
+title: Continuous Delivery With Kubernetes, Docker, and CircleCI
 date: 2017-03-06 22:10 UTC
 tags: kubernetes, docker
 ---
@@ -49,6 +49,8 @@ ENV JAVA_OPTS=""
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar /wallet.jar" ]
 ~~~
 
+[Open on Github](https://github.com/phoebus-games/wallet)
+
 The process for building standalone Playframework is a bit more complex, as Playframework does not produce a standalone JAR normally:
 
 ~~~bash
@@ -67,6 +69,8 @@ ENV JAVA_OPTS=""
 ENV APPLICATION_SECRET=changeme
 ENTRYPOINT [ "sh", "-c", "java -cp 'conf:lib/*' play.core.server.ProdServerStart"]
 ~~~
+
+[Open on Github](https://github.com/phoebus-games/router)
 
 These build each commit on CircleCI. I particularly like CircleCI's clean user interface and its "insights" features, amongst I choose it in preference to the popular TravisCI.
 
@@ -109,3 +113,14 @@ Phew! Ok, so what does this do?
 * Kicks of the smoke test.
 
 `GPG_KEY` is a random string. I used this to encrypt `kubeconfig`, as there are no "secrets" in CircleCI.
+
+[Open on Github](https://github.com/phoebus-games/router)
+
+Finally, a successful smoke test kicks of a load test.
+
+## Tips
+
+* Integration test with a real database running locally. This is super easy with Homebrew on the Mac.
+* Separate the building of your component from the building of the Docker image. Use different tools.
+* Separate deployment from build, and then take advantage of the Docker packaging to reuse the same deployment script.
+* Don't bother trying to run it all locally. Use Wiremock to simulate your dependencies when doing integration testing.
