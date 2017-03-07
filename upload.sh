@@ -1,4 +1,4 @@
 #!/bin/sh
 set -eux
-rsync -a build/ alexecollins.com:/var/www/html/
+rsync -avz --rsync-path="sudo rsync" build/ deploy@alexecollins.com:/var/www/alexecollins.com/
 

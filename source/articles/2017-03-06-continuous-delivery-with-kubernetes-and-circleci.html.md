@@ -6,7 +6,7 @@ tags: kubernetes, docker
 
 In this article I'll walk you through my experience setting up a Continuous Delivery pipeline using (mostly) open and free tools.
 
-I've spent a lot less time writing code over the last year, and decided to create a small side-project to keep my Kubernetes skills fresh. Oh, and to use absolutely ever technology I've ever learnt and used in anger (Deployment, Kubernetes, Nginx, Docker, CircleCI, Mongo,  Postgres, Java 8, Scala 2.11, Node, HTML, CSS, JavaScript, Ruby, Spring Boot, Playframework 2, jQuery, Phaser (PIXIJS), JUnit, ScalaTest, WDIO,  Selenium WebDriver, RestAssured, Gatling, Git/GitHub, Middleman, Jekyll, Swagger 2, urm Prolog? TCL?).
+I've spent a lot less time writing code over the last year, and decided to create a small side-project to keep my [Kubernetes](https://kubernetes.io) skills fresh. Oh, and to use absolutely ever technology I've ever used (Deployment, Kubernetes, Nginx, Docker, CircleCI, Mongo,  Postgres, Java 8, Scala 2.11, Node, HTML, CSS, JavaScript, Ruby, Spring Boot, Playframework 2, jQuery, Phaser (PIXIJS), JUnit, ScalaTest, WDIO,  Selenium WebDriver, RestAssured, Gatling, Git/GitHub, Middleman, Jekyll, Swagger 2, urm Lisp? Cobol? Prolog? TCL?).
 
 The project in a system for writing games, and has six main components:
 
@@ -25,13 +25,13 @@ I wanted to deliver this onto a server automatically, so I created this pipeline
 
 This means that every commit is built, tested, packaged, deployed, smoke and load tested.
 
-I said this is nearly free, but one thing I paid for was some cloud hosted servers. I used Digital Ocean, as they have a fantastically easy to use interface, and a variety of data centres. Kubernetes needed 3x 2CPU/2GB machines, which set me back $60 a month. You can power them down when you're not using them (using the Digital Ocean API and a curl script).
+I said this is nearly free, the one thing I paid for was some cloud hosted servers. I used [Digital Ocean](https://www.digitalocean.com), as they have a fantastically easy to use interface, and a variety of data centres. Kubernetes needed 3x 2CPU/2GB machines, which set me back $60 a month. You can power them down when you're not using them (using the Digital Ocean API and a curl script).
 
 Getting Kubernetes set up from scratch (the "hard way") takes a long time and requires a lot of technical expertise and patience. Instead, I used [Stackpoint](https://stackpoint.io) to do this for me. To do this I had  to create an API token for Digital Ocean, sign-up to Stack Point, tell it the token is and it span up a Kubernetes cluster in about 15 mins.
 
 Once it's started up, you're emailed an `kubeconfig` file to use with `kubectl`.
 
-I build my applications and deploy them to Docker Hub. I don't use any specialist tools to do this, just Maven, SBT, and the core Docker tools. You need to have `DOCKER_USER`, `DOCKER_EMAIL`, `DOCKER_PASS` - your Docker Hub username, email, and password. Here's a build script for a standalone JAR Maven project:
+I build my applications and deploy them to [Docker Hub](https://hub.docker.com). I don't use any specialist tools to do this, just Maven, SBT, and the core Docker tools. You need to have `DOCKER_USER`, `DOCKER_EMAIL`, `DOCKER_PASS` - your Docker Hub username, email, and password. Here's a build script for a standalone JAR Maven project:
 
 ~~~bash
 mvn package -DskipTests
