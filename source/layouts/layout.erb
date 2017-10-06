@@ -33,48 +33,6 @@
 
     	<%= yield %>
 
-
-      <!-- begin advert -->
-
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Free, full length book on Selenium WebDriver</h4>
-      </div>
-      <div class="modal-body">
-      <table class="table">
-          <tr>
-          <td>
-              <center>
-                <a href="https://selenium-webdriver-book.github.io?utm_source=alexblog&utm_medium=banner&utm_content=modal" onclick=" ga('send', 'event', {eventCategory: 'Outbound Link', eventAction: 'click', eventLabel: event.target.href, transport: 'beacon'})" > <img src="/images/cover.png"  style="padding:0"></a>
-              </center>
-          </td>
-          <td>
-            <p>
-              <b>Free, Selenium 3.0 compatible, and at over 420 pages</b> this book is a hands-on guide to dozens of specific ways you can use to get the most of WebDriver in your test automation development.
-          </p>
-          <p>
-              This book will help you learn the fundamentals of the WebDriver API such as locating and interacting with web pages, through advanced topics such as Page Objects and mobile testing, and finally teach you how to build up your own web application testing framework.
-          </p>
-          </tr>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <a class="btn btn-primary" href="https://selenium-webdriver-book.github.io?utm_source=alexblog&utm_medium=banner&utm_content=modal" onclick=" ga('send', 'event', {eventCategory: 'Outbound Link', eventAction: 'click', eventLabel: event.target.href, transport: 'beacon'})">Get the book and make me a Selenium WebDriver expert! </a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">No thanks</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-              <!-- end advert -->
-
                 <!-- begin related -->
         <% related = blog.articles.map {|a| {:a => a, :tags => ((current_page.data.tags || '').gsub(/ /,'').split(',') & a.tags)}}.find_all{|a| a[:tags].length>0}.sort{|a,b| b[:tags].length <=> a[:tags].length}.map{|a| a[:a]}.find_all{|a| a.title!=current_page.data.title}[0...5] %>
         <% if (related.length >0) %>
@@ -153,14 +111,5 @@
 </script>
 <!-- end analytics -->
 
-<script src="/js/jquery-3.1.1.min.js">
-</script>
-<script src="/js/bootstrap.min.js">
-</script>
-<script>
-setTimeout(function() {
-  $('#myModal').modal();
-}, 30000)
-</script>
   </body>
 </html>
