@@ -2,8 +2,14 @@
 
 title: Mental Models
 date: 2018-03-06 16:27 UTC
-tags: 
+tags: mental-models
 
 ---
+Over the years, I've found a number of mental models and rules of thumb to be really useful in focusing my thinking. In this series I'll share the ones that I've found most valuable:
 
-
+* Hopes and Expectations
+* 20% Thinking
+* Games of Percentages
+* Rationale vs Reason
+* Are We Speaking Greek?
+* Tactics and Strategies
