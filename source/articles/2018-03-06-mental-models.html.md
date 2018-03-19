@@ -9,8 +9,9 @@ Over the years, I've found a number of mental models and rules of thumb to be re
 
 * [Hopes and Expectations](/hopes-and-expectations)
 * [20% Thinking](/20-thinking)
-* 10x Or 1x Idea
+* [10x Or 1x](/10x-or-1x)
 * Games of Percentages
 * Rationale vs Reason
 * Are We Speaking Greek?
 * Tactics and Strategies
+* Is It v1 Or v2?
