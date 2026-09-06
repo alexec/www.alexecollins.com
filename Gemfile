@@ -1,15 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'less'
-
-# Faster JS compression
-gem 'therubyracer'
-
-gem "middleman"
-gem "middleman-blog"
-gem "middleman-syntax"
-gem 'middleman-minify-html'
-gem "middleman-imageoptim"
+gem "middleman", "~> 4.6"
+gem "middleman-blog", "~> 4.2"
+gem "middleman-syntax", "~> 3.6"
+gem "middleman-minify-html"
 
 # For feed.xml.builder
 gem "builder"
