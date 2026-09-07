@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<% skip = %r{\A(404|tags/|page/|\d{4}/)}
+   pages = sitemap.resources.select { |r| r.path.end_with?(".html") && r.path !~ skip }
+   pages.sort_by(&:url).each do |page| %>
+  <url>
+    <loc>https://www.alexecollins.com<%= page.url %></loc>
+<% if page.respond_to?(:date) && page.date %>
+    <lastmod><%= page.date.strftime("%Y-%m-%d") %></lastmod>
+<% end %>
+  </url>
+<% end %>
+</urlset>
