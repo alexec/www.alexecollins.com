@@ -2,7 +2,7 @@
 title: Building iOS apps in 2026
 date: 2026-09-06 12:00 UTC
 tags: ios, claude-code
-published: false
+published: true
 ---
 Confession time: despite spending the last twenty years deep in backend infrastructure—wrangling workflow engines, Kubernetes, and distributed systems from my home office here in Walnut Creek—until this summer, I had never actually shipped an iOS app. I don't know Swift, and I've never touched UIKit. Aside from a couple of toy macOS apps I hand-coded years ago, mobile development was completely outside my wheelhouse.
 
