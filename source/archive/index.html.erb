@@ -1,0 +1,12 @@
+---
+title: Archive
+---
+
+<% blog.articles.group_by {|a| a.date.year }.sort.reverse.each do |year, articles| %>
+  <h2><%= year %></h2>
+  <ul class="archive-list">
+    <% articles.each do |article| %>
+      <li><%= link_to article.title, article %> <span class="meta"><%= article.date.strftime('%b %e') %></span></li>
+    <% end %>
+  </ul>
+<% end %>

@@ -18,7 +18,6 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     base64 (0.3.0)
     bigdecimal (4.1.2)
-    builder (3.3.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -168,7 +167,6 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  builder
   middleman (~> 4.6)
   middleman-blog (~> 4.2)
   middleman-minify-html

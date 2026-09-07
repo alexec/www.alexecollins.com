@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "middleman",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "export PATH=\"$HOME/.local/portable-ruby/portable-ruby/3.3.8/bin:$PATH\"; exec bundle exec middleman serve"],
+      "port": 4567
+    }
+  ]
+}

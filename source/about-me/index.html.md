@@ -1,35 +1,13 @@
 ---
-title: About Me
+title: About
 ---
 
-<!--<img src="/images/me.png" style="float:left"/>-->
+I'm Alex Collins, a Principal Software Engineer at [Intuit](https://www.intuit.com) in Mountain View, California.
 
-<div class="jumbotron">
-Alex Collins is a driven, dedicated, hands-on team leader, technical leader and architect. He has 12 years of experience delivering low latency, high volume, high-availability online transaction processing systems and trading systems, for the largest clients in the UK IT sector. He has strong management and communication skills developed from his years of team leadership, and a track record of excellent design and architectural skills.
-</div>
+I was previously a maintainer of [Argo](https://argoproj.github.io), the open-source Kubernetes-native workflow and GitOps tooling, working on Argo Workflows and Argo CD.
 
-<hr/>
+Before moving to the Bay Area I spent over ten years in London as a Java technical lead and architect, building low-latency, high-volume transaction processing and trading systems for some of the largest clients in the UK IT sector.
 
-**Languages and Frameworks:**
-Java (JEE, JPA, Spring, Hibernate, JDBC, JNI, JUnit, TestNG, JMeter), Groovy/Grails, TCL/TK, Ruby, TCP/IP, HTTP, XML, JSON, REST, SOAP, HTML5, JavaScript/jQuery, CSS3
+I studied at the University of Sheffield.
 
-**Databases:**
-DB2, Microsoft SQL Server, PostgreSQL, MySQL, Informix, Oracle, 
-MongoDB, Hazelcast
-
-**Operating Systems:**
-UNIX, Linux (RHEL, Cent-OS, Ubuntu), OS-X, Windows Server
-
-**Application Servers:**
-Tomcat, JBoss, Jetty, ColdFusion
-
-**Tools:**
-Maven, Ant, Hudson, Jenkins, CruiseControl, Git, SVN, CVS, Puppet, Vagrant, Docker, JIRA, Trac, RT, Bugzilla, Drupal, WordPress
-
-**Process:**
-Agile (Scrum/Kanban), TDD, BDD, UML
-
-<hr/>
-
-I've lived in London since 2002.
-
+My code is on [GitHub](https://github.com/alexec). If you'd like to get in touch, message me on [LinkedIn](https://www.linkedin.com/in/alexecollins/).

@@ -7,6 +7,8 @@
 
 set :markdown_engine, :kramdown
 
+activate :syntax
+
 activate :blog do |blog|
   # blog.prefix = "blog"
   blog.permalink = "/:title"
@@ -28,7 +30,13 @@ activate :blog do |blog|
   blog.page_link = "page/:num"
 end
 
-page "/feed.xml", :layout => false
+helpers do
+  # Summary of an article as plain text, for the post list on the home page.
+  def plain_summary(article, length = 220)
+    Nokogiri::HTML(article.summary(length)).xpath('//text()').map(&:text).join(' ').gsub(/\s+/, ' ').gsub(/\s+([.,;:!?)])/, '\1').strip
+  end
+end
+
 
 ###
 # Compass
@@ -126,5 +134,4 @@ configure :build do
 	activate :directory_indexes
 #	activate :gzip
 #  activate :livereload
-  activate :syntax
 end

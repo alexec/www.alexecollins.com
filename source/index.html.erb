@@ -1,24 +1,20 @@
 ---
 title: Blog
-pageable: true
-per_page: 5
 ---
 
-<% if paginate %>
-  <% if prev_page %>
-    <p><%= link_to 'Previous page', prev_page %></p>
-  <% end %>
-<% end %>
+<% recent = blog.articles.select {|a| a.date.to_date >= Date.today - 365 }.first(5) %>
 
-<% page_articles.each_with_index do |article, i| %>
-  <h2><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></h2>
-  <!-- use article.summary(250) if you have Nokogiri available to show just
-       the first 250 characters -->
-  <%= article.summary() %>
+<% if recent.empty? %>
+  <p>Nothing new in the last year. Older posts are in the <a href="/archive/">archive</a>.</p>
+<% else %>
+<div class="post-list">
+<% recent.each do |article| %>
+  <article>
+    <h2><%= link_to article.title, article %></h2>
+    <p class="meta"><time datetime="<%= article.date.strftime('%Y-%m-%d') %>"><%= article.date.strftime('%B %e, %Y') %></time></p>
+    <p><%= plain_summary(article) %></p>
+  </article>
 <% end %>
-
-<% if paginate %>
-  <% if next_page %>
-    <p><%= link_to 'Next page', next_page %></p>
-  <% end %>
+</div>
+<p class="meta">Older posts are in the <a href="/archive/">archive</a>.</p>
 <% end %>

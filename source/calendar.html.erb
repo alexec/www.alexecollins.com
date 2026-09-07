@@ -12,22 +12,16 @@ pageable: true
   <% end %>
 </h1>
 
-<% if paginate %>
-  <p>Page <%= page_number %> of <%= num_pages %></p>
-
-  <% if prev_page %>
-    <p><%= link_to 'Previous page', prev_page %></p>
-  <% end %>
-<% end %>
-
 <ul>
-  <% page_articles.each_with_index do |article, i| %>
-    <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
+  <% page_articles.each do |article| %>
+    <li><%= link_to article.title, article %> <span class="meta"><%= article.date.strftime('%b %e, %Y') %></span></li>
   <% end %>
 </ul>
 
-<% if paginate %>
-  <% if next_page %>
-    <p><%= link_to 'Next page', next_page %></p>
-  <% end %>
+<% if paginate && (prev_page || next_page) %>
+<nav class="pagination">
+  <% if prev_page %><%= link_to '&larr; Newer', prev_page %><% end %>
+  <span class="spacer"></span>
+  <% if next_page %><%= link_to 'Older &rarr;', next_page %><% end %>
+</nav>
 <% end %>
