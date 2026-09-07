@@ -1,10 +1,15 @@
 www.alexecollins.com
 ====================
 
-To upload:
+To publish, push to `master`. GitHub Actions (`.github/workflows/pages.yml`) builds the site
+and deploys it to GitHub Pages at https://www.alexecollins.com.
 
+To build locally (needs Ruby 3.3, see `Gemfile.lock`):
+
+	./install.sh
 	./build.sh
-	./upload.sh
+
+Drafts: add `published: false` to an article's front matter and it is skipped by the build.
 
 Promote to:
 
