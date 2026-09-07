@@ -8,9 +8,9 @@ Confession time: despite spending the last twenty years deep in backend infrastr
 
 But since June, that changed. I've built a handful of native Apple apps. I shipped a few, and intentionally tossed the rest. This series is about what that experience actually looked like. This first post lays out the "why," and the ones that follow will dive into specific case studies.
 
-<img src="/images/building-ios-apps-in-2026/apps-home.png" width="360" alt="iPhone simulator home screen showing Corpospeak, MeetingBuddy, Brushwise, Meeting Clerk, and Persephone">
+![Equilibrium, a Mac app showing hours worked per day as a column for each day](/images/building-ios-apps-in-2026/equilibrium.png)
 
-*The simulator at the end of the summer. Everything that isn't Apple's is mine.*
+*Equilibrium, a Mac app that works out how many hours I've worked from when the laptop was awake. An app for exactly one user.*
 
 ## The argument
 
@@ -19,10 +19,6 @@ So, why now? I think two massive shifts happened at exactly the same time.
 First, coding agents finally crossed the threshold from "helpful assistant" to "capable of doing the heavy lifting." (As someone who geeks out over agentic systems and tools like the Claude ADK, I was eager to put this to the test). Second, Apple started baking genuinely useful AI directly into the operating system—and handing it to developers for free.
 
 Combine those two, and suddenly, building small, highly personal apps that never would have justified the time investment before just makes perfectly logical sense. I don't think I'm the only one seeing this. Apple added agentic coding to Xcode 26.3 back in February, and I've read reports that new App Store submissions rose 84 percent year-over-year in the first quarter, though I can't tell you how much of that is cause and effect. Either way, this post isn't about the market; it's about what the process was like for me.
-
-![Equilibrium, a Mac app showing hours worked per day as a column for each day](/images/building-ios-apps-in-2026/equilibrium.png)
-
-*Equilibrium, a Mac app that works out how many hours I've worked from when the laptop was awake. An app for exactly one user.*
 
 ## How I worked
 
