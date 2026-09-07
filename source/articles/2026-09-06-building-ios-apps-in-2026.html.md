@@ -14,7 +14,7 @@ So, why now? I think two massive shifts happened at exactly the same time.
 
 First, coding agents finally crossed the threshold from "helpful assistant" to "capable of doing the heavy lifting." (As someone who geeks out over agentic systems and tools like the Claude ADK, I was eager to put this to the test). Second, Apple started baking genuinely useful AI directly into the operating system—and handing it to developers for free.
 
-Combine those two, and suddenly, building small, highly personal apps that never would have justified the time investment before just makes perfectly logical sense. And I'm not the only one seeing this. When Apple integrated agentic coding into Xcode 26.3 back in February, new App Store submissions spiked 84 percent year-over-year. But this isn't about the market; it's about what the process was like for me.
+Combine those two, and suddenly, building small, highly personal apps that never would have justified the time investment before just makes perfectly logical sense. I don't think I'm the only one seeing this. Apple added agentic coding to Xcode 26.3 back in February, and I've read reports that new App Store submissions rose 84 percent year-over-year in the first quarter, though I can't tell you how much of that is cause and effect. Either way, this post isn't about the market; it's about what the process was like for me.
 
 ## How I worked
 
@@ -38,11 +38,11 @@ Eventually, I started viewing those broken early versions as rapid prototyping r
 
 As for Apple's native tools, it was a mixed bag.
 
-The on-device model honestly underwhelmed me. With a context window of around 4,000 tokens, it just can't chew through large or complex text. It was fine for quick summaries or rewrites, but the more I gave it, the more it misunderstood me. I'm holding out hope for Private Cloud Compute in iOS 27 to handle the heavier lifting, and I'm very curious to see if tool calling will be practical there.
+The on-device model honestly underwhelmed me. Apple's documentation puts its context window at around 4,000 tokens, and in practice it just can't chew through large or complex text. It was fine for quick summaries or rewrites, but the more I gave it, the more it misunderstood me. I'm holding out hope for Private Cloud Compute in iOS 27 to handle the heavier lifting, and I'm very curious to see if tool calling will be practical there.
 
 The real headache, though, was evaluation. You can't confidently ship an AI feature without solid evals. Claude was great at writing the tests, and they always passed. But the moment the feature hit real-world data, it stumbled. Real data is messy. If you're extracting actions from meeting notes, you need to account for wildly different conversation styles, varying numbers of speakers, and different transcription formats. Sourcing that varied data is the actual hard part now, not the coding.
 
-On the bright side, speech transcription is vastly improved. You get two models now: an older, fast-but-rough one, and a newer, slow-but-highly-accurate one. I ended up using both in tandem—flashing the fast one on screen so the user feels heard immediately, while the slow one quietly generates the permanent transcript. I'll show exactly how that works in one of the case studies.
+On the bright side, speech transcription is vastly improved. You get two models now. In my use, the older one is fast but rough, and the newer one is slow but far more accurate. I ended up using both in tandem—flashing the fast one on screen so the user feels heard immediately, while the slow one quietly generates the permanent transcript. I'll show exactly how that works in one of the case studies.
 
 I also played around with Personal Voice. The stock text-to-speech voices are still pretty lackluster (somehow worse than Siri), so having the app speak in my own recorded voice was a fun alternative. People ask why I went through the hassle instead of using a built-in voice, and honestly, there's just something uniquely fascinating about hearing your own voice say things you never actually said.
 
@@ -50,15 +50,15 @@ Then there's ARKit. It's incredible at mapping flat surfaces, but it was easily 
 
 ## Where the limit is
 
-Ultimately, the current limit of agentic coding is the physical world.
+For me, the limit of agentic coding turned out to be the physical world.
 
-If Claude can run the test itself—like checking a timer or verifying a text rewrite—the loop works beautifully. But the second a feature touches reality, physical spaces, or real human voices, you still need a human in the loop to test it. I don't see that changing. What *will* change are the models. The stuff that's breaking on our phones today will likely be seamless in six months, either on-device or routed through Private Cloud Compute.
+If Claude can run the test itself—like checking a timer or verifying a text rewrite—the loop works beautifully. But the second a feature touches reality, physical spaces, or real human voices, you still need a human in the loop to test it. I don't see that changing. What I expect to change are the models. My guess is that the stuff breaking on our phones today will work in six months, either on-device or routed through Private Cloud Compute.
 
 ## The catch
 
 So, here's the catch: building got cheap. Everything *after* building didn't.
 
-The exact same tools that enabled me to ship so quickly are flooding the App Store. Review times are dragging, and the churn rate for AI apps is staggering. If your goal is to chase subscriptions and fight for the top ten percent, code creation was probably never your biggest bottleneck anyway.
+I haven't measured any of this myself, but from what I've read, the same tools that let me ship so quickly are flooding the App Store, review times are growing, and AI apps churn faster than ordinary ones. If your goal is to chase subscriptions and fight for the top ten percent, code creation was probably never your biggest bottleneck anyway.
 
 To me, the truly exciting space is much smaller. It's building hyper-custom apps for yourself, your family, or a niche you already know inside and out. In that world, App Store discovery doesn't matter because you already know exactly who the users are.
 
