@@ -87,6 +87,13 @@ end
 #   end
 # end
 
+# App pages: one folder per app, at /<app-name>/privacy.html and /<app-name>/support.html.
+# These opt out of directory_indexes so the URL is the literal .html file Apple's App Store
+# record points at. See README.md, "App privacy and support pages". Adding an app needs no
+# change here: the glob already covers it.
+page "/*/privacy.html", directory_index: false
+page "/*/support.html", directory_index: false
+
 set :css_dir, 'css'
 
 set :js_dir, 'js'
