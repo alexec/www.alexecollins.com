@@ -2,7 +2,7 @@
 title: Call Your Mom Privacy Policy
 ---
 
-_Last updated: 12 September 2026_
+_Last updated: 11 September 2026_
 
 Call Your Mom does not collect, store, transmit, or share any personal data.
 

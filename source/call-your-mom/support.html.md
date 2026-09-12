@@ -2,7 +2,7 @@
 title: Call Your Mom Support
 ---
 
-_Last updated: 12 September 2026_
+_Last updated: 11 September 2026_
 
 Call Your Mom shows one number: the days since you last spoke to her. Two buttons reset it,
 and a prompt once a week reminds you. That is the whole app.
