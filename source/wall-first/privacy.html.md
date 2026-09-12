@@ -2,7 +2,7 @@
 title: Wall First Privacy Policy
 ---
 
-_Last updated: 11 September 2026_
+_Last updated: 12 September 2026_
 
 Wall First has no account, no analytics, and no server of mine. Nothing you photograph and
 nothing you measure reaches me.
@@ -30,12 +30,13 @@ own store on your device. A few small settings sit beside them: whether you have
 first-run sheet, whether captures go to Photos, whether you have overridden the units, and
 whether you have seen the tip about marking a wall.
 
-If you are signed in to iCloud, that store syncs through **your** iCloud account, in its
-private database, so a piece captured on your iPhone appears on your iPad. It is your iCloud,
-under your own Apple Account, and I have no way to reach it. Without an iCloud account the app
-runs from a local store and tells you that sync is unavailable. The app's push capability is
-used only by iCloud, to tell it something changed on your other device. Wall First sends you no
-notifications.
+If you are signed in to iCloud, that store syncs through **your** iCloud account, in its private
+database, so a piece captured on your iPhone appears on your iPad. It is your iCloud, under your
+own Apple Account, and I have no way to reach it. When Wall First cannot open the cloud store it
+runs from a local store on that device instead, and nothing syncs anywhere. The iCloud section
+of Settings tells you which store is in use, and shows the system's own reason when it is the
+local one. The app's push capability is used only by iCloud, to tell it something changed on
+your other device. Wall First sends you no notifications.
 
 ## Photos
 
