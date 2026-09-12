@@ -2,7 +2,7 @@
 title: Brushwise Support
 ---
 
-_Last updated: 12 September 2026_
+_Last updated: 11 September 2026_
 
 Brushwise walks you through a full clean, morning and night: water flosser, floss, a real
 two-minute brush including your tongue, then mouthwash, with a toothbrush check at the end
