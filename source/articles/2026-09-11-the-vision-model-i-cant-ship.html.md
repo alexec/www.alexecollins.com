@@ -6,7 +6,7 @@ published: true
 ---
 There's a plush octopus in a bobble hat sitting on my desk. I pointed my phone at it, pressed the shutter, and the phone said: "a plush toy of an orange octopus wearing a blue and black striped hat and scarf, holding a white ball, and has the word INTUIT on its tag."
 
-It read INTUIT off a little cloth tag. That took one second, with the phone in aeroplane mode. No server, no API key, nothing left the device.
+It read INTUIT off a little cloth tag. That took one second. No server, no API key, no network call anywhere in the app.
 
 [![Three vision models describing the same photograph of a plush octopus toy](/images/the-vision-model-i-cant-ship/three-models.jpg)](/images/the-vision-model-i-cant-ship/three-models-full.jpg)
 
