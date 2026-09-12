@@ -15,7 +15,10 @@ in the app's own storage, one per day, named for the day they were taken. Nothin
 anywhere, and nothing is sent.
 
 The app asks for the camera the first time you use it, behind the page that explains what it
-does, and you can withdraw it in Settings. That is the only permission it needs to work.
+does, and you can withdraw it in Settings. Two other things are asked for later and only at
+the moment you use them: notifications, for the daily reminder, and permission to add to
+Photos, for saving the reel. Nothing is asked for at launch, and each one is explained in the
+app's own words before iOS puts its question up.
 
 The app never looks at what is in a photograph. There is no face detection, no subject
 recognition and no automatic straightening. Yesterday's frame is drawn faintly over the live
@@ -29,6 +32,13 @@ behind rather than writing it into the file.
 
 The reel is stitched from your frames on the phone, into a temporary file, whenever a day is
 added. It is rebuilt rather than kept, and iOS may clear it at any time.
+
+Once seven days are in, Save to Photos puts a copy of the reel in your photo library, where it
+stays. Hold Still asks for add-only access to do that, which is permission to put a video in
+and nothing more. It cannot read, change or delete anything already in your library, and it
+never looks. The copy is made when you press the button and at no other time. If you have
+iCloud Photos switched on, that copy syncs the way every other video in your library does,
+which is between you and Apple rather than anything of mine.
 
 Sharing the reel hands a video file to the iOS share sheet, and where it goes from there is
 your choice and the choice of whichever app you send it to. Hold Still is not involved after

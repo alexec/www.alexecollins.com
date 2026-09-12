@@ -20,7 +20,7 @@ Say what you did, what happened, and what you expected instead. These help:
 - the version of Hold Still from the App Store listing
 - how many days are in the run, and roughly when it started
 - for anything about the reel, whether it played in the app and what went wrong when you
-  tried to share it
+  tried to save or share it
 - for anything about the streak, the days you think should be in it
 
 ## What to expect
@@ -38,8 +38,10 @@ reply.
 - **A missed day is a missed day.** No freezes, no repairs, no grace beyond the one that is
   already there: the streak is alive until midnight, because a day is not over at breakfast.
   Your longest run is kept whatever happens to the current one.
-- **The reel cannot be shared in the first week.** Three frames is not a reel. The app waits
-  until there is something worth handing to somebody, and longer runs give it more to be.
+- **The reel cannot leave the app in the first week.** Three frames is not a reel. The app
+  waits until there is something worth handing to somebody, and longer runs give it more to
+  be. Saving to Photos and sharing open on the same day, because a reel in your library is a
+  reel you can send from your library.
 - **The photographs do not straighten themselves.** Alignment is by eye against the ghost.
   If the reel wobbles, that is what happened, and a fixed spot to stand does more than any
   software would.
@@ -56,10 +58,18 @@ were. There is no re-flip, so the reel will turn over on the day you changed it.
 
 ## Getting the reel out
 
-Share it from the app and it goes wherever you send it. The reel itself is rebuilt from your
-frames each time something changes rather than kept, so it is not a file sitting somewhere
-you can go and find. Saving it into Photos automatically is on the list and not built yet,
-and until it is, sharing it is the way out.
+Two ways, both open once seven days are in. **Save to Photos** puts a copy in your photo
+library and it stays there like any other video you took. **Share the reel** hands it to the
+share sheet and it goes wherever you send it.
+
+The reel inside the app is built again from your frames every time something changes rather
+than kept, so it is not a file sitting somewhere you can go and find. Saving is how you end
+up with one that is, which matters because iOS can clear the app's working copy whenever it
+needs the room.
+
+The first time you press Save, Hold Still asks to add to Photos. That permission only lets it
+put a video in; it cannot read what is already in your library. If you say no and change your
+mind, the Reel tab has a way back to Settings.
 
 ## If the daily reminder never arrives
 
