@@ -13,9 +13,9 @@ all, so nothing you say reaches me or anyone else.
 Corpospeak listens through the microphone so it can turn what you say into corporate
 English and read it back to you. Your device does all of it: Apple's Speech framework
 writes down what you said, Apple Intelligence rewrites it, and one of the voices below
-speaks the result. Audio and transcripts are held in memory while they are being used and
-are never written to disk. The one thing the app saves is the identifier of the voice you
-picked, so it uses the same one next time.
+speaks the result. Corpospeak holds the audio and the transcript in memory while it is
+working on them and never writes either to disk. The one thing it saves is the identifier
+of the voice you picked, so it uses the same one next time.
 
 Corpospeak only ever recognizes speech on your device. If your device cannot recognize your
 language by itself, the app tells you so and does not listen. It never falls back to
