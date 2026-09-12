@@ -28,9 +28,9 @@ The split explains a few things that confused me for an afternoon. The iOS Simul
 
 My first test was a stock photograph of a pantry: thirty labelled jars on a shelf, with a man in half the frame. The model gave me "various jars and containers, likely containing spices, grains, or other food items". When I pushed it to list the contents it wrote `jar, jar, jar, jar` until it hit the token limit.
 
-I wrote that up as a failure. Then I pointed it at a drawer in my own house and it catalogued the drawer.
+I wrote that up as a failure. Then I pointed the phone at the drawers in my own kitchen, and it catalogued them.
 
-The difference is not subtle once you see it. Wide scene photographs, with people and room context in them, get described and embellished. Close-up shots where the thing fills the frame get catalogued. A kitchen drawer of jumbled cutlery came back as knives, spoons, forks, stainless steel, not arranged in any order. Three consecutive runs of the sewing box gave the same core inventory each time.
+The difference is not subtle once you see it. Wide scene photographs, with people and room context in them, get described and embellished. Close-up shots where the thing fills the frame get catalogued. Going back to the test photographs with that in mind, a close-up of a drawer of jumbled cutlery came back as knives, spoons, forks, stainless steel, not arranged in any order. Three consecutive runs of an open sewing box gave the same core inventory each time.
 
 So the test set was the problem, not the model. Worth remembering if you try this: photograph it the way you would actually use it.
 
