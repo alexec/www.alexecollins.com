@@ -45,5 +45,7 @@ email. A reply usually takes a few days, and a fix takes longer than a reply.
 
 ## Privacy
 
-Wall First collects nothing, and the only data that leaves your device is your own iCloud sync.
-The [privacy policy](/wall-first/privacy.html) says what that means in full.
+Wall First has no account, no analytics, and no server of mine. Nothing you photograph and
+nothing you measure reaches me. Your walls and pieces sync through your own iCloud, and each
+capture is copied into your own Photos library. Both stay under your Apple Account. The
+[privacy policy](/wall-first/privacy.html) says what that means in full.
