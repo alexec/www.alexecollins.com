@@ -46,7 +46,15 @@ reply.
 ## Getting a trip out of the app
 
 Any open trip shares as plain text, tick boxes and all, into a message, a note or anywhere
-else. Getting every trip out at once is on the list and not built yet.
+else. Next to it is a printer. It prints the list as a page with a box against every item,
+whether or not you have already ticked it in the app, so you can work down it with a pen
+propped against the open bag. The print sheet is the system's own, so you choose the paper,
+or save the page as a PDF instead.
+
+"Share Every Trip" at the foot of the trips list hands over all of them at once, as one text
+file, newest trip first. Keep it in Files or mail it to yourself. What the app has learned
+about you stays behind: it is counts against item names, and they mean nothing away from the
+app that made them.
 
 ## Privacy
 
