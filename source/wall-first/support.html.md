@@ -2,7 +2,7 @@
 title: Wall First Support
 ---
 
-_Last updated: 11 September 2026_
+_Last updated: 12 September 2026_
 
 Wall First lets you arrange pictures on a wall before you put a nail in it. Photograph each
 piece, mark the wall in the camera, then move the pieces around on a straight-on photo, or live
@@ -32,11 +32,16 @@ email. A reply usually takes a few days, and a fix takes longer than a reply.
   pieces, import them, keep the library. Marking walls and arranging happen on the iPad, where
   there is room to see the wall.
 - **The iPad stays in landscape.** A wall is wider than it is tall, and so is the app.
-- **"iCloud sync is unavailable."** With no iCloud account Wall First runs from a local store on
-  that device. Everything still works, but the iPhone and the iPad will not see each other.
-- **The Wall First album is empty inside the app.** Your captures are still going to Photos. The
-  album only shows up inside the app when Photos access is full rather than limited to a
-  selection.
+- **The iPad and the iPhone do not see each other's work.** Wall First syncs through your own
+  iCloud, so both devices have to be signed in to the same Apple Account. The iCloud section of
+  Settings in the app says whether it is syncing or running from a local store on that device.
+  Everything works either way, but a piece captured on one device only reaches the other through
+  iCloud.
+- **Saved photos is empty, and there is no "Wall First" album.** Photos only lets an app file
+  pictures into an album when it has full access. If you gave Wall First a selection of photos
+  instead, your captures still reach your library, but they land loose among your own photos and
+  there is no album for the app to show. Give it full access in Settings and it makes the album,
+  and captures from then on go into it.
 
 ## Privacy
 
