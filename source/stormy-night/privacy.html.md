@@ -8,9 +8,10 @@ Stormy Night does not collect, store, transmit, or share any personal data.
 
 ## What the app does
 
-Stormy Night plays an eight-hour storm, mixed live on your iPhone from audio files built
-into the app. That is the whole of it. It asks for no permissions at all: no microphone, no
-location, no notifications, no contacts, no photos, no health data, no motion.
+Stormy Night plays a storm that runs to the dawn you set, mixed live on your iPhone from
+audio files built into the app. That is the whole of it. It asks for no permissions at all:
+no microphone, no location, no notifications, no contacts, no photos, no health data, no
+motion.
 
 You tell it when dawn is and the storm stretches to fit, so the birds arrive when you asked.
 That time is worked out against the clock on your phone. The app never knows where you are.
