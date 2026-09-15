@@ -16,7 +16,7 @@ Then I read the licence, and found out I'm not allowed to use it. This is the ca
 
 ## Why I wanted this
 
-Two of my apps have a camera in them and a blank text field right next to it. Rehang lets you arrange pictures on a wall in AR before you drill any holes, and it calls each one "Piece 1" and "Piece 2" until you name it yourself. What's Where? photographs your cupboards so you can prove what you owned when the insurance company asks.
+Two of my apps have a camera in them and a blank text field right next to it. Wall First lets you arrange pictures on a wall in AR before you drill any holes, and it calls each one "Piece 1" and "Piece 2" until you name it yourself. What's Where? photographs your cupboards so you can prove what you owned when the insurance company asks.
 
 In both cases there's a photo, and there's a gap where a description should be, and I've been filling that gap by typing. So the question I actually wanted answered was narrow: can a phone look at a photograph and tell me what's in it, well enough to save me the typing?
 
@@ -38,7 +38,9 @@ I wrote that up as a failure and moved on. Then I pointed the actual phone at th
 
 The difference isn't subtle once you've seen it. Wide shots, with people and room context in them, get described and embellished. Close-ups where the thing fills the frame get catalogued. Going back to the test images with that in mind, a close-up of a drawer of jumbled cutlery came back as knives, spoons, forks, stainless steel, not arranged in any particular order. Three runs of an open sewing box gave me the same inventory each time, down to the orange-handled scissors.
 
-So my test set was the problem, not the model. If you try this yourself: photograph things the way you'd actually use it, not the way a stock photographer would.
+So my test set was the problem, not the model. That's FastVLM, on my own test photos, not a rule about vision models generally, and I never checked whether it held for the model I actually ship. It doesn't. Point SmolVLM2 at the same kind of wide shot and it doesn't embellish, it answers accurately, just a different question than the one I meant to ask: a pantry with someone standing in front of it comes back as a man in a room full of shelves, true and useless if what you wanted was the jars. Fill the frame and it names what's inside. Stand back and it names the room instead. One photograph in eleven came back wrong, and it was an empty one: asked about a dovetailed box with nothing in it, it invented a wooden chest of drawers and called it antique, twice, identically. It reads exactly like the ten that were right, which is the hard part.
+
+If you try this yourself: photograph things the way you'd actually use it, not the way a stock photographer would, and don't leave anything empty for it to invent something into.
 
 There are two failure modes that turn up whatever you point it at. It invents small background furniture, usually a wire fence that isn't in the picture. And it won't name the specific thing. A Brittany spaniel comes back as "a dog" every single time, even when I explicitly ask for the breed. Ask it "what breed is this?" on its own and it answers "a spaniel" instantly. It knows. It just won't volunteer it.
 
@@ -50,7 +52,7 @@ The code is fine. Apple grants you use, modification and redistribution with no 
 
 > "Research Purposes" does not include any commercial exploitation, product development or use in any commercial product or service.
 
-My apps are free and MIT, so I spent a happy minute assuming that let me off. It doesn't. "Product development" is sitting right there in the middle, and nothing qualifies it as commercial. Putting this in Rehang is product development whatever I charge, which is nothing. The licence is revocable too, and shipping the weights inside an app bundle hands them to people who aren't doing research and never agreed to anything.
+My apps are free and MIT, so I spent a happy minute assuming that let me off. It doesn't. "Product development" is sitting right there in the middle, and nothing qualifies it as commercial. Putting this in Wall First is product development whatever I charge, which is nothing. The licence is revocable too, and shipping the weights inside an app bundle hands them to people who aren't doing research and never agreed to anything.
 
 Building the throwaway app is squarely inside the licence. That's what it's for. Shipping any of it isn't.
 
@@ -71,6 +73,8 @@ On a drawer, SmolVLM2 holds up fine. On my octopus it didn't. Same photograph, b
 FastVLM named the animal and read a word off a cloth tag. SmolVLM2 got the clothing right, missed the octopus entirely, missed the tag, and parked the toy on a wooden table it isn't sitting on. It was also three times slower to the first word, which is a wider gap on the phone than I'd measured on my Mac.
 
 So the one I'm not allowed to use is the better one, and on a phone it isn't close. That's irritating, and it's the honest result.
+
+**Correction, 15 September.** That verdict was two models wide, and a third one took part of it back. Qwen3-VL 2B, the Apache 2.0 one I mention in passing above, names the breed. Asked the same description prompt the app already uses, it said "A Brittany Spaniel, a breed of dog, wearing a green and red harness", four runs out of four. Asked the breed outright, "Brittany", nine runs out of nine. FastVLM gets the family and stops there. So "it won't name the specific thing" was true of the two models I had measured when I wrote this, and it isn't true of every model I'm allowed to ship. Qwen costs 2.5 GB against SmolVLM2's 597 MB, and about twice as long to the first word, taken on the same picture in one sitting. That's a price rather than a ceiling. The honest result is narrower than the one I published: the model I can't use is the quickest, and it isn't the one that says the most.
 
 ## Smaller isn't faster
 
@@ -98,7 +102,7 @@ I went through all twenty of my apps looking for the fit, and I got the answer b
 
 What's Where? is the obvious one, and it's the one I'm leaving alone. It has a written rule that the app never looks at the photograph, because every item on a card has to trace back to words I actually said out loud. It's meant to be evidence. A model that puts a fence in a photo of a lawn on every run, and gives you a different answer to the same picture twice, is precisely what that rule is there to keep out.
 
-Rehang is the fit. It already photographs each piece and already uses Vision to find the frame edges. It just calls them Piece 1 and Piece 2. Naming them off the photo lands on a promise the app already makes, which is that nothing needs typing, and if it gets one wrong I'm staring straight at the picture and can fix it with a tap.
+Wall First is the fit. It already photographs each piece and already uses Vision to find the frame edges. It just calls them Piece 1 and Piece 2. Naming them off the photo lands on a promise the app already makes, which is that nothing needs typing, and if it gets one wrong I'm staring straight at the picture and can fix it with a tap.
 
 That's the useful shape, I think. Not "where could I put a vision model", but "where is there already a photograph with a blank field next to it".
 
@@ -110,7 +114,7 @@ A phone can describe what it sees, on device, in a few seconds, using a model yo
 
 There's a bigger catch coming, and it's a good one. iOS 27 puts image input into Apple's own Foundation Models framework, with OCR and barcode tools alongside it. No download, no licence to read, nothing in your bundle. When that lands, most of this post becomes history. Which fits the argument I started this series with: Apple keeps handing you things for free, and the job is working out what to build with them before everyone else does.
 
-I'd still rather have found all this out now than build Rehang on an assumption.
+I'd still rather have found all this out now than build Wall First on an assumption.
 
 ---
 
