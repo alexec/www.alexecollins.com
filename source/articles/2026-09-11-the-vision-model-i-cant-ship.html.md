@@ -62,6 +62,8 @@ The good news is that the capability transfers even when the model doesn't, and 
 
 Check the licence per model rather than per family, by the way. Qwen3-VL 2B is Apache 2.0. Qwen2.5-VL 3B is under a Qwen *Research* licence, which is the same trap wearing a different hat.
 
+Qwen3-VL 2B is worth a second look, because it does the one thing FastVLM won't. Asked the description prompt the app already uses, it said "A Brittany Spaniel, a breed of dog, wearing a green and red harness", four runs out of four. Asked the breed outright, "Brittany", nine runs out of nine. FastVLM gets as far as the family and stops. Qwen costs 2.5 GB against the 8-bit SmolVLM2's 597 MB, and about twice as long to the first word, on the same picture in one sitting. That's a price rather than a ceiling.
+
 On a drawer, SmolVLM2 holds up fine. On my octopus it didn't. Same photograph, both models, on the phone:
 
 | Model | On disk | First word | All of it | What it said |
@@ -72,9 +74,7 @@ On a drawer, SmolVLM2 holds up fine. On my octopus it didn't. Same photograph, b
 
 FastVLM named the animal and read a word off a cloth tag. SmolVLM2 got the clothing right, missed the octopus entirely, missed the tag, and parked the toy on a wooden table it isn't sitting on. It was also three times slower to the first word, which is a wider gap on the phone than I'd measured on my Mac.
 
-So the one I'm not allowed to use is the better one, and on a phone it isn't close. That's irritating, and it's the honest result.
-
-**Correction, 15 September.** That verdict was two models wide, and a third one took part of it back. Qwen3-VL 2B, the Apache 2.0 one I mention in passing above, names the breed. Asked the same description prompt the app already uses, it said "A Brittany Spaniel, a breed of dog, wearing a green and red harness", four runs out of four. Asked the breed outright, "Brittany", nine runs out of nine. FastVLM gets the family and stops there. So "it won't name the specific thing" was true of the two models I had measured when I wrote this, and it isn't true of every model I'm allowed to ship. Qwen costs 2.5 GB against SmolVLM2's 597 MB, and about twice as long to the first word, taken on the same picture in one sitting. That's a price rather than a ceiling. The honest result is narrower than the one I published: the model I can't use is the quickest, and it isn't the one that says the most.
+So the one I'm not allowed to use is the quickest, and on a phone it isn't close. It isn't the one that says the most. Qwen names the breed and FastVLM never does, so what I give up by obeying the licence is speed rather than the answer. That's irritating, and it's the honest result.
 
 ## Smaller isn't faster
 
@@ -110,7 +110,7 @@ That's the useful shape, I think. Not "where could I put a vision model", but "w
 
 Yes, it was worth doing, with a caveat I didn't expect to be writing.
 
-A phone can describe what it sees, on device, in a few seconds, using a model you're allowed to ship. That's real, and it wasn't true a couple of years ago. But the best one I tested is the one I can't use, it's three times quicker than the one I can, and the finding that'll actually change what I build next is a fact about token counts rather than anything any of the models said.
+A phone can describe what it sees, on device, in a few seconds, using a model you're allowed to ship. That's real, and it wasn't true a couple of years ago. But the quickest one I tested is the one I can't use, and it's three times quicker than the one I can. The finding that'll actually change what I build next is a fact about token counts rather than anything any of the models said.
 
 There's a bigger catch coming, and it's a good one. iOS 27 puts image input into Apple's own Foundation Models framework, with OCR and barcode tools alongside it. No download, no licence to read, nothing in your bundle. When that lands, most of this post becomes history. Which fits the argument I started this series with: Apple keeps handing you things for free, and the job is working out what to build with them before everyone else does.
 
