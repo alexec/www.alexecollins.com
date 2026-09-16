@@ -2,7 +2,7 @@
 title: Out of Mind Privacy Policy
 ---
 
-_Last updated: 11 September 2026_
+_Last updated: 15 September 2026_
 
 Out of Mind does not collect, store, transmit, or share any personal data. There is no
 account, no sync, and no server of mine. The app has no networking code in it at all.
@@ -49,23 +49,17 @@ write-only permission for Reminders, not because it wants to look.
 One file in the app's own storage on the phone: the pile of slips you have said and not yet
 dealt with. Each slip holds its title, the clause of the dump it came from kept word for
 word, and whatever date, place or people the app lifted out of it. Alongside them is one
-sentence summing up the last dump, which is what the morning notification says.
+sentence summing up the last dump.
 
 That is the whole of it. A slip leaves the pile into Reminders or into nothing, and there is
 no archive, no history and no copy of anything already filed. You can share the pile out as
 plain text, one line a slip, which hands over the list you are looking at and keeps nothing.
 
-## Notifications
-
-Two a day, both made on this iPhone: a nudge at five in the afternoon, and a summary the
-next morning of what you said. They arrive quietly in Notification Centre rather than as an
-alert, and you can promote or silence them there. Nothing is pushed from a server, because
-there is no server.
-
 ## What there is none of
 
 No account, no sign-in, no iCloud, no sync, no analytics, no advertising, no tracking, no
-in-app purchases, and no subscription.
+in-app purchases, and no subscription. No notifications either: Out of Mind never interrupts
+you, so it never asks to.
 
 ## Contact
 
