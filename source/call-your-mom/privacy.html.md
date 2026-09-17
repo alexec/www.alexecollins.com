@@ -2,7 +2,7 @@
 title: Call Your Mom Privacy Policy
 ---
 
-_Last updated: 11 September 2026_
+_Last updated: 16 September 2026_
 
 Call Your Mom does not collect, store, transmit, or share any personal data.
 
@@ -14,7 +14,8 @@ One file on your iPhone, in the app's own storage:
 - the day and the half hour you chose for the weekly prompt
 - the date of each call you made or told it about, and whether it was a call or a tap on "We
   spoke"
-- whether you reach her by phone or FaceTime, and whether you have read the first-run sheet
+- whether you reach her by phone, FaceTime or WhatsApp, and whether you have read the
+  first-run sheet
 
 Her name is not in that list and is not stored anywhere. The app says "Mum" on every screen
 and in every notification, whatever her contact card is filed under. Not keeping the name at
@@ -37,6 +38,12 @@ Tapping Call opens the Phone app or FaceTime with her number in it. While the ap
 screen it watches for a call connecting, so that a call which rang out does not reset the
 counter; after that it judges by how long you were gone. It cannot see who you called and it
 never reads your call history.
+
+If you choose WhatsApp, the app hands her number to WhatsApp and WhatsApp opens the
+conversation. That is the one case where her number leaves this app, and it goes to an app
+already on your phone rather than over the network. What WhatsApp does with it is covered by
+WhatsApp's own privacy policy, not this one. Pick any of the other three and nothing ever
+leaves Call Your Mom.
 
 ## Notifications
 
