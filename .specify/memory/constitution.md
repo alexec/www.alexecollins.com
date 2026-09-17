@@ -52,7 +52,7 @@ to a bad sound, and a real sound to a synthesised one.
 
 ## This app's own rules
 
-None extracted yet. `CLAUDE.md` is the map of this code; anything in it that turns out to
+None extracted yet. `AGENTS.md` is the map of this code; anything in it that turns out to
 be a rule that must not be broken belongs here, and moving it is a commit like any other.
 
 ## Spec-driven development
@@ -78,8 +78,13 @@ Alex decides. An agent that cannot decide something raises it through the factor
 something else. It does not ask inside its own interface and wait, because a question asked
 there reaches nobody who is not already watching that agent.
 
-`CLAUDE.md` is the map of this code and says how things work. This file says what may not be
-broken while changing it. Where they disagree, this one wins and `CLAUDE.md` gets corrected.
+`AGENTS.md` is the map of this code and says how things work. This file says what may not be
+broken while changing it. Where they disagree, this one wins and `AGENTS.md` gets corrected.
+
+The map is `AGENTS.md` and never `CLAUDE.md`. Four different CLIs work this folder and a
+file named after one of them is a file the other three do not read. Claude Code reads
+`CLAUDE.md` and not `AGENTS.md`, so that name is a symlink to this one and nothing is ever
+written into it: a second map can only disagree with the first.
 
 Amending this file is a commit like any other, with the reason in the message. A principle
 here that turns out to be wrong is deleted rather than quietly ignored.
