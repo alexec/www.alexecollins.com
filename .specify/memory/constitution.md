@@ -81,10 +81,12 @@ there reaches nobody who is not already watching that agent.
 `AGENTS.md` is the map of this code and says how things work. This file says what may not be
 broken while changing it. Where they disagree, this one wins and `AGENTS.md` gets corrected.
 
-The map is `AGENTS.md` and never `CLAUDE.md`. Four different CLIs work this folder and a
-file named after one of them is a file the other three do not read. Claude Code reads
-`CLAUDE.md` and not `AGENTS.md`, so that name is a symlink to this one and nothing is ever
-written into it: a second map can only disagree with the first.
+**There is no map in this repository yet**, and the two paragraphs above point at a file
+nobody has written. When one is written it is `AGENTS.md`: four different CLIs work this
+folder and a file named after one of them is a file the other three do not read. Claude
+Code reads `CLAUDE.md` and not `AGENTS.md`, so that name goes beside it as a symlink
+(`ln -s AGENTS.md CLAUDE.md`) and nothing is ever written into it: a second map can only
+disagree with the first.
 
 Amending this file is a commit like any other, with the reason in the message. A principle
 here that turns out to be wrong is deleted rather than quietly ignored.
