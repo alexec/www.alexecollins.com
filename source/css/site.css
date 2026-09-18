@@ -6,6 +6,19 @@
   --code-bg: #f4f4f4;
   --pre-bg: #f8f8f8;
   --measure: 44rem;
+
+  /* Diagrams. Inline SVG reads these so a post's figures follow the theme. */
+  --dg-surface: #fbfbfb;
+  --dg-box: #ffffff;
+  --dg-box-alt: #eef3fa;
+  --dg-box-warm: #fdf2e6;
+  --dg-box-dim: #f2f2f2;
+  --dg-stroke: #c4c4c4;
+  --dg-stroke-strong: #8a8a8a;
+  --dg-accent: #1a5fb4;
+  --dg-accent-2: #a34b00;
+  --dg-text: #222;
+  --dg-muted: #6b6b6b;
 }
 
 * { box-sizing: border-box; }
@@ -131,6 +144,61 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
 
 /* Some older posts use h1 inside the body; render them as section headings */
 .post > h1 { font-size: 1.75rem; margin-top: 2.25rem; }
+
+/* Long-form posts: opening paragraph, contents box, pulled-out statements */
+.lede { font-size: 1.2em; }
+
+.toc {
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--pre-bg);
+  padding: 1.25rem 1.5rem;
+  font-size: 0.95rem;
+}
+.toc-note { margin: 0 0 0.75rem; color: var(--muted); }
+.toc ol { margin: 0; padding-left: 1.5rem; }
+.toc li { margin-bottom: 0.25rem; }
+
+.key {
+  margin: 2rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 4px solid var(--link);
+  font-size: 1.05em;
+}
+.key p:last-child { margin-bottom: 0; }
+
+.refs li { margin-bottom: 0.5rem; }
+
+/* Figures */
+figure { margin: 2.5rem 0; }
+figure svg { display: block; width: 100%; height: auto; }
+figcaption {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Inline SVG diagrams */
+.diagram text { font-family: inherit; fill: var(--dg-text); }
+.diagram .t-sm { font-size: 11px; }
+.diagram .t-md { font-size: 13px; }
+.diagram .t-lg { font-size: 15px; font-weight: 700; }
+.diagram .t-mute { fill: var(--dg-muted); }
+.diagram .t-mid { text-anchor: middle; }
+.diagram .t-end { text-anchor: end; }
+.diagram .bold { font-weight: 700; }
+.diagram .box { fill: var(--dg-box); stroke: var(--dg-stroke); stroke-width: 1; }
+.diagram .box-alt { fill: var(--dg-box-alt); }
+.diagram .box-warm { fill: var(--dg-box-warm); }
+.diagram .box-dim { fill: var(--dg-box-dim); }
+.diagram .surface { fill: var(--dg-surface); stroke: var(--dg-stroke); stroke-width: 1; }
+.diagram .line { stroke: var(--dg-stroke-strong); stroke-width: 1.5; fill: none; }
+.diagram .line-dash { stroke: var(--dg-stroke-strong); stroke-width: 1.5; fill: none; stroke-dasharray: 5 4; }
+.diagram .accent { stroke: var(--dg-accent); }
+.diagram .accent-fill { fill: var(--dg-accent); }
+.diagram .warn { stroke: var(--dg-accent-2); }
+.diagram .warn-fill { fill: var(--dg-accent-2); }
 
 /* Archive */
 .archive-list { list-style: none; padding-left: 0; }
