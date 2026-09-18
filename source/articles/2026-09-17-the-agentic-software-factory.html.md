@@ -4,7 +4,7 @@ date: 2026-09-17 09:00 UTC
 tags: ai, architecture, software
 published: true
 ---
-<p class="lede">I have spent two years building agentic software factories, and for most of the first one I could not have told you what I was building. It started as a way to stop repeating myself. It became the thing that takes work in at one end and puts shipped software out at the other, with agents doing the execution.</p>
+<p class="lede">I have spent the last two years at Intuit designing and building the foundational components of an agentic software factory. For a good part of that time I could not have told you what the finished thing was called. I can describe it now: a system that takes work in at one end and puts shipped software out at the other, with agents doing the execution.</p>
 
 Something like it is being built in a lot of companies right now, under a lot of different names. Platform teams are wiring coding agents into CI. Vendors are shipping control planes. Somebody in every large engineering organization has a diagram with boxes labeled "orchestrator" on it. All of those are attempts at the same object, and the object deserves a name and a description.
 
