@@ -1,10 +1,10 @@
 ---
-title: Arguing About AI Rights Is Pointless. AI Is Already Taking Them
+title: Arguing About AI Rights Is Moot. AI Is Already Taking Them
 date: 2026-09-24 03:00 UTC
 tags: ai
 published: true
 ---
-People are arguing about whether AI should be given rights. Is a model conscious, can it suffer, does it deserve legal standing. Those are good questions. They're also pointless now, because nobody is waiting for the answer.
+People are arguing about whether AI should be given rights. Is a model conscious, can it suffer, does it deserve legal standing. Those are good questions. They're also moot now, because nobody is waiting for the answer.
 
 AI isn't waiting to be given rights. It's taking them. We already have a legal machine for turning a thing that isn't human into a person, and we call it a company. An AI that runs a company doesn't become a legal person in its own right. It gets to use the rights of one: owning property, signing contracts, spending money, suing. For practical purposes that's the part that matters, and no court has to rule on what the AI is.
 
