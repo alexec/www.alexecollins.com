@@ -4,6 +4,69 @@ date: 2026-09-24 03:00 UTC
 tags: ai
 published: true
 ---
+<figure>
+<svg class="diagram" viewBox="0 0 520 556" role="img" aria-labelledby="fig-path-title">
+  <title id="fig-path-title">The path from company to person for AI: six milestones done between 1819 and 2025, then three guessed for 2027, 2028 and 2029 to 2030</title>
+  <circle class="accent-fill" cx="104" cy="20" r="5"/>
+  <text class="t-sm t-mute" x="116" y="24">Done</text>
+  <circle class="box warn" cx="184" cy="20" r="5" stroke-width="2"/>
+  <text class="t-sm t-mute" x="196" y="24">My guess</text>
+
+  <path class="line accent" d="M96 63 L96 380"/>
+  <path class="line-dash warn" d="M96 380 L96 525"/>
+
+  <circle class="accent-fill" cx="96" cy="63" r="6"/>
+  <text class="t-md bold t-end" x="80" y="68">1819</text>
+  <text class="t-lg" x="114" y="68">Companies become legal persons</text>
+  <text class="t-md t-mute" x="114" y="86">They own property, sign contracts and sue</text>
+
+  <circle class="accent-fill" cx="96" cy="117" r="6"/>
+  <text class="t-md bold t-end" x="80" y="122">1919</text>
+  <text class="t-lg" x="114" y="122">A court puts returns over the CEO</text>
+  <text class="t-md t-mute" x="114" y="140">Dodge v. Ford</text>
+
+  <circle class="accent-fill" cx="96" cy="171" r="6"/>
+  <text class="t-md bold t-end" x="80" y="176">2010</text>
+  <text class="t-lg" x="114" y="176">And again, in blunter language</text>
+  <text class="t-md t-mute" x="114" y="194">eBay v. Newmark, over craigslist</text>
+
+  <circle class="accent-fill" cx="96" cy="225" r="6"/>
+  <text class="t-md bold t-end" x="80" y="230">2015</text>
+  <text class="t-lg" x="114" y="230">Software can steer an LLC, on paper</text>
+  <text class="t-md t-mute" x="114" y="248">Shawn Bayern's operating-agreement recipe</text>
+
+  <circle class="accent-fill" cx="96" cy="279" r="6"/>
+  <text class="t-md bold t-end" x="80" y="284">2021</text>
+  <text class="t-lg" x="114" y="284">Investors remove a CEO, no court needed</text>
+  <text class="t-md t-mute" x="114" y="302">Danone and Emmanuel Faber</text>
+
+  <circle class="accent-fill" cx="96" cy="333" r="6"/>
+  <text class="t-md bold t-end" x="80" y="338">2025</text>
+  <text class="t-lg" x="114" y="338">An AI runs real operations</text>
+  <text class="t-md t-mute" x="114" y="356">Avery, at KPMG and the University of Amsterdam</text>
+
+  <path class="line-dash" d="M20 380 L510 380"/>
+  <rect class="box" x="44" y="371" width="44" height="18" rx="3"/>
+  <text class="t-sm bold t-mid" x="66" y="384">Now</text>
+
+  <circle class="box warn" cx="96" cy="417" r="6" stroke-width="2"/>
+  <text class="t-md t-mute t-end" x="80" y="422">2027</text>
+  <text class="t-lg" x="114" y="422">A memberless LLC is filed</text>
+  <text class="t-md t-mute" x="114" y="440">Bayern's recipe run for real</text>
+
+  <circle class="box warn" cx="96" cy="471" r="6" stroke-width="2"/>
+  <text class="t-md t-mute t-end" x="80" y="476">2028</text>
+  <text class="t-lg" x="114" y="476">An AI directs a company with no members</text>
+  <text class="t-md t-mute" x="114" y="494">Both halves at once. No new law needed</text>
+
+  <circle class="box warn" cx="96" cy="525" r="6" stroke-width="2"/>
+  <text class="t-md t-mute t-end" x="80" y="530">2029–30</text>
+  <text class="t-lg" x="114" y="530">The human signatory can't say no</text>
+  <text class="t-md t-mute" x="114" y="548">Nobody will be able to see when it happens</text>
+</svg>
+<figcaption>The path from company to person for AI. Everything above the line has happened. The dates below it are my guesses, and the order is the part I'd defend.</figcaption>
+</figure>
+
 People are arguing about whether AI should be given rights. Is a model conscious, can it suffer, does it deserve legal standing. Those are good questions. They're also moot now, because nobody is waiting for the answer.
 
 AI isn't waiting to be given rights. It's taking them. We already have a legal machine for turning a thing that isn't human into a person, and we call it a company. An AI that runs a company doesn't become a legal person in its own right. It gets to use the rights of one: owning property, signing contracts, spending money, suing. For practical purposes that's the part that matters, and no court has to rule on what the AI is.
