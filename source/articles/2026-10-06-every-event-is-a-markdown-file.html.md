@@ -40,7 +40,7 @@ The industry has already settled on it for everything around agents. `AGENTS.md`
 
 Events are the next thing to follow. The front matter is for the router, which needs fields it can filter on. The body is for the agent, which needs to understand what happened.
 
-```markdown
+~~~markdown
 ---
 type: pull_request.merged
 source: github
@@ -51,7 +51,7 @@ time: 2026-10-06T09:12:00Z
 ---
 Pull request #4471, "Retry failed payments once", was merged into main by Alex.
 It belongs to work order W-4471. Three files changed and the tests are green.
-```
+~~~
 
 There's prior art for the envelope. [CloudEvents](https://cloudevents.io), a CNCF specification, already standardizes `type`, `source`, `subject` and `time` for events in general, in JSON. I'd keep those attribute names exactly and put them in front matter, then add the one thing CloudEvents never needed: a body written for a model.
 
@@ -59,7 +59,7 @@ There's prior art for the envelope. [CloudEvents](https://cloudevents.io), a CNC
 
 If events are markdown, the workflow that reacts to one should be markdown as well. Front matter says when it fires. The body is the prompt.
 
-```markdown
+~~~markdown
 ---
 on: pull_request.changes_requested
 filter:
@@ -75,7 +75,7 @@ owner: alex
 Somebody asked for changes on {{subject}}. Read the unresolved review comments,
 make the changes, run the tests and push to the same branch. If a comment asks
 for something the work order doesn't cover, ask Alex instead of guessing.
-```
+~~~
 
 A workflow is a prompt with a trigger stapled to the top. Anybody who can write a prompt can write one, which matters, because the people who know which workflows a project needs are the people on that project, not the platform team.
 
