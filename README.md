@@ -11,6 +11,16 @@ To build locally (needs Ruby 3.3, see `Gemfile.lock`):
 
 Drafts: add `published: false` to an article's front matter and it is skipped by the build.
 
+The Agents docs
+---------------
+
+`agents/` is the docs site of Agents, served at https://www.alexecollins.com/agents/. It is
+built HTML, not Middleman source: the `docs-publish` workflow in alexec/Agents (a private
+repository) builds it from that repository's `docs/` and pushes it here with a deploy key.
+Do not edit it here; the next push replaces it. It is outside `source/` so Middleman never
+touches it (no layout, no minifying, no directory indexes), and `pages.yml` and `build.sh`
+copy it into `build/agents/` after the Middleman build.
+
 Promote to:
 
 	https://dzone.com/links
