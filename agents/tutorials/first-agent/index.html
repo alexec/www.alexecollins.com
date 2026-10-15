@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Build Agents, add a project, and have an agent find and fix a failing test.">
+        <meta name="description" content="Install Agents, add a project, and have an agent find and fix a failing test.">
       
       
       
@@ -384,6 +384,8 @@
       
         
       
+        
+      
     
     
     
@@ -662,10 +664,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-build-and-open-agents" class="md-nav__link">
+  <a href="#1-install-and-open-agents" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        1. Build and open Agents
+        1. Install and open Agents
       </span>
     </span>
   </a>
@@ -2178,6 +2180,8 @@
       
         
       
+        
+      
     
     
     
@@ -2462,6 +2466,33 @@
     
   
   Workspace providers
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/ssh-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ssh options
 
     
   </span>
@@ -3010,10 +3041,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-build-and-open-agents" class="md-nav__link">
+  <a href="#1-install-and-open-agents" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        1. Build and open Agents
+        1. Install and open Agents
       </span>
     </span>
   </a>
@@ -3113,40 +3144,38 @@
                   
 
 <h1 id="your-first-agent">Your first agent<a class="headerlink" href="#your-first-agent" title="Permanent link">&para;</a></h1>
-<p>In this tutorial you build Agents on your Mac, give it a small project with a failing
+<p>In this tutorial you install Agents on your Mac, give it a small project with a failing
 test, and ask an agent to fix it. You answer the agent's questions as it works, and at the
-end you read what it changed. It takes about fifteen minutes, most of it the first build.</p>
+end you read what it changed. It takes about fifteen minutes.</p>
 <p><strong>What you'll have at the end:</strong> a finished agent, its fix in your project, and a feel for
 how every agent in the app works.</p>
 <p><img alt="The finished conversation: the question, the steps the agent took, its answer, and the one file it changed" src="../images/first-agent-01.png" /></p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A Mac with Xcode installed.</li>
+<li>A Mac, and an invitation to the Agents alpha on TestFlight.</li>
 <li>One coding agent signed in on this Mac. This tutorial uses <strong>Claude Code</strong>, signed in
   with <code>claude</code> and <code>/login</code> in Terminal. The app talks to Claude through a small adapter:
   it runs it with your own Node if you have one, and otherwise installs its own copy in
   step 1. Codex, Gemini, Antigravity, Grok, Copilot and Cursor work too; see
   <a href="../../reference/runtimes/">Runtimes</a> for what each needs.</li>
 </ul>
-<h2 id="1-build-and-open-agents">1. Build and open Agents<a class="headerlink" href="#1-build-and-open-agents" title="Permanent link">&para;</a></h2>
-<p>Agents is built from its source. In Terminal:</p>
-<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>xcodegen
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/alexec/Agents.git
-<span class="nb">cd</span><span class="w"> </span>Agents
-xcodegen<span class="w"> </span>generate
-open<span class="w"> </span>Agents.xcodeproj
-</code></pre></div>
-<p>On a Mac, Agents is two apps: <strong>Agents Host</strong> runs your agents, and <strong>Agents</strong> is the
-window you work in. Build and run both from Xcode, Agents Host first:</p>
+<h2 id="1-install-and-open-agents">1. Install and open Agents<a class="headerlink" href="#1-install-and-open-agents" title="Permanent link">&para;</a></h2>
+<p>On a Mac, Agents is two apps: <strong>Agents</strong> is the window you work in, and <strong>Agents Host</strong>
+runs your agents.</p>
 <ol>
-<li>Choose the <strong>AgentsHost</strong> scheme with <strong>My Mac</strong> as the destination, and choose
-   <strong>Product ▸ Run</strong>. The first build takes a few minutes. Agents Host starts this Mac's
-   agents and its control plane, and keeps them running with its window closed.</li>
-<li>Choose the <strong>AgentsStore</strong> scheme and choose <strong>Product ▸ Run</strong>. This is the window.</li>
+<li>Open the invitation to the Agents alpha in <strong>TestFlight</strong>, and click <strong>Install</strong>. Open
+   Agents.</li>
+<li>The window opens on <strong>Where should your agents run?</strong> Under <strong>Set one up on this Mac</strong>,
+   click <strong>Get Agents Host…</strong>. Download Agents Host, drag it into <code>~/Applications</code>, and
+   open it. <a href="../../how-to/set-up-on-this-mac/">Set up Agents on this Mac</a> says more about
+   this step.</li>
+<li>Agents Host asks <strong>Where should this Mac's agents report?</strong> Click <strong>Run It Here</strong>.
+   Agents Host starts this Mac's agents and its control plane, and keeps them running with
+   its window closed.</li>
 </ol>
-<p>The window opens on <strong>Where should your agents run?</strong> After a moment it says <strong>Agents Host
-is running on this Mac</strong>. Click <strong>Pair</strong>: Agents Host shows a code, and the window asks
-for it. Type or paste the code and click <strong>Connect</strong>.</p>
+<p>After a moment the window says <strong>Agents Host is running on this Mac</strong>. Click <strong>Pair</strong>:
+Agents Host shows a code, and the window asks for it. Type or paste the code and click
+<strong>Connect</strong>.</p>
 <p>You should see the Agents window, with a <strong>Get started</strong> card at the top of the sidebar.
 It is a checklist from here to your first agent, and each step ticks itself when it is
 done:</p>

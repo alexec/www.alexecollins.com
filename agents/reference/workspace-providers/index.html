@@ -16,7 +16,7 @@
         <link rel="prev" href="../events/">
       
       
-        <link rel="next" href="../keyboard-shortcuts/">
+        <link rel="next" href="../ssh-options/">
       
       
         
@@ -360,6 +360,8 @@
       
         
           
+        
+      
         
       
         
@@ -2029,6 +2031,8 @@
       
         
       
+        
+      
     
     
     
@@ -2450,6 +2454,73 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-command-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The command provider
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The command provider">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workspaces-written-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Workspaces, written out
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workspaces, written out">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#many-workspaces-from-one-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Many workspaces from one entry
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#presets" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Presets
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Behaviour
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2464,6 +2535,33 @@
   
 </nav>
       
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssh-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ssh options
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -3077,6 +3175,73 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-command-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The command provider
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The command provider">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workspaces-written-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Workspaces, written out
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workspaces, written out">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#many-workspaces-from-one-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Many workspaces from one entry
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#presets" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Presets
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Behaviour
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3258,6 +3423,126 @@ answer. See <a href="../../how-to/add-a-workspace-provider/#a-tool-map-for-a-pro
 (<a href="../../how-to/add-a-workspace-provider/#let-an-agent-write-it">Let an agent write it</a>). The
 map is then the same as a map that you wrote. The provider's record says which runtime
 wrote it, and when (<code>writtenBy</code>), until you change it.</p>
+<h2 id="the-command-provider">The command provider<a class="headerlink" href="#the-command-provider" title="Permanent link">&para;</a></h2>
+<p>The command provider, <code>workspace-commands</code>, ships with the control plane. It is a provider
+that runs command lines you give it, or a preset's, through the shell. It follows the
+contract on this page and speaks stdio. Its whole configuration is the JSON in
+<code>WORKSPACE_COMMANDS_CONFIG</code>. Its secrets are the other environment variables the control
+plane passes it, which its commands can use as <code>$NAME</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">WORKSPACE_COMMANDS_CONFIG</span><span class="o">=</span><span class="s1">'{"preset":"docker","containers":["devbox"],"ssh":"dev@127.0.0.1 -p 2222"}'</span><span class="w"> </span>workspace-commands
+</code></pre></div>
+<h3 id="workspaces-written-out">Workspaces, written out<a class="headerlink" href="#workspaces-written-out" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"workspaces"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"devstack-1"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"devstack"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cws start devstack-1"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"stop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cws stop devstack-1"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cws status devstack-1"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"ssh"</span><span class="p">:</span><span class="w"> </span><span class="s2">"devstack-1.cws"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"tunnel"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>id</code> defaults to <code>name</code>.</li>
+<li><code>${…}</code> with no value of its own (<code>${TOKEN}</code>) is left for the shell, so a secret in the
+  environment can be used either way.</li>
+<li><code>status</code> is optional. Without it, the state is the last start's or stop's result while the
+  server runs, and <code>unknown</code> before that.</li>
+</ul>
+<h4 id="many-workspaces-from-one-entry">Many workspaces from one entry<a class="headerlink" href="#many-workspaces-from-one-entry" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"list"</span><span class="p">:</span><span class="w"> </span><span class="s2">"doctl compute droplet list --tag-name agents --format ID,Name,Status,PublicIPv4 --no-header"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"id"</span><span class="p">,</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"state"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ip"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"doctl compute droplet-action power-on ${id} --wait"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"stop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"doctl compute droplet-action power-off ${id} --wait"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"ssh"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root@${ip}"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"running"</span><span class="p">,</span><span class="w"> </span><span class="nt">"off"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stopped"</span><span class="p">,</span><span class="w"> </span><span class="nt">"new"</span><span class="p">:</span><span class="w"> </span><span class="s2">"starting"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"create"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">,</span><span class="w"> </span><span class="nt">"delete"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>list</code> prints one workspace per line, split on whitespace into <code>columns</code>. The last column
+  takes the rest of the line.</li>
+<li>Or, instead of <code>columns</code>, <code>"json": {"items": "&lt;path to the array&gt;", "id": "&lt;path&gt;", "name":
+  "&lt;path&gt;", "state": "&lt;path&gt;", …}</code> reads the output as JSON. The paths are those of a
+  <a href="#tool-maps">tool map</a>, within each item. An empty <code>items</code> means the output is the array.</li>
+<li><code>${column}</code> in a template is the value from the workspace's row. It is shell-quoted before
+  the command runs.</li>
+<li><code>create</code>, <code>delete</code> and <code>options</code> need <code>list</code>, which finds what <code>create</code> made by its
+  name. <code>create</code> fills in <code>${name}</code>, <code>${firstBoot}</code> and each option's key; with <code>${firstBoot}</code>
+  it answers <code>firstBootRuns: true</code>. <code>delete</code> fills in <code>${id}</code> and the workspace's columns.
+  <code>options</code> is the New Workspace form's JSON Schema; a property's <code>default</code> fills in a
+  choice left out.
+  Of the presets, only <code>docker</code> with an <code>image</code> has them.</li>
+<li><code>states</code> maps the CLI's words to contract states. A status output is matched
+  case-insensitively after trimming whitespace.</li>
+</ul>
+<h3 id="presets">Presets<a class="headerlink" href="#presets" title="Permanent link">&para;</a></h3>
+<p><code>{"preset": "&lt;name&gt;", …parameters}</code>. A preset is a set of the commands above, compiled in.
+Its parameters fill them in.</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Parameters</th>
+<th>List / start / stop</th>
+<th>ssh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker</code></td>
+<td><code>containers</code> (names, optional), <code>ssh</code>, <code>image</code> (optional)</td>
+<td>With <code>containers</code>: <code>docker inspect -f '{{.State.Status}}' ${id}</code> / <code>docker start ${id}</code> / <code>docker stop ${id}</code>. Without: <code>docker ps -a --filter label=agents.workspace --format '{{.Names}}\t{{.State}}\t{{.Label "agents.ssh"}}'</code>, columns <code>id state ssh</code>, with the same start and stop. A container opts in with <code>docker run --label agents.workspace --label agents.ssh='…'</code>. With <code>image</code> and no <code>containers</code>: create <code>docker run -d --name ${name} --label agents.workspace ${image} &amp;&amp; docker exec ${name} sh -c ${firstBoot}</code>, delete <code>docker rm -f -v ${id}</code>, options <code>image</code> (default the given one). States: running→running, exited/created→stopped, restarting→starting.</td>
+<td>each container's <code>agents.ssh</code> label; else <code>ssh</code> as given</td>
+</tr>
+<tr>
+<td><code>doctl</code></td>
+<td><code>tag</code></td>
+<td><code>doctl compute droplet list --tag-name ${tag} …</code> / <code>droplet-action power-on --wait</code> / <code>power-off --wait</code>. States: active/new/off.</td>
+<td><code>root@${ip}</code> or <code>user</code> param</td>
+</tr>
+<tr>
+<td><code>codespaces</code></td>
+<td><code>repo</code> (optional)</td>
+<td><code>gh codespace list --json name,displayName,state</code> / <code>gh codespace ssh -c ${id} -- true</code> (a codespace starts when used) / <code>gh codespace stop -c ${id}</code>. States: Available→running, Shutdown→stopped, Starting→starting.</td>
+<td><code>gh codespace ssh --config</code> alias, <code>tunnel: true</code></td>
+</tr>
+<tr>
+<td><code>coder</code></td>
+<td>none</td>
+<td><code>coder list -o json</code> / <code>coder start -y ${id}</code> / <code>coder stop -y ${id}</code>. Read as JSON (<code>latest_build.status</code>).</td>
+<td><code>coder.${name}</code> (from <code>coder config-ssh</code>)</td>
+</tr>
+<tr>
+<td><code>gcloud-workstations</code></td>
+<td><code>cluster</code>, <code>config</code>, <code>region</code></td>
+<td><code>gcloud workstations list … --format='value(name.basename(),state)'</code> / <code>start</code> / <code>stop</code>. States: STATE_RUNNING and so on.</td>
+<td><code>tunnel: true</code></td>
+</tr>
+</tbody>
+</table>
+<p>A preset needs its CLI installed and signed in where the control plane runs. If the CLI
+isn't there, its first command exits 127, and the error is "‹cli› isn't installed where the
+control plane runs".</p>
+<h3 id="behaviour">Behaviour<a class="headerlink" href="#behaviour" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Commands run through <code>/bin/sh -c</code>, from the server's working
+  directory (the control home).</li>
+<li>Timeouts: <code>status</code> and <code>list</code> 25 s; <code>start</code>, <code>stop</code>, <code>create</code> and <code>delete</code> 9 min 55 s.</li>
+<li>A non-zero exit is a failure. The text is the last 20 lines of stderr (or stdout), cut at
+  1 KB.</li>
+<li><code>workspace_start</code> runs <code>start</code>, then <code>status</code> if there is one, until it says running, every
+  5 s within the timeout. <code>workspace_stop</code> does the same for stopped.</li>
+<li>No command runs as root, and nothing asks for sudo. A preset never adds <code>sudo</code>.</li>
+<li>It writes nothing to disk and logs to stderr. Commands are logged, but the environment is
+  not, and neither are <code>${…}</code> values that come from secrets.</li>
+<li><code>workspace-commands --version</code> prints its version.</li>
+</ul>
 <h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../how-to/start-workspaces-from-agents/">Start workspaces from Agents</a></li>
@@ -3320,13 +3605,13 @@ wrote it, and when (<code>writtenBy</code>), until you change it.</p>
         
         
           
-          <a href="../keyboard-shortcuts/" class="md-footer__link md-footer__link--next" aria-label="Next: Keyboard shortcuts">
+          <a href="../ssh-options/" class="md-footer__link md-footer__link--next" aria-label="Next: ssh options">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Keyboard shortcuts
+                ssh options
               </div>
             </div>
             <div class="md-footer__button md-icon">
