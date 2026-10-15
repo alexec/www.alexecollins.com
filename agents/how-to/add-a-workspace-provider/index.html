@@ -3010,27 +3010,27 @@ shell commands, and its presets fill those in for the common tools:</p>
 </thead>
 <tbody>
 <tr>
-<td>Docker</td>
+<td>Docker Containers</td>
 <td><code>docker</code></td>
-<td>the containers you name</td>
+<td>the containers you name, or the containers labelled <code>agents.workspace</code></td>
 </tr>
 <tr>
-<td>DigitalOcean</td>
+<td>DigitalOcean Droplets</td>
 <td><code>doctl</code>, signed in</td>
 <td>droplets with a tag</td>
 </tr>
 <tr>
-<td>Codespaces</td>
+<td>GitHub Codespaces</td>
 <td><code>gh</code>, signed in</td>
 <td>your codespaces, or one repository's</td>
 </tr>
 <tr>
-<td>Coder</td>
+<td>Coder Workspaces</td>
 <td><code>coder</code>, signed in, after <code>coder config-ssh</code></td>
 <td>your Coder workspaces</td>
 </tr>
 <tr>
-<td>Workstations</td>
+<td>Google Cloud Workstations</td>
 <td><code>gcloud</code>, signed in</td>
 <td>one cluster and configuration's workstations</td>
 </tr>
@@ -3055,9 +3055,15 @@ root. A secret you add goes to them as an environment variable of the same name:
   key are filled in, each as one shell word. With <code>${firstBoot}</code> in it, the new workspace
   installs Agents on its first boot. Without it, you add it over ssh once it is made.</li>
 <li><strong><code>delete</code></strong>: the command that deletes one, with <code>${id}</code> and its list's columns.</li>
-<li><strong><code>options</code></strong>: the New Workspace form, as a JSON Schema object.</li>
+<li><strong><code>options</code></strong>: the New Workspace form, as a JSON Schema object. A property's <code>default</code>
+  fills in a choice the form leaves empty.</li>
 </ul>
-<p>No preset makes workspaces, so this needs <strong>An MCP server</strong> or a provider configured by hand.</p>
+<p>The Docker preset makes workspaces when you give it an <strong>Image</strong> and no containers. New
+Workspace… runs <code>docker run -d --name &lt;name&gt; --label agents.workspace &lt;image&gt;</code>, then the
+install command in it with <code>docker exec</code>, so the container joins by itself. The image must
+keep running and have <code>curl</code>. Delete Workspace… runs <code>docker rm -f -v</code>, which also removes
+the container's anonymous volumes. Any other preset needs <strong>An MCP server</strong> or a provider
+configured by hand to make workspaces.</p>
 <p>The command provider is the <code>workspace-commands</code> binary. The control plane looks for it
 beside itself, then where <code>AGENTS_WORKSPACE_COMMANDS</code> says, then on its <code>PATH</code>. Its configuration is described in full in
 <a href="https://github.com/alexec/Agents/blob/main/specs/691-workspace-providers/contracts/command-provider.md">its contract</a>.</p>

@@ -3090,11 +3090,12 @@ sign-in, and <strong>Add</strong> is offered as usual. The entry that is written
 <p>Choose <strong>Sign out</strong> on the row. The app tells the server to forget the grant where the
 server offers that, and forgets it itself. The row says <strong>needs sign-in</strong> again.</p>
 <h2 id="where-the-sign-in-is-kept">Where the sign-in is kept<a class="headerlink" href="#where-the-sign-in-is-kept" title="Permanent link">&para;</a></h2>
-<p>In <code>~/.agents/mcp-sign-ins.json</code>, beside <code>secrets.env</code>, and like it readable only by you.
-Never in <code>mcp.json</code>, so a project's committed entry carries no one's sign-in. The app logs
-the server's name and what happened, never an address, a code or a token, and it never
-sends a sign-in to your iPhone, iPad or the web page. If your <code>~/.agents</code> is a git
-repository, keep <code>mcp-sign-ins.json</code> out of it as you keep <code>secrets.env</code>.</p>
+<p>In <code>~/.agents-secrets/mcp-sign-ins.json</code>, beside <code>secrets.env</code>, and like it readable only
+by you. The folder is apart from <code>~/.agents</code> because <code>~/.agents</code> is settings that you can
+copy, sync or commit, and secrets are not settings. Never in <code>mcp.json</code>, so a project's
+committed entry carries no one's sign-in. The app logs the server's name and what
+happened, never an address, a code or a token, and it never sends a sign-in to your
+iPhone, iPad or the web page. Do not copy, sync or commit <code>~/.agents-secrets</code>.</p>
 <p>A sign-in is for the server's address, so a server in both your own <code>mcp.json</code> and a
 project's is signed in to once.</p>
 <h2 id="when-an-agent-starts">When an agent starts<a class="headerlink" href="#when-an-agent-starts" title="Permanent link">&para;</a></h2>

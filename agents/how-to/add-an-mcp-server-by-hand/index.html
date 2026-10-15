@@ -2994,7 +2994,7 @@ the sheet shows the tools it listed.</p>
      a shell (<code>--dir "/a b"</code>). <strong>Add variable</strong> adds an environment variable.</li>
 <li><strong>Remote URL</strong>: the <strong>URL</strong>. <strong>Add header</strong> adds a header, such as <code>Authorization</code>.</li>
 <li>Tick <strong>Secret</strong> on a variable or header that holds a key or token. Its value goes into
-   your own <code>~/.agents/secrets.env</code>, and the entry in <code>mcp.json</code> holds <code>${NAME}</code>, the same
+   your own <code>~/.agents-secrets/secrets.env</code>, and the entry in <code>mcp.json</code> holds <code>${NAME}</code>, the same
    way a registry add does. The line under it shows the name. A variable's secret has the
    variable's own name. A header's has the server's and the header's, such as
    <code>MY_API_AUTHORIZATION</code>. Leave the value empty to use one that is already set under that

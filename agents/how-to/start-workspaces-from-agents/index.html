@@ -1061,6 +1061,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#start-for-scheduled-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Start for scheduled workflows
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3084,6 +3095,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#start-for-scheduled-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Start for scheduled workflows
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3158,10 +3180,10 @@ waits for its agentsd to connect, and the server comes online by itself.</p>
 <ol>
 <li>Open <strong>Settings ▸ Control plane ▸ Providers</strong> on the Mac and choose <strong>Add Provider…</strong>.</li>
 <li>Pick the kind:</li>
-<li><strong>Docker</strong>: containers on the Mac that runs the control plane.</li>
-<li><strong>DigitalOcean</strong>: droplets with a tag. Agents reaches each one as <code>root@</code> its address
+<li><strong>Docker Containers</strong>: containers on the Mac that runs the control plane.</li>
+<li><strong>DigitalOcean Droplets</strong>: droplets with a tag. Agents reaches each one as <code>root@</code> its address
      unless you say another user.</li>
-<li><strong>Codespaces</strong>, <strong>Coder</strong>, or <strong>Workstations</strong> (Google Cloud Workstations).</li>
+<li><strong>GitHub Codespaces</strong>, <strong>Coder Workspaces</strong>, or <strong>Google Cloud Workstations</strong>.</li>
 <li><strong>Your commands</strong>: one workspace, given as the commands you already use to start and
      stop it, such as <code>cws start devstack-1</code>. A status command is optional; it prints
      <code>running</code> or <code>stopped</code>.</li>
@@ -3203,12 +3225,13 @@ say why and offer <strong>Start</strong> again.</p>
 <p>Choose <strong>Stop</strong> on its row in <strong>Settings ▸ Control plane ▸ Hosts</strong>. If agents are working
 there, Agents names them and asks first. The row says <strong>Stopping…</strong> and then <strong>Stopped</strong>.</p>
 <h2 id="start-when-used-and-stop-when-idle">Start when used and stop when idle<a class="headerlink" href="#start-when-used-and-stop-when-idle" title="Permanent link">&para;</a></h2>
-<p>A linked server's <code>···</code> menu has two settings:</p>
+<p>A linked server's <code>···</code> menu has three settings:</p>
 <ul>
 <li><strong>Start when used</strong>, on by default.</li>
 <li><strong>Stop when idle</strong>, after 30 minutes by default.</li>
+<li><strong>Start for scheduled workflows</strong>, on by default.</li>
 </ul>
-<p>Both are kept with the link.</p>
+<p>All three are kept with the link.</p>
 <h3 id="start-when-used">Start when used<a class="headerlink" href="#start-when-used" title="Permanent link">&para;</a></h3>
 <p>With <strong>Start when used</strong> on, you don't have to press <strong>Start</strong>. Send a prompt to an agent on
 the stopped server, or start a new agent in one of its projects, on the Mac, the iPhone or
@@ -3242,10 +3265,30 @@ means:</p>
 <p>A turn starting in that time starts the count again. When Agents stops it, its row and the
 strip over its chats say <strong>devbox was stopped by Agents after 30 minutes idle</strong>. With <strong>Start
 when used</strong> on as well, your next prompt starts it again.</p>
-<p>A server's scheduled workflows don't run while it is stopped. Its row warns you when it has
-some and <strong>Stop when idle</strong> is on.</p>
 <p>A server on a build of Agents from before this never says whether it is idle, so it is never
 stopped as idle. Update it from its row.</p>
+<h3 id="start-for-scheduled-workflows">Start for scheduled workflows<a class="headerlink" href="#start-for-scheduled-workflows" title="Permanent link">&para;</a></h3>
+<p>A stopped server runs nothing, so its scheduled workflows would not run. With <strong>Start for
+scheduled workflows</strong> on, Agents starts the workspace a little before the server's next
+scheduled workflow is due:</p>
+<ul>
+<li>The server's own clock still fires the workflow. Agents only starts the machine.</li>
+<li>It starts it 5 minutes before the due time. After the first start, it uses how long the
+  last start took, plus 2 minutes.</li>
+<li>It starts it once for each due time.</li>
+<li><strong>Stop when idle</strong> does not stop a server whose next scheduled workflow is due within its
+  idle time. After the run, the server is idle again and stops as usual.</li>
+</ul>
+<p>A stopped server's row, and the strip over its chats on the Mac, the iPhone and the web page,
+say when it starts and for which workflow: <strong>Starts at 02:55 for Nightly review</strong>. <strong>Stop</strong>
+says it too, before it stops the server.</p>
+<p>With the switch off, the server stays stopped, and its scheduled workflows don't run while it
+is stopped. Its row warns you of that when it has some and <strong>Stop when idle</strong> is on. A server
+on a build of Agents from before this doesn't say when its workflows are due, so it is not
+started for them, and its row warns you the same way.</p>
+<p>Only scheduled workflows start a server. An event (such as <code>issue.opened</code>) is still heard only
+when the server is next up. Agents knows only the due time the server last sent: a workflow
+added while it is stopped is not seen until it is next up.</p>
 <h2 id="make-a-new-workspace">Make a new workspace<a class="headerlink" href="#make-a-new-workspace" title="Permanent link">&para;</a></h2>
 <p>For a provider that can make workspaces, its card in <strong>Settings ▸ Control plane ▸
 Providers</strong> has <strong>New Workspace…</strong>.</p>

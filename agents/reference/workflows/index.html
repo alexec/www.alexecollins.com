@@ -3140,7 +3140,7 @@ Check the build and say whether it is green.
 <tr>
 <td><code>on:</code> <code>schedule</code></td>
 <td><code>at:</code>, and optionally <code>between:</code> and <code>days:</code></td>
-<td>Runs at set times. <strong>At</strong> is a list of minutes past the hour, <code>":00"</code> or <code>":30"</code> and nothing else. <strong>Between</strong> is a range of hours such as <code>"09:00-18:00"</code>; without it, every hour. <strong>Days</strong> is a list of <code>mon</code>, <code>tue</code>, <code>wed</code>, <code>thu</code>, <code>fri</code>, <code>sat</code>, <code>sun</code>; without it, every day. A time missed while the Mac slept or the app was closed is not run later; the workflow's page says it was missed.</td>
+<td>Runs at set times. <strong>At</strong> is a list of minutes past the hour, <code>":00"</code> or <code>":30"</code> and nothing else. <strong>Between</strong> is a range of hours such as <code>"09:00-18:00"</code>; without it, every hour. <strong>Days</strong> is a list of <code>mon</code>, <code>tue</code>, <code>wed</code>, <code>thu</code>, <code>fri</code>, <code>sat</code>, <code>sun</code>; without it, every day. A time missed while the Mac slept or the app was closed is not run later; the workflow's page says it was missed. A server on a stopped workspace is started for it, when <strong>Start for scheduled workflows</strong> is on (<a href="../../how-to/start-workspaces-from-agents/">Start workspaces from Agents</a>); a Mac, or a server with the switch off, still misses it.</td>
 </tr>
 <tr>
 <td><code>on:</code> an event name, such as <code>branch.moved</code> or <code>agent.finished</code></td>

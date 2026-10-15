@@ -3146,7 +3146,7 @@ Antigravity reads no instructions file when the app starts it, so neither gets i
 <h2 id="add-an-mcp-server">Add an MCP server<a class="headerlink" href="#add-an-mcp-server" title="Permanent link">&para;</a></h2>
 <p>To find one on the MCP Registry and add it from the app, see
 <a href="../add-an-mcp-server-from-the-registry/">Add an MCP server from the registry</a>. The entry it
-writes names each secret as <code>${NAME}</code>, and the value goes in <code>~/.agents/secrets.env</code>, which
+writes names each secret as <code>${NAME}</code>, and the value goes in <code>~/.agents-secrets/secrets.env</code>, which
 is yours alone, readable only by you, and never committed. When an agent starts, the app
 fills each <code>${NAME}</code> from that file. A name that is not set means that server is left out
 of the session, and <strong>Settings ▸ Agent Configuration</strong> says which name is missing. The value is never
