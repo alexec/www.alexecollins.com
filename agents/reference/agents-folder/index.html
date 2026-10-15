@@ -3120,6 +3120,11 @@ Agents app writes.</p>
 <td>The start form</td>
 </tr>
 <tr>
+<td><code>display.json</code></td>
+<td>Your display choices, the same on every client: how much of a turn shows, the smart groups that are off, whether Archived projects, Status and Usage are open, the new-session form's runtime and choices, and the marketplace last chosen</td>
+<td>Any client</td>
+</tr>
+<tr>
 <td><code>host.json</code></td>
 <td>The role of each of your Macs in Agents Host (its store, bucket, web remote and relay), one entry per Mac, by its local host name. The bucket's keys stay in the keychain.</td>
 <td>Agents Host</td>
@@ -3141,8 +3146,8 @@ not be able to change them:</p>
   retention-clock files, in <code>~/Library/Application Support/Agents</code>
   (<code>~/.agents-server/root</code> on a server).</li>
 <li><strong>Caches and logs:</strong> the system's cache and log folders. You can delete them at any time.</li>
-<li><strong>Each device's own choices:</strong> folds, drafts, window sizes, the selected project, and
-  pairing.</li>
+<li><strong>Each device's own choices:</strong> project folds, drafts, the new-session form's folders,
+  window sizes, the selected project, and pairing.</li>
 </ul>
 <p>A scratch copy of the app, started with its own root, keeps its settings in
 <code>&lt;root&gt;/settings</code> and never writes the real <code>~/.agents</code>, unless <code>AGENTS_PERSONAL_HOME</code>
